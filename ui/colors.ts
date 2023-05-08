@@ -53,6 +53,23 @@ const colors = {
 	basicColors
 } as const
 
+const darkColorNames = [...Object.keys(darkColors)] as Array<
+	keyof typeof darkColors
+>
+type DarkColorNames = (typeof darkColorNames)[number]
+
+const lightColorNames = [...Object.keys(lightColors)] as Array<
+	keyof typeof lightColors
+>
+type LightColorNames = (typeof lightColorNames)[number]
+
+const basicColorNames = [...Object.keys(basicColors)] as Array<
+	keyof typeof basicColors
+>
+type BasicColorNames = (typeof basicColorNames)[number]
+
+type ColorNames = DarkColorNames | LightColorNames
+
 /**
  * primary (string): The primary color of the app used to tint various elements. Usually you'll want to use your brand color for this.
  * background (string): The color of various backgrounds, such as background color for the screens.
@@ -91,5 +108,9 @@ export {
 	darkColors,
 	lightColors,
 	darkNavigationTheme,
-	lightNavigationTheme
+	lightNavigationTheme,
+	BasicColorNames,
+	DarkColorNames,
+	LightColorNames,
+	ColorNames
 }

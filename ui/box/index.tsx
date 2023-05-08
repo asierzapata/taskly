@@ -1,6 +1,5 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import _ from 'lodash'
+import * as React from 'react'
+import * as _ from 'lodash'
 
 /* ====================================================== */
 /*                   Actions / Selectors                  */
@@ -11,14 +10,22 @@ import _ from 'lodash'
 /* ====================================================== */
 
 import { useColorScheme, View } from 'react-native'
-import { colors } from 'styleguide/colors'
 
 /* ====================================================== */
 /*                         Styles                         */
 /* ====================================================== */
 
-import { pixelSizeHorizontal, pixelSizeVertical } from 'styleguide/normalizer'
-import { styles } from './box_styles'
+import { pixelSizeHorizontal, pixelSizeVertical } from '@/ui/normalizer'
+import {
+	type AlignValues,
+	type FlexDirectionValues,
+	type FlexValues,
+	type JustifyValues,
+	type OverflowValues,
+	type DarkColorNames,
+	type LightColorNames,
+	styles
+} from './box_styles'
 
 /* ====================================================== */
 /*                    Implementation                      */
@@ -59,8 +66,44 @@ const Box = ({
 	children,
 	style,
 	...props
+}: {
+	as?: string | React.ComponentType<any>
+	w?: number
+	minW?: number
+	h?: number
+	minH?: number
+	mt?: number
+	mb?: number
+	ml?: number
+	mr?: number
+	mv?: number
+	mh?: number
+	pt?: number
+	pb?: number
+	pl?: number
+	pr?: number
+	pv?: number
+	ph?: number
+	flex?: FlexValues
+	flexGrow?: FlexValues
+	flexShrink?: FlexValues
+	flexDirection?: FlexDirectionValues
+	align?: AlignValues
+	justify?: JustifyValues
+	relative?: boolean
+	absolute?: boolean
+	backgroundColor?: DarkColorNames | LightColorNames
+	borderColor?: DarkColorNames | LightColorNames
+	borderWidth?: number
+	borderRadius?: number
+	overflow?: OverflowValues
+	opacity?: number
+	children?: React.ReactNode
+	style?: Record<string, string | number>
+	// This is a hack to allow any other props to be passed to the component `as`
+	[key: string]: unknown
 }) => {
-	const colorScheme = useColorScheme()
+	const colorScheme = useColorScheme() || 'light'
 
 	const computedStyles = React.useMemo(() => {
 		const stylesArray = []
@@ -185,14 +228,7 @@ const Box = ({
 			stylesArray.push(styles[`justify-${justify}`])
 		}
 
-		if (relative) {
-			stylesArray.push(styles.relative)
-		}
-
-		if (absolute) {
-			stylesArray.push(styles.absolute)
-		}
-
+		colorScheme
 		if (
 			backgroundColor &&
 			styles[`backgroundColor-${colorScheme}-${backgroundColor}`]
@@ -267,102 +303,6 @@ const Box = ({
 			{children}
 		</Component>
 	)
-}
-
-Box.propTypes = {
-	as: PropTypes.any,
-	w: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	minW: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	h: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	minH: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	mt: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	mb: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	ml: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	mr: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	mv: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	mh: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	pt: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	pb: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	pl: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	pr: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	pv: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	ph: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	flex: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
-	flexGrow: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
-	flexShrink: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
-	flexDirection: PropTypes.oneOf([
-		'row',
-		'column',
-		'row-reverse',
-		'column-reverse'
-	]),
-	align: PropTypes.oneOf([
-		'center',
-		'flex-start',
-		'flex-end',
-		'stretch',
-		'baseline'
-	]),
-	justify: PropTypes.oneOf([
-		'center',
-		'flex-start',
-		'flex-end',
-		'space-between',
-		'space-around',
-		'space-evenly'
-	]),
-	relative: PropTypes.bool,
-	absolute: PropTypes.bool,
-	backgroundColor: PropTypes.oneOf([
-		..._.keys(colors.dark),
-		..._.keys(colors.light)
-	]),
-	borderColor: PropTypes.oneOf([
-		..._.keys(colors.dark),
-		..._.keys(colors.light)
-	]),
-	borderWidth: PropTypes.number,
-	borderRadius: PropTypes.number,
-	overflow: PropTypes.oneOf(['visible', 'hidden']),
-	opacity: PropTypes.number,
-	children: PropTypes.node,
-	style: PropTypes.object
-}
-
-Box.defaultProps = {
-	as: undefined,
-	w: null,
-	minW: null,
-	h: null,
-	minH: null,
-	mt: null,
-	mb: null,
-	ml: null,
-	mr: null,
-	mv: null,
-	mh: null,
-	pt: null,
-	pb: null,
-	pl: null,
-	pr: null,
-	pv: null,
-	ph: null,
-	flex: null,
-	flexGrow: null,
-	flexShrink: null,
-	flexDirection: null,
-	align: null,
-	justify: null,
-	relative: null,
-	absolute: null,
-	backgroundColor: null,
-	borderColor: null,
-	borderWidth: null,
-	borderRadius: null,
-	overflow: null,
-	opacity: null,
-	children: null,
-	style: null
 }
 
 /* ====================================================== */
