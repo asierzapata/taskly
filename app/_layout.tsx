@@ -4,17 +4,14 @@ import { StatusBar } from 'expo-status-bar'
 import {
 	ThemeProvider,
 	DarkTheme,
-	DefaultTheme,
-	useTheme
+	DefaultTheme
 } from '@react-navigation/native'
 import { useColorScheme } from 'react-native'
 import { Box } from '@/ui/box'
 
 export default function Root() {
 	const scheme = useColorScheme()
-	const colors = useTheme().colors
 
-	console.log('>>>>>>', colors)
 	return (
 		<ThemeProvider value={scheme === 'dark' ? DarkTheme : DefaultTheme}>
 			<AuthenticationProvider>
