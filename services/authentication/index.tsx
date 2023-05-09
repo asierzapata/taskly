@@ -18,7 +18,9 @@ type AuthContextValue = {
 }
 
 const AuthContext = React.createContext<AuthContextValue>({
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	signInWithEmail: async () => {},
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	signOut: () => {},
 	user: null
 })
@@ -73,10 +75,11 @@ export function AuthenticationProvider({
 			await account.createEmailSession(email, password)
 			await updateUser()
 		},
-		[]
+		[updateUser]
 	)
 
 	const signOut = React.useCallback(() => {
+		console.log('>>>>>>', 'signOut')
 		setUser(null)
 	}, [])
 

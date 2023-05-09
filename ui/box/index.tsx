@@ -9,6 +9,7 @@ import * as _ from 'lodash'
 /*                       Components                       */
 /* ====================================================== */
 
+import type { StyleProp } from 'react-native'
 import { useColorScheme, View } from 'react-native'
 
 /* ====================================================== */
@@ -99,7 +100,7 @@ const Box = ({
 	overflow?: OverflowValues
 	opacity?: number
 	children?: React.ReactNode
-	style?: Record<string, string | number>
+	style?: StyleProp<unknown>
 	// This is a hack to allow any other props to be passed to the component `as`
 	[key: string]: unknown
 }) => {

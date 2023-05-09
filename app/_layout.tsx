@@ -9,17 +9,23 @@ import {
 import { useColorScheme } from 'react-native'
 import { Box } from '@/ui/box'
 
+// Redux
+import { store } from '@/modules/store'
+import { Provider } from 'react-redux'
+
 export default function Root() {
 	const scheme = useColorScheme()
 
 	return (
-		<ThemeProvider value={scheme === 'dark' ? DarkTheme : DefaultTheme}>
-			<AuthenticationProvider>
-				<Box backgroundColor="background" flex={1}>
-					<Slot />
-				</Box>
-				<StatusBar style="auto" />
-			</AuthenticationProvider>
-		</ThemeProvider>
+		<Provider store={store}>
+			<ThemeProvider value={scheme === 'dark' ? DarkTheme : DefaultTheme}>
+				<AuthenticationProvider>
+					<Box backgroundColor="background" flex={1}>
+						<Slot />
+					</Box>
+					<StatusBar style="auto" />
+				</AuthenticationProvider>
+			</ThemeProvider>
+		</Provider>
 	)
 }

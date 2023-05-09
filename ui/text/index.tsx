@@ -71,11 +71,28 @@ const Text = ({
 	const computedStyles = React.useMemo(() => {
 		const stylesArray = []
 
+		console.log(
+			'>>>>>>',
+			size,
+			color,
+			weight,
+			textStyle,
+			align,
+			textDecorationLine,
+			colorScheme
+		)
+
 		if (size) {
 			stylesArray.push(styles[`size-${size}`])
 		}
 
 		if (color) {
+			console.log(
+				'>>>>>>',
+				colorScheme,
+				color,
+				styles[`color-${colorScheme}-${color}`]
+			)
 			stylesArray.push(styles[`color-${colorScheme}-${color}`])
 		}
 

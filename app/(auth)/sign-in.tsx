@@ -1,15 +1,10 @@
 import React from 'react'
 import { useAuth } from '@/services/authentication'
-import {
-	Text,
-	View,
-	TextInput,
-	Button,
-	Alert,
-	ActivityIndicator
-} from 'react-native'
+import { Text, View, Button, Alert, ActivityIndicator } from 'react-native'
 import { useForm, Controller } from 'react-hook-form'
 import { useTheme } from '@react-navigation/native'
+import { TextInput } from '@/ui/form/text_input'
+import { Box } from '@/ui/box'
 
 type FormData = {
 	email: string
@@ -76,44 +71,52 @@ export default function SignIn() {
 				backgroundColor: colors.background
 			}}
 		>
-			<Controller
-				control={control}
-				rules={{
-					required: true
-				}}
-				render={({ field: { onChange, onBlur, value } }) => (
-					<TextInput
-						placeholder="Your email"
-						inputMode="email"
-						autoComplete="email"
-						autoFocus
-						returnKeyType="next"
-						onBlur={onBlur}
-						onChangeText={onChange}
-						value={value}
-					/>
-				)}
-				name="email"
-			/>
-			{errors.email && <Text>This is required.</Text>}
-			<Controller
-				control={control}
-				rules={{
-					required: true
-				}}
-				render={({ field: { onChange, onBlur, value } }) => (
-					<TextInput
-						placeholder="Password"
-						onBlur={onBlur}
-						onChangeText={onChange}
-						value={value}
-						autoComplete="password"
-						returnKeyType="send"
-					/>
-				)}
-				name="password"
-			/>
-			{errors.password && <Text>This is required.</Text>}
+			<Box mh={4}>
+				<Text>Email</Text>
+				<Controller
+					control={control}
+					rules={{
+						required: true
+					}}
+					render={({ field: { onChange, onBlur, value } }) => (
+						<TextInput
+							placeholder="Your email"
+							inputMode="email"
+							autoComplete="email"
+							autoFocus
+							returnKeyType="next"
+							onBlur={onBlur}
+							onChangeText={onChange}
+							value={value}
+							// size="bigBody"
+						/>
+					)}
+					name="email"
+				/>
+				{errors.email && <Text>This is required.</Text>}
+			</Box>
+
+			<Box>
+				<Text>Password</Text>
+				<Controller
+					control={control}
+					rules={{
+						required: true
+					}}
+					render={({ field: { onChange, onBlur, value } }) => (
+						<TextInput
+							placeholder="Password"
+							onBlur={onBlur}
+							onChangeText={onChange}
+							value={value}
+							autoComplete="password"
+							returnKeyType="send"
+						/>
+					)}
+					name="password"
+				/>
+				{errors.password && <Text>This is required.</Text>}
+			</Box>
 
 			<Button title="Sign in" onPress={onSubmit} />
 		</View>
