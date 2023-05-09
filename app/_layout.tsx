@@ -7,7 +7,8 @@ import {
 	DefaultTheme,
 	useTheme
 } from '@react-navigation/native'
-import { View, useColorScheme } from 'react-native'
+import { useColorScheme } from 'react-native'
+import { Box } from '@/ui/box'
 
 export default function Root() {
 	const scheme = useColorScheme()
@@ -17,7 +18,9 @@ export default function Root() {
 	return (
 		<ThemeProvider value={scheme === 'dark' ? DarkTheme : DefaultTheme}>
 			<AuthenticationProvider>
-				<Slot />
+				<Box backgroundColor="background" flex={1}>
+					<Slot />
+				</Box>
 				<StatusBar style="auto" />
 			</AuthenticationProvider>
 		</ThemeProvider>

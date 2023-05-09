@@ -1,13 +1,16 @@
 import React from 'react'
 import _ from 'lodash'
 
+import type { BasicColorNames } from '@/ui/colors'
+
 /* ====================================================== */
 /*                       Components                       */
 /* ====================================================== */
 
+import type { ColorValue } from 'react-native'
 import { ActivityIndicator, useColorScheme } from 'react-native'
 import { Box } from '@/ui/box'
-import { BasicColorNames, colors } from '@/ui/colors'
+import { colors } from '@/ui/colors'
 
 /* ====================================================== */
 /*                    Implementation                      */
@@ -30,14 +33,15 @@ const Loading = ({
 	size?: (typeof LOADING_SIZES)[keyof typeof LOADING_SIZES]
 }) => {
 	const colorScheme = useColorScheme()
-	const defaultColor =
+
+	let activityIndicatorColor: ColorValue =
 		colorScheme === 'dark' && !negative
 			? colors.dark.loading
 			: colors.light.loading
-
-	const activityIndicatorColor = !_.isEmpty(color)
-		? colors.basicColors[color as BasicColorNames]
-		: defaultColor
+	if (color !== undefined) {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+		activityIndicatorColor = colors.basicColors[color] as ColorValue
+	}
 
 	return (
 		<Box flex={fullscreen ? 1 : undefined} justify="center" align="center">

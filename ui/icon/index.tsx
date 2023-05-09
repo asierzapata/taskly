@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 /*                       Components                       */
 /* ====================================================== */
 
-import { FontAwesome5 } from '@expo/vector-icons'
+import { FontAwesome } from '@expo/vector-icons'
 import { Box } from '@/ui/box'
 import { pixelSizeVertical } from '@/ui/normalizer'
 
@@ -18,13 +18,13 @@ const Icon = ({
 	color,
 	size
 }: {
-	name: keyof typeof FontAwesome5.glyphMap
+	name: keyof typeof FontAwesome.glyphMap
 	color: string
 	size: number
 }) => {
 	const normalizedSize = pixelSizeVertical(size)
 	return (
-		<Box as={FontAwesome5} name={name} size={normalizedSize} color={color} />
+		<Box as={FontAwesome} name={name} size={normalizedSize} color={color} />
 	)
 }
 
