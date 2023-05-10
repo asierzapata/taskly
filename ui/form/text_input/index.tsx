@@ -27,39 +27,46 @@ type TextInputProps = {
 	align?: Align
 }
 
-const TextInput = ({
-	size = 'body',
-	color = 'text',
-	weight = 'normal',
-	align,
-	...props
-}: React.ComponentProps<typeof NativeTextInput> & TextInputProps) => {
-	const scheme = useColorScheme() ?? 'light'
+const TextInput = React.forwardRef(
+	(
+		{
+			size = 'body',
+			color = 'text',
+			weight = 'normal',
+			align,
+			...props
+		}: React.ComponentProps<typeof NativeTextInput> & TextInputProps,
+		ref
+	) => {
+		const scheme = useColorScheme() ?? 'light'
 
-	const computedStyles = React.useMemo(() => {
-		const stylesArray = []
+		const computedStyles = React.useMemo(() => {
+			const stylesArray = []
 
-		if (size) {
-			stylesArray.push(styles[`size-${size}`])
-		}
+			if (size) {
+				stylesArray.push(styles[`size-${size}`])
+			}
 
-		if (color) {
-			stylesArray.push(styles[`color-${scheme}-${color}`])
-		}
+			if (color) {
+				stylesArray.push(styles[`color-${scheme}-${color}`])
+			}
 
-		if (weight) {
-			stylesArray.push(styles[`weight-${weight}`])
-		}
+			if (weight) {
+				stylesArray.push(styles[`weight-${weight}`])
+			}
 
-		if (align) {
-			stylesArray.push(styles[`align-${align}`])
-		}
+			if (align) {
+				stylesArray.push(styles[`align-${align}`])
+			}
 
-		return stylesArray
-	}, [size, color, weight, align, scheme])
+			return stylesArray
+		}, [size, color, weight, align, scheme])
 
-	return <Box as={NativeTextInput} {...props} style={computedStyles} />
-}
+		return (
+			<Box ref={ref} as={NativeTextInput} {...props} style={computedStyles} />
+		)
+	}
+)
 
 /* ====================================================== */
 /*                      Public API                        */

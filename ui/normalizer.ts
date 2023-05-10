@@ -32,10 +32,22 @@ const pixelSizeHorizontal = (size: number) => {
 	return widthPixel(size)
 }
 
+const PIXELS_BY_UNIT = 4 // 4px
+
+const pixelUnitHorizontal = (unit: number) => {
+	return widthPixel(unit * PIXELS_BY_UNIT)
+}
+
+const pixelUnitVertical = (unit: number) => {
+	return heightPixel(unit * PIXELS_BY_UNIT)
+}
+
 export {
 	widthPixel,
 	heightPixel,
 	fontPixel,
 	pixelSizeVertical,
-	pixelSizeHorizontal
+	pixelSizeHorizontal,
+	pixelUnitHorizontal,
+	pixelUnitVertical
 }

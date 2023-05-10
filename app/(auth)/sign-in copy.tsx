@@ -20,8 +20,7 @@ import {
 	ActivityIndicator,
 	KeyboardAvoidingView,
 	Platform,
-	Keyboard,
-	ScrollView
+	Keyboard
 } from 'react-native'
 import { useForm, Controller } from 'react-hook-form'
 import { Button } from '@/ui/button'
@@ -98,91 +97,94 @@ export default function SignIn() {
 
 	return (
 		<Box
-			as={ScrollView}
-			bounces={false}
+			as={KeyboardAvoidingView}
+			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 			flex={1}
-			contentContainerStyle={{ flexGrow: 1 }}
 		>
 			<Box
-				as={KeyboardAvoidingView}
-				behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-				flex={1}
-				justifyContent="center"
-				alignItems="center"
+				as={TouchableWithoutFeedback}
+				accessible={false}
+				onPress={Keyboard.dismiss}
 			>
-				<Box w="50%" gap={2}>
-					<Text size="caption" weight="bold">
-						Email
-					</Text>
-					<Controller
-						control={control}
-						rules={{
-							required: true
-						}}
-						render={({ field: { onChange, onBlur, value } }) => (
-							<TextInput
-								placeholder="Your email"
-								inputMode="email"
-								autoComplete="email"
-								// autoFocus
-								autoCapitalize="none"
-								returnKeyType="next"
-								onBlur={onBlur}
-								onChangeText={onChange}
-								value={value}
-								onSubmitEditing={() => {
-									if (passwordInputRef.current) passwordInputRef.current.focus()
-								}}
-							/>
-						)}
-						name="email"
-					/>
-					{errors.email && (
-						<Text size="caption" color="danger">
-							Email is required
+				<Box h="100%" justifyContent="center" alignItems="center">
+					<Box w="50%" gap={2}>
+						<Text size="caption" weight="bold">
+							Email
 						</Text>
-					)}
-				</Box>
-
-				<Box w="50%" gap={2} mt={4}>
-					<Text size="caption" weight="bold">
-						Password
-					</Text>
-					<Controller
-						control={control}
-						rules={{
-							required: true
-						}}
-						render={({ field: { onChange, onBlur, value } }) => (
-							<TextInput
-								ref={passwordInputRef}
-								placeholder="Password"
-								onBlur={onBlur}
-								onChangeText={onChange}
-								value={value}
-								autoComplete="password"
-								returnKeyType="send"
-								secureTextEntry
-								onSubmitEditing={onSubmit}
-							/>
+						<Controller
+							control={control}
+							rules={{
+								required: true
+							}}
+							render={({ field: { onChange, onBlur, value } }) => (
+								<TextInput
+									placeholder="Your email"
+									inputMode="email"
+									autoComplete="email"
+									// autoFocus
+									autoCapitalize="none"
+									returnKeyType="next"
+									onBlur={onBlur}
+									onChangeText={onChange}
+									value={value}
+									onSubmitEditing={() => {
+										if (passwordInputRef.current)
+											passwordInputRef.current.focus()
+									}}
+								/>
+							)}
+							name="email"
+						/>
+						{errors.email && (
+							<Text size="caption" color="danger">
+								Email is required
+							</Text>
 						)}
-						name="password"
-					/>
-					{errors.password && (
-						<Text size="caption" color="danger">
-							Password is required
-						</Text>
-					)}
-				</Box>
+					</Box>
 
-				<Box w="50%" gap={2} mt={4}>
-					<Button
-						loading={loading}
-						disabled={loading || Object.keys(errors).length > 0 || !isValid}
-						onPress={onSubmit}
-					>
-						Sign in
-					</Button>
+					<Box w="50%" gap={2} mt={4}>
+						<Text size="caption" weight="bold">
+							Password
+						</Text>
+						<Controller
+							control={control}
+							rules={{
+								required: true
+							}}
+							render={({ field: { onChange, onBlur, value } }) => (
+								<TextInput
+									ref={passwordInputRef}
+									placeholder="Password"
+									onBlur={onBlur}
+									onChangeText={onChange}
+									value={value}
+									autoComplete="password"
+									returnKeyType="send"
+									secureTextEntry
+									onSubmitEditing={onSubmit}
+								/>
+							)}
+							name="password"
+						/>
+						{errors.password && (
+							<Text size="caption" color="danger">
+								Password is required
+							</Text>
+						)}
+					</Box>
+
+					<Box w="50%" gap={2} mt={4}>
+						<Button
+							loading={loading}
+							disabled={loading || Object.keys(errors).length > 0 || !isValid}
+							onPress={onSubmit}
+							style={{
+								zIndex: 1000
+							}}
+						>
+							Sign in
+						</Button>
+					</Box>
 				</Box>
 			</Box>
 		</Box>

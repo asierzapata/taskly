@@ -4,14 +4,6 @@ import { colors, darkColors, lightColors } from '@/ui/colors'
 
 type StylesObject<
 	K extends string,
-	V extends string | number,
-	S extends string
-> = {
-	[key in `${K}-${V}`]: Record<S, V>
-}
-
-type ColoredStylesObject<
-	K extends string,
 	N extends string | number,
 	V extends string | number,
 	S extends string
@@ -19,20 +11,36 @@ type ColoredStylesObject<
 	[key in `${K}-${N}`]: Record<S, V>
 }
 
-export const possibleFlexValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const
+export const possibleFlexValues = [
+	'1',
+	'2',
+	'3',
+	'4',
+	'5',
+	'6',
+	'7',
+	'8',
+	'9',
+	'10'
+] as const
 export type FlexValues = (typeof possibleFlexValues)[number]
-const flexStylesObject = {} as StylesObject<'flex', FlexValues, 'flex'> &
-	StylesObject<'flexGrow', FlexValues, 'flexGrow'> &
-	StylesObject<'flexShrink', FlexValues, 'flexShrink'>
+const flexStylesObject = {} as StylesObject<
+	'flex',
+	FlexValues,
+	number,
+	'flex'
+> &
+	StylesObject<'flexGrow', FlexValues, number, 'flexGrow'> &
+	StylesObject<'flexShrink', FlexValues, number, 'flexShrink'>
 possibleFlexValues.forEach(value => {
 	flexStylesObject[`flex-${value}`] = {
-		flex: value
+		flex: parseInt(value, 10)
 	}
 	flexStylesObject[`flexGrow-${value}`] = {
-		flexGrow: value
+		flexGrow: parseInt(value, 10)
 	}
 	flexStylesObject[`flexShrink-${value}`] = {
-		flexShrink: value
+		flexShrink: parseInt(value, 10)
 	}
 })
 
@@ -45,6 +53,7 @@ export const possibleFlexDirectionValues = [
 export type FlexDirectionValues = (typeof possibleFlexDirectionValues)[number]
 const flexDirectionStylesObject = {} as StylesObject<
 	'flexDirection',
+	FlexDirectionValues,
 	FlexDirectionValues,
 	'flexDirection'
 >
@@ -72,13 +81,13 @@ const lightColorValues = [...Object.values(lightColors)] as Array<
 export type LightColorNames = (typeof lightColorNames)[number]
 export type LightColorValues = (typeof lightColorValues)[number]
 
-const backgroundColorStylesObject = {} as ColoredStylesObject<
+const backgroundColorStylesObject = {} as StylesObject<
 	'backgroundColor-dark',
 	DarkColorNames,
 	DarkColorValues,
 	'backgroundColor'
 > &
-	ColoredStylesObject<
+	StylesObject<
 		'backgroundColor-light',
 		LightColorNames,
 		LightColorValues,
@@ -99,13 +108,13 @@ _.forEach(colors.light, (colorValue, colorName) => {
 	}
 })
 
-const borderColorStylesObject = {} as ColoredStylesObject<
+const borderColorStylesObject = {} as StylesObject<
 	'borderColor-dark',
 	DarkColorNames,
 	DarkColorValues,
 	'borderColor'
 > &
-	ColoredStylesObject<
+	StylesObject<
 		'borderColor-light',
 		LightColorNames,
 		LightColorValues,
@@ -126,13 +135,13 @@ _.forEach(colors.light, (colorValue, colorName) => {
 	}
 })
 
-const colorStylesObject = {} as ColoredStylesObject<
+const colorStylesObject = {} as StylesObject<
 	'color-dark',
 	DarkColorNames,
 	DarkColorValues,
 	'color'
 > &
-	ColoredStylesObject<'color-light', LightColorNames, LightColorValues, 'color'>
+	StylesObject<'color-light', LightColorNames, LightColorValues, 'color'>
 _.forEach(colors.dark, (colorValue, colorName) => {
 	if (!_.includes(darkColorNames, colorName)) return
 	const _colorName = colorName as DarkColorNames
@@ -156,7 +165,12 @@ export const possibleAlignValues = [
 	'baseline'
 ] as const
 export type AlignValues = (typeof possibleAlignValues)[number]
-const alignStylesObject = {} as StylesObject<'align', AlignValues, 'alignItems'>
+const alignStylesObject = {} as StylesObject<
+	'align',
+	AlignValues,
+	AlignValues,
+	'alignItems'
+>
 _.forEach(possibleAlignValues, value => {
 	alignStylesObject[`align-${value}`] = {
 		alignItems: value
@@ -175,6 +189,7 @@ export type JustifyValues = (typeof possibleJustifyValues)[number]
 const justifyStylesObject = {} as StylesObject<
 	'justify',
 	JustifyValues,
+	JustifyValues,
 	'justifyContent'
 >
 _.forEach(possibleJustifyValues, value => {
@@ -187,6 +202,7 @@ export const possibleOverflowValues = ['visible', 'hidden'] as const
 export type OverflowValues = (typeof possibleOverflowValues)[number]
 const overflowStylesObject = {} as StylesObject<
 	'overflow',
+	OverflowValues,
 	OverflowValues,
 	'overflow'
 >
