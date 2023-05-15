@@ -5,9 +5,9 @@ module.exports = {
 	semi: false,
 	singleQuote: true,
 	jsxSingleQuote: false,
-	quoteProps: "as-needed",
-	trailingComma: "none",
+	quoteProps: 'as-needed',
+	trailingComma: 'none',
 	bracketSpacing: true,
 	jsxBracketSameLine: false,
-	arrowParens: "avoid",
-};
+	arrowParens: 'avoid'
+}

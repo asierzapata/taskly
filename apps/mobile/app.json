@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "scheme": "taskly",
+    "web": {
+      "bundler": "metro"
+    },
+    "name": "Taskly",
+    "slug": "taskly"
+  }
+}
