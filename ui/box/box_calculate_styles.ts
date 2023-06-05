@@ -1,264 +1,270 @@
-import _ from 'lodash'
+// import _ from 'lodash'
 
-import type { BoxProps } from '.'
+// import type { BoxProps } from '.'
 
-/* ====================================================== */
-/*                         Styles                         */
-/* ====================================================== */
+// /* ====================================================== */
+// /*                         Styles                         */
+// /* ====================================================== */
 
-import { styles } from './box_styles'
+// import { styles } from './box_styles'
 
-import type { RegisteredStyle } from 'react-native/types'
+// import type { RegisteredStyle } from 'react-native'
 
-/* ====================================================== */
-/*                     Implementation                     */
-/* ====================================================== */
+// /* ====================================================== */
+// /*                     Implementation                     */
+// /* ====================================================== */
 
-function calculateStyles(
-	boxProps: BoxProps,
-	{
-		breakpoint,
-		textDirection,
-		colorScheme
-	}: {
-		breakpoint: Breakpoint
-		textDirection: TextDirection
-		colorScheme: 'light' | 'dark'
-	}
-) {
-	const parseDefinedStylesForBreakpoint = (
-		value: string,
-		prefix: string,
-		style: string
-	) => parseDefinedStyles(value, prefix, style, breakpoint, colorScheme)
+// function calculateStyles(
+// 	boxProps: BoxProps,
+// 	{
+// 		breakpoint,
+// 		textDirection,
+// 		colorScheme
+// 	}: {
+// 		breakpoint: Breakpoint
+// 		textDirection: TextDirection
+// 		colorScheme: 'light' | 'dark'
+// 	}
+// ) {
+// 	const parseDefinedStylesForBreakpoint = (
+// 		prefix: string,
+// 		style: string,
+// 		value?: string
+// 	) => parseDefinedStyles({ value, prefix, style, breakpoint, colorScheme })
 
-	const parseRawStylesForBreakpoint = (value, style) =>
-		parseRawStyles(value, style, breakpoint, colorScheme)
+// 	const parseRawStylesForBreakpoint = (style: string, value?: string) =>
+// 		parseRawStyles({ value, style, breakpoint, colorScheme })
 
-	const _styles = [
-		// BACKGROUNDS
-		// -----------
+// 	const _styles = [
+// 		// BACKGROUNDS
+// 		// -----------
 
-		parseDefinedStylesForBreakpoint(
-			boxProps.backgroundColor,
-			'backgroundColor-',
-			'backgroundColor'
-		),
+// 		parseDefinedStylesForBreakpoint(
+// 			'backgroundColor-',
+// 			'backgroundColor',
+// 			boxProps.backgroundColor
+// 		),
 
-		// SIZES
-		// -----
+// 		// SIZES
+// 		// -----
 
-		parseRawStylesForBreakpoint(boxProps.w, 'width'),
-		parseRawStylesForBreakpoint(boxProps.maxW, 'max-width'),
-		parseRawStylesForBreakpoint(boxProps.minW, 'min-width'),
-		parseRawStylesForBreakpoint(boxProps.h, 'height'),
-		parseRawStylesForBreakpoint(boxProps.maxH, 'max-height'),
-		parseRawStylesForBreakpoint(boxProps.minH, 'min-height'),
+// 		parseRawStylesForBreakpoint('width', boxProps.w),
+// 		parseRawStylesForBreakpoint('max-width', boxProps.maxW),
+// 		parseRawStylesForBreakpoint('min-width', boxProps.minW),
+// 		parseRawStylesForBreakpoint('height', boxProps.h),
+// 		parseRawStylesForBreakpoint('max-height', boxProps.maxH),
+// 		parseRawStylesForBreakpoint('min-height', boxProps.minH),
 
-		// FLEXBOX
-		// -------
+// 		// FLEXBOX
+// 		// -------
 
-		parseDefinedStylesForBreakpoint(boxProps.flex, 'flex-', 'flex'),
-		parseDefinedStylesForBreakpoint(boxProps.flexGrow, 'flexGrow-', 'flexGrow'),
-		parseDefinedStylesForBreakpoint(
-			boxProps.flexShrink,
-			'flexShrink-',
-			'flexShrink'
-		),
-		parseDefinedStylesForBreakpoint(
-			boxProps.justify,
-			'justify-',
-			'justify-content'
-		),
-		parseDefinedStylesForBreakpoint(boxProps.align, 'align-', 'alignItems'),
-		parseRawStylesForBreakpoint(boxProps.gap, 'gap'),
+// 		parseDefinedStylesForBreakpoint('flex-', 'flex', boxProps.flex),
+// 		parseDefinedStylesForBreakpoint('flexGrow-', 'flexGrow', boxProps.flexGrow),
+// 		parseDefinedStylesForBreakpoint(
+// 			'flexShrink-',
+// 			'flexShrink',
+// 			boxProps.flexShrink
+// 		),
+// 		parseDefinedStylesForBreakpoint(
+// 			'justify-',
+// 			'justify-content',
+// 			boxProps.justify
+// 		),
+// 		parseDefinedStylesForBreakpoint('align-', 'alignItems', boxProps.align),
+// 		parseRawStylesForBreakpoint('gap', boxProps.gap),
 
-		// OVERFLOWS
-		// ---------
+// 		// OVERFLOWS
+// 		// ---------
 
-		parseDefinedStylesForBreakpoint(boxProps.overflow, 'overflow-', 'overflow'),
+// 		parseDefinedStylesForBreakpoint('overflow-', 'overflow', boxProps.overflow),
 
-		// MARGINS
-		// -------
+// 		// MARGINS
+// 		// -------
 
-		parseRawStylesForBreakpoint(boxProps.m, 'margin'),
-		parseRawStylesForBreakpoint(boxProps.mt, 'marginTop'),
-		parseRawStylesForBreakpoint(
-			boxProps.me,
-			textDirection === 'ltr' ? 'marginRight' : 'marginLeft'
-		),
-		parseRawStylesForBreakpoint(boxProps.mb, 'marginBottom'),
-		parseRawStylesForBreakpoint(
-			boxProps.ms,
-			textDirection === 'ltr' ? 'marginLeft' : 'marginRight'
-		),
-		parseRawStylesForBreakpoint(boxProps.mh, 'marginHorizontal'),
-		parseRawStylesForBreakpoint(boxProps.mv, 'marginVertical'),
+// 		parseRawStylesForBreakpoint('margin', boxProps.m),
+// 		parseRawStylesForBreakpoint('marginTop', boxProps.mt),
+// 		parseRawStylesForBreakpoint(
+// 			textDirection === 'ltr' ? 'marginRight' : 'marginLeft',
+// 			boxProps.me
+// 		),
+// 		parseRawStylesForBreakpoint('marginBottom', boxProps.mb),
+// 		parseRawStylesForBreakpoint(
+// 			textDirection === 'ltr' ? 'marginLeft' : 'marginRight',
+// 			boxProps.ms
+// 		),
+// 		parseRawStylesForBreakpoint('marginHorizontal', boxProps.mh),
+// 		parseRawStylesForBreakpoint('marginVertical', boxProps.mv),
 
-		// PADDINGS
-		// --------
+// 		// PADDINGS
+// 		// --------
 
-		parseRawStylesForBreakpoint(boxProps.p, 'padding'),
-		parseRawStylesForBreakpoint(boxProps.pt, 'paddingTop'),
-		parseRawStylesForBreakpoint(
-			boxProps.pe,
-			textDirection === 'ltr' ? 'paddingRight' : 'paddingLeft'
-		),
-		parseRawStylesForBreakpoint(boxProps.pb, 'paddingBottom'),
-		parseRawStylesForBreakpoint(
-			boxProps.ps,
-			textDirection === 'ltr' ? 'paddingLeft' : 'paddingRight'
-		),
-		parseRawStylesForBreakpoint(boxProps.ph, 'paddingHorizontal'),
-		parseRawStylesForBreakpoint(boxProps.pv, 'paddingVertical'),
+// 		parseRawStylesForBreakpoint('padding', boxProps.p),
+// 		parseRawStylesForBreakpoint('paddingTop', boxProps.pt),
+// 		parseRawStylesForBreakpoint(
+// 			textDirection === 'ltr' ? 'paddingRight' : 'paddingLeft',
+// 			boxProps.pe
+// 		),
+// 		parseRawStylesForBreakpoint('paddingBottom', boxProps.pb),
+// 		parseRawStylesForBreakpoint(
+// 			textDirection === 'ltr' ? 'paddingLeft' : 'paddingRight',
+// 			boxProps.ps
+// 		),
+// 		parseRawStylesForBreakpoint('paddingHorizontal', boxProps.ph),
+// 		parseRawStylesForBreakpoint('paddingVertical', boxProps.pv),
 
-		// Z-INDEXES
-		// ---------
+// 		// Z-INDEXES
+// 		// ---------
 
-		parseRawStylesForBreakpoint(boxProps.zIndex, 'zIndex'),
+// 		parseRawStylesForBreakpoint('zIndex', boxProps.zIndex),
 
-		// BORDERS
-		// -------
+// 		// BORDERS
+// 		// -------
 
-		parseDefinedStylesForBreakpoint(
-			boxProps.borderColor,
-			'borderColor-',
-			'borderColor'
-		),
-		parseDefinedStylesForBreakpoint(
-			boxProps.borderStyle,
-			'bor-',
-			'border-style'
-		),
-		parseRawStylesForBreakpoint(boxProps.borderWidth, 'borderWidth'),
-		parseRawStylesForBreakpoint(boxProps.borderRadius, 'borderRadius'),
+// 		parseDefinedStylesForBreakpoint(
+// 			'borderColor-',
+// 			'borderColor',
+// 			boxProps.borderColor
+// 		),
+// 		parseDefinedStylesForBreakpoint(
+// 			'bor-',
+// 			'border-style',
+// 			boxProps.borderStyle
+// 		),
+// 		parseRawStylesForBreakpoint('borderWidth', boxProps.borderWidth),
+// 		parseRawStylesForBreakpoint('borderRadius', boxProps.borderRadius),
 
-		// OPACITY
-		// -------
+// 		// OPACITY
+// 		// -------
 
-		parseRawStylesForBreakpoint(boxProps.opacity, 'opacity')
-	] as RegisteredStyle<unknown>[]
+// 		parseRawStylesForBreakpoint('opacity', boxProps.opacity)
+// 	] as RegisteredStyle<unknown>[]
 
-	return _styles
-}
+// 	return _styles
+// }
 
-/* ====================================================== */
-/*                       Public API                       */
-/* ====================================================== */
+// /* ====================================================== */
+// /*                       Public API                       */
+// /* ====================================================== */
 
-export { calculateStyles, parseDefinedStyles }
+// export { calculateStyles, parseDefinedStyles }
 
-/* ====================================================== */
-/*                         Helpers                        */
-/* ====================================================== */
+// /* ====================================================== */
+// /*                         Helpers                        */
+// /* ====================================================== */
 
-const BREAKPOINT_MODIFIERS = ['sm', 'md', 'lg', 'xl', '2xl'] as const
+// const BREAKPOINT_MODIFIERS = ['sm', 'md', 'lg', 'xl', '2xl'] as const
 
-function parseDefinedStyles(
-	value = '',
-	prefix: string,
-	style: string,
-	breakpoint: Breakpoint,
-	colorScheme: 'light' | 'dark'
-) {
-	if (_.isNull(value) || _.isUndefined(value)) return {}
+// function parseDefinedStyles({
+// 	value = '',
+// 	prefix,
+// 	breakpoint,
+// 	colorScheme,
+// 	style
+// }: {
+// 	prefix: string
+// 	breakpoint: Breakpoint
+// 	colorScheme: 'light' | 'dark'
+// 	value?: string
+// 	style?: string
+// }) {
+// 	if (_.isNull(value) || _.isUndefined(value)) return {}
 
-	const parsedStyles = BREAKPOINT_MODIFIERS.map(() => ({
-		idle: ''
-	}))
-	const breakpointIndex = _.indexOf(BREAKPOINT_MODIFIERS, breakpoint)
-	let baseStyle = ''
+// 	const parsedStyles = BREAKPOINT_MODIFIERS.map(() => ({
+// 		idle: ''
+// 	}))
+// 	const breakpointIndex = _.indexOf(BREAKPOINT_MODIFIERS, breakpoint)
+// 	let baseStyle = ''
 
-	value
-		.toString()
-		.split(' ')
-		.forEach(_value => {
-			const items = _value.split(':')
-			if (items.length === 1) {
-				baseStyle = _value
-			} else if (
-				items.length === 2 &&
-				_.includes(BREAKPOINT_MODIFIERS, items[0])
-			) {
-				const index = _.indexOf(BREAKPOINT_MODIFIERS, items[0])
-				parsedStyles[index].idle = items[1]
-			}
-			throw new Error(
-				`Invalid ${style} value: ${value}. Expected format: ${prefix}{breakpoint}:{value}`
-			)
-		})
+// 	value
+// 		.toString()
+// 		.split(' ')
+// 		.forEach(_value => {
+// 			const items = _value.split(':')
+// 			if (items.length === 1) {
+// 				baseStyle = _value
+// 			} else if (
+// 				items.length === 2 &&
+// 				_.includes(BREAKPOINT_MODIFIERS, items[0])
+// 			) {
+// 				const index = _.indexOf(BREAKPOINT_MODIFIERS, items[0])
+// 				parsedStyles[index].idle = items[1]
+// 			}
+// 			throw new Error(
+// 				`Invalid ${style} value: ${value}. Expected format: ${prefix}{breakpoint}:{value}`
+// 			)
+// 		})
 
-	let defaultStyle = { idle: baseStyle }
-	const breakpointStyles = parsedStyles.map(_style => {
-		defaultStyle = { ...defaultStyle, ..._style }
-		return defaultStyle
-	})
+// 	let defaultStyle = { idle: baseStyle }
+// 	const breakpointStyles = parsedStyles.map(_style => {
+// 		defaultStyle = { ...defaultStyle, ..._style }
+// 		return defaultStyle
+// 	})
 
-	const breakpointStyle = breakpointStyles[breakpointIndex]
+// 	const breakpointStyle = breakpointStyles[breakpointIndex]
 
-	return parseBreakpointStyle({ value: breakpointStyle, prefix, style })
-}
+// 	return parseBreakpointStyle({ value: breakpointStyle, prefix, style })
+// }
 
-function parseBreakpointStyle({
-	value,
-	prefix,
-	style
-}: {
-	value: Record<string, string>
-	prefix: string
-	style: string
-}) {
-	let inlineStyle = {}
-	let className = ''
+// function parseBreakpointStyle({
+// 	value,
+// 	prefix,
+// 	style
+// }: {
+// 	value: Record<string, string>
+// 	prefix: string
+// 	style?: string
+// }) {
+// 	let inlineStyle = {}
+// 	let className = ''
 
-	_.forEach(value, (v, modifier) => {
-		const { className: _className, style: _inlineStyle } = parseStyle({
-			value: v,
-			prefix: modifier !== 'idle' ? `${prefix}${modifier}:` : prefix,
-			style
-		})
-		if (_className) className += `${_className} `
-		if (_inlineStyle && modifier === 'idle')
-			inlineStyle = { ...inlineStyle, ..._inlineStyle }
-	})
+// 	_.forEach(value, (v, modifier) => {
+// 		const { className: _className, style: _inlineStyle } = parseStyle({
+// 			value: v,
+// 			prefix: modifier !== 'idle' ? `${prefix}${modifier}:` : prefix,
+// 			style
+// 		})
+// 		if (_className) className += `${_className} `
+// 		if (_inlineStyle && modifier === 'idle')
+// 			inlineStyle = { ...inlineStyle, ..._inlineStyle }
+// 	})
 
-	return {
-		className: _.trim(className) ? _.trim(className) : undefined,
-		style: _.isEmpty(inlineStyle) ? undefined : inlineStyle
-	}
-}
+// 	return {
+// 		className: _.trim(className) ? _.trim(className) : undefined,
+// 		style: _.isEmpty(inlineStyle) ? undefined : inlineStyle
+// 	}
+// }
 
-function parseStyle({
-	value,
-	prefix,
-	style
-}: {
-	value: string
-	prefix: string
-	style: string
-}) {
-	// Inline Styles
-	// -------------
+// function parseStyle({
+// 	value,
+// 	prefix,
+// 	style
+// }: {
+// 	value: string
+// 	prefix: string
+// 	style?: string
+// }) {
+// 	// Inline Styles
+// 	// -------------
 
-	if (_.startsWith(value, '[') && _.endsWith(value, ']')) {
-		const _styles = {}
-		const styleValue = value.replace(']', '').replace('[', '')
-		style.split(',').forEach(_style => {
-			_styles[_style] = styleValue
-		})
-		return { style: _styles }
-	}
+// 	if (_.startsWith(value, '[') && _.endsWith(value, ']')) {
+// 		const _styles = {}
+// 		const styleValue = value.replace(']', '').replace('[', '')
+// 		style.split(',').forEach(_style => {
+// 			_styles[_style] = styleValue
+// 		})
+// 		return { style: _styles }
+// 	}
 
-	// Classes
-	// -------
+// 	// Classes
+// 	// -------
 
-	if (!value && !_.isFinite(value)) return {}
+// 	if (!value && !_.isFinite(value)) return {}
 
-	return {
-		className: value
-			.toString()
-			.split(' ')
-			.map(_v => styles[`${prefix}${_v}`])
-			.join(' ')
-	}
-}
+// 	return {
+// 		className: value
+// 			.toString()
+// 			.split(' ')
+// 			.map(_v => styles[`${prefix}${_v}`])
+// 			.join(' ')
+// 	}
+// }

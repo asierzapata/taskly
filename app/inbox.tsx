@@ -1,18 +1,15 @@
 import * as React from 'react'
 
 import { Box } from '@/ui/box'
-import { AreaTasksList } from '@/features/task_management/area_tasks_list'
 import { StyleSheet, useColorScheme } from 'react-native'
 import { AddTaskInput } from '@/features/task_management/add_task_input'
 import type { BottomSheetFooterProps } from '@gorhom/bottom-sheet'
 import BottomSheet, { BottomSheetFooter } from '@gorhom/bottom-sheet'
 import { colors } from '@/ui/colors'
 import { useRouter } from 'expo-router'
-import type { Area } from '@/features/task_management/types'
-import { AreasList } from '@/features/task_management/areas_list'
 import { Button } from '@/ui/button'
-import { PlusIcon } from 'lucide-react-native'
-import { Timeline } from '@/features/calendar_management/timeline'
+import { ChevronLeftIcon } from 'lucide-react-native'
+import { InboxTaskList } from '@/features/task_management/inbox_task_list'
 
 export default function Index() {
 	const router = useRouter()
@@ -27,23 +24,21 @@ export default function Index() {
 		console.log('handleSheetChanges', index)
 	}, [])
 
-	const handleAreaPressed = React.useCallback((area: Area) => {
-		router.push(`/area/${area.id}`)
+	const handleGoBack = React.useCallback(() => {
+		router.push('/')
 	}, [])
 
-	const handleInboxPressed = React.useCallback(() => {
-		router.push(`/inbox`)
-	}, [])
-
-	const handleAddArea = React.useCallback(() => {
-		router.push(`/add-area`)
-	}, [])
+	const renderFooter = React.useCallback(
+		(props: BottomSheetFooterProps) => (
+			<BottomSheetFooter {...props}>
+				<AddTaskInput areaId="" />
+			</BottomSheetFooter>
+		),
+		[]
+	)
 
 	return (
 		<Box flex={1} justifyContent="center" alignItems="center">
-			<Box width="100%" height="100%">
-				<Timeline />
-			</Box>
 			<BottomSheet
 				ref={bottomSheetRef}
 				index={1}
@@ -60,22 +55,25 @@ export default function Index() {
 						? styles.lightBottomSheet
 						: styles.darkBottomSheet
 				}
+				footerComponent={renderFooter}
 			>
-				<Box width="100%" align="flex-end" justify="center" ph={4} pb={4}>
+				<Box
+					width="100%"
+					flexDirection="row"
+					align="center"
+					justify="flex-start"
+					mh={4}
+				>
 					<Button
 						flavor="text"
-						onPress={handleAddArea}
-						icon={PlusIcon}
-						iconSide="left"
-						iconColor="secondary"
+						onPress={handleGoBack}
+						icon={ChevronLeftIcon}
+						iconColor="text"
 					>
-						Add Area
+						Go Back
 					</Button>
 				</Box>
-				<AreasList
-					onAreaPressed={handleAreaPressed}
-					onInboxPressed={handleInboxPressed}
-				/>
+				<InboxTaskList />
 			</BottomSheet>
 		</Box>
 	)

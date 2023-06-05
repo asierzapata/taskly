@@ -1,5 +1,4 @@
 import { Slot } from 'expo-router'
-import { AuthenticationProvider } from '../services/authentication'
 import { StatusBar } from 'expo-status-bar'
 
 import { ThemeProvider } from '@react-navigation/native'
@@ -11,26 +10,27 @@ import { Box } from '@/ui/box'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 
 // Redux
-import { store } from '@/modules/store'
+import { persistor, store } from '@/store'
 import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
 
 export default function Root() {
 	const scheme = useColorScheme()
 
 	return (
 		<Provider store={store}>
-			<ThemeProvider
-				value={scheme === 'dark' ? darkNavigationTheme : lightNavigationTheme}
-			>
-				<AuthenticationProvider>
+			<PersistGate loading={null} persistor={persistor}>
+				<ThemeProvider
+					value={scheme === 'dark' ? darkNavigationTheme : lightNavigationTheme}
+				>
 					<SafeAreaProvider>
 						<Box as={SafeAreaView} backgroundColor="background" flex={1}>
 							<Slot />
 						</Box>
 						<StatusBar style="auto" />
 					</SafeAreaProvider>
-				</AuthenticationProvider>
-			</ThemeProvider>
+				</ThemeProvider>
+			</PersistGate>
 		</Provider>
 	)
 }

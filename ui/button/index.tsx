@@ -10,6 +10,9 @@ import { Box } from '@/ui/box'
 import { Loading } from '@/ui/loading'
 import { Text } from '@/ui/text'
 import { Pressable } from 'react-native'
+import type { LucideIcon } from 'lucide-react-native'
+import type { DarkColorNames, LightColorNames } from '../colors'
+import { Icon } from '../icon'
 
 /* ====================================================== */
 /*                    Implementation                      */
@@ -28,6 +31,9 @@ type ButtonProps = {
 	disabled?: boolean
 	onPress?: () => void
 	onLongPress?: () => void
+	icon?: LucideIcon
+	iconSide?: 'left' | 'right'
+	iconColor?: DarkColorNames | LightColorNames
 	children: React.ReactNode
 } & React.ComponentProps<typeof Box> &
 	React.ComponentProps<typeof Pressable>
@@ -37,6 +43,9 @@ const Button = ({
 	size = 'm',
 	loading = false,
 	disabled = false,
+	icon,
+	iconSide = 'left',
+	iconColor,
 	onPress,
 	onLongPress,
 	children,
@@ -55,20 +64,28 @@ const Button = ({
 	const opacity = pressed ? 0.75 : 1
 
 	let paddingVertical = 3
+	let paddingHorizontal = 3
 	let fontSize = 'body' as Size
+	let iconSize = 16
 
 	switch (size) {
 		case 'l':
 			paddingVertical = 3
+			paddingHorizontal = 3
 			fontSize = 'subtitle'
+			iconSize = 24
 			break
 		case 'm':
 			paddingVertical = 2
+			paddingHorizontal = 2
 			fontSize = 'body'
+			iconSize = 20
 			break
 		case 's':
 			paddingVertical = 1
+			paddingHorizontal = 1
 			fontSize = 'caption'
+			iconSize = 16
 			break
 	}
 
@@ -78,9 +95,11 @@ const Button = ({
 				as={Pressable}
 				borderRadius={BUTTONS_BORDER_RADIUS}
 				backgroundColor={disabled || loading ? 'primaryDeep' : 'primary'}
+				flexDirection="row"
 				align="center"
 				justify="center"
 				pv={paddingVertical}
+				ph={paddingHorizontal}
 				opacity={opacity}
 				disabled={disabled || loading}
 				onPress={onPress}
@@ -89,6 +108,15 @@ const Button = ({
 				onPressOut={handlePressOut}
 				{...props}
 			>
+				{!!icon && iconSide === 'left' && (
+					<Box mr={1}>
+						<Icon
+							icon={icon}
+							size={iconSize}
+							color={iconColor ?? 'textInverted'}
+						/>
+					</Box>
+				)}
 				{!loading && (
 					<Text
 						size={fontSize}
@@ -96,6 +124,15 @@ const Button = ({
 					>
 						{children}
 					</Text>
+				)}
+				{!!icon && iconSide === 'right' && (
+					<Box ml={1}>
+						<Icon
+							icon={icon}
+							size={iconSize}
+							color={iconColor ?? 'textInverted'}
+						/>
+					</Box>
 				)}
 				{loading && <Loading negative />}
 			</Box>
@@ -109,6 +146,7 @@ const Button = ({
 				borderWidth={1}
 				borderColor={disabled || loading ? 'primaryDeep' : 'primary'}
 				backgroundColor="background"
+				flexDirection="row"
 				align="center"
 				justify="center"
 				opacity={opacity}
@@ -119,7 +157,25 @@ const Button = ({
 				onPressOut={handlePressOut}
 				{...props}
 			>
+				{!!icon && iconSide === 'left' && (
+					<Box mr={1}>
+						<Icon
+							icon={icon}
+							size={iconSize}
+							color={iconColor ?? 'textInverted'}
+						/>
+					</Box>
+				)}
 				{!loading && <Text size={fontSize}>{children}</Text>}
+				{!!icon && iconSide === 'right' && (
+					<Box mr={1}>
+						<Icon
+							icon={icon}
+							size={iconSize}
+							color={iconColor ?? 'textInverted'}
+						/>
+					</Box>
+				)}
 				{loading && <Loading />}
 			</Box>
 		)
@@ -129,6 +185,7 @@ const Button = ({
 			<Box
 				as={Pressable}
 				borderRadius={BUTTONS_BORDER_RADIUS}
+				flexDirection="row"
 				align="center"
 				justify="center"
 				opacity={opacity}
@@ -139,14 +196,31 @@ const Button = ({
 				onPressOut={handlePressOut}
 				{...props}
 			>
+				{!!icon && iconSide === 'left' && (
+					<Box mr={1}>
+						<Icon
+							icon={icon}
+							size={iconSize}
+							color={iconColor ?? 'textInverted'}
+						/>
+					</Box>
+				)}
 				{!loading && (
 					<Text
-						textDecorationLine="underline"
 						size={fontSize}
 						color={disabled || loading ? 'textLight' : 'text'}
 					>
 						{children}
 					</Text>
+				)}
+				{!!icon && iconSide === 'right' && (
+					<Box mr={1}>
+						<Icon
+							icon={icon}
+							size={iconSize}
+							color={iconColor ?? 'textInverted'}
+						/>
+					</Box>
 				)}
 				{loading && <Loading />}
 			</Box>

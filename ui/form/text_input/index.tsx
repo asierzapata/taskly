@@ -15,12 +15,14 @@ import { Box } from '@/ui/box'
 /* ====================================================== */
 
 import { styles } from './text_input_styles'
+import type { BottomSheetTextInput } from '@gorhom/bottom-sheet'
 
 /* ====================================================== */
 /*                    Implementation                      */
 /* ====================================================== */
 
 type TextInputProps = {
+	as?: typeof NativeTextInput | typeof BottomSheetTextInput
 	size?: Size
 	color?: ColorNames
 	weight?: Weight
@@ -30,12 +32,15 @@ type TextInputProps = {
 const TextInput = React.forwardRef(
 	(
 		{
+			as = NativeTextInput,
 			size = 'body',
 			color = 'text',
 			weight = 'normal',
 			align,
 			...props
-		}: React.ComponentProps<typeof NativeTextInput> & TextInputProps,
+		}: React.ComponentProps<typeof NativeTextInput> &
+			React.ComponentProps<typeof Box> &
+			TextInputProps,
 		ref
 	) => {
 		const scheme = useColorScheme() ?? 'light'
@@ -62,9 +67,7 @@ const TextInput = React.forwardRef(
 			return stylesArray
 		}, [size, color, weight, align, scheme])
 
-		return (
-			<Box ref={ref} as={NativeTextInput} {...props} style={computedStyles} />
-		)
+		return <Box ref={ref} as={as} {...props} style={computedStyles} />
 	}
 )
 

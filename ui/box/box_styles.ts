@@ -63,6 +63,24 @@ possibleFlexDirectionValues.forEach(value => {
 	}
 })
 
+export const possibleFlexWrapValues = [
+	'wrap',
+	'nowrap',
+	'wrap-reverse'
+] as const
+export type FlexWrapValues = (typeof possibleFlexWrapValues)[number]
+const flexWrapStylesObject = {} as StylesObject<
+	'flexWrap',
+	FlexWrapValues,
+	FlexWrapValues,
+	'flexWrap'
+>
+possibleFlexWrapValues.forEach(value => {
+	flexWrapStylesObject[`flexWrap-${value}`] = {
+		flexWrap: value
+	}
+})
+
 const darkColorNames = [...Object.keys(darkColors)] as Array<
 	keyof typeof darkColors
 >
@@ -215,6 +233,7 @@ _.forEach(possibleOverflowValues, value => {
 const mergedStylesObject = {
 	...flexStylesObject,
 	...flexDirectionStylesObject,
+	...flexWrapStylesObject,
 	...colorStylesObject,
 	...alignStylesObject,
 	...justifyStylesObject,

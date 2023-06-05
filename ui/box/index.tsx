@@ -17,6 +17,7 @@ import { useColorScheme, View } from 'react-native'
 /* ====================================================== */
 
 import { pixelUnitHorizontal, pixelUnitVertical } from '@/ui/normalizer'
+import type { FlexWrapValues } from './box_styles'
 import {
 	type AlignValues,
 	type FlexDirectionValues,
@@ -32,54 +33,50 @@ import {
 /*                    Implementation                      */
 /* ====================================================== */
 
-type Width = string
+type Width = number | string
 type MinWidth = Width
-type Height = string
+type Height = number | string
 type MinHeight = Height
-type Margin = string
-type Padding = string
-type Gap = string
+type Margin = number
+type Padding = number
+type Gap = number
 type Opacity = string
 type BorderRadius = string
 type BorderWidth = string
 
-// type ScreenSizeModifier = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
-type StyleWithScreenSizeModifier<T extends string> = T | `${T} ${string}`
-// | `${T} ${ScreenSizeModifier}:${T}`
-// | `${T} ${ScreenSizeModifier}:${T} ${ScreenSizeModifier}:${T}`
-// | `${T} ${ScreenSizeModifier}:${T} ${ScreenSizeModifier}:${T} ${ScreenSizeModifier}:${T}`
-
 export type BoxProps = {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	as?: string | React.ComponentType<any>
-	w?: StyleWithScreenSizeModifier<Width>
-	minW?: StyleWithScreenSizeModifier<MinWidth>
-	h?: StyleWithScreenSizeModifier<Height>
-	minH?: StyleWithScreenSizeModifier<MinHeight>
-	mt?: StyleWithScreenSizeModifier<Margin>
-	mb?: StyleWithScreenSizeModifier<Margin>
-	ml?: StyleWithScreenSizeModifier<Margin>
-	mr?: StyleWithScreenSizeModifier<Margin>
-	mv?: StyleWithScreenSizeModifier<Margin>
-	mh?: StyleWithScreenSizeModifier<Margin>
-	pt?: StyleWithScreenSizeModifier<Padding>
-	pb?: StyleWithScreenSizeModifier<Padding>
-	pl?: StyleWithScreenSizeModifier<Padding>
-	pr?: StyleWithScreenSizeModifier<Padding>
-	pv?: StyleWithScreenSizeModifier<Padding>
-	ph?: StyleWithScreenSizeModifier<Padding>
-	flex?: StyleWithScreenSizeModifier<FlexValues>
-	flexGrow?: StyleWithScreenSizeModifier<FlexValues>
-	flexShrink?: StyleWithScreenSizeModifier<FlexValues>
-	flexDirection?: StyleWithScreenSizeModifier<FlexDirectionValues>
-	gap?: StyleWithScreenSizeModifier<Gap>
-	align?: StyleWithScreenSizeModifier<AlignValues>
-	justify?: StyleWithScreenSizeModifier<JustifyValues>
+	w?: Width
+	minW?: MinWidth
+	h?: Height
+	minH?: MinHeight
+	mt?: Margin
+	mb?: Margin
+	ml?: Margin
+	mr?: Margin
+	mv?: Margin
+	mh?: Margin
+	pt?: Padding
+	pb?: Padding
+	pl?: Padding
+	pr?: Padding
+	pv?: Padding
+	ph?: Padding
+	flex?: FlexValues
+	flexGrow?: FlexValues
+	flexShrink?: FlexValues
+	flexDirection?: FlexDirectionValues
+	flexWrap?: FlexWrapValues
+	gap?: Gap
+	align?: AlignValues
+	justify?: JustifyValues
 	backgroundColor?: DarkColorNames | LightColorNames
 	borderColor?: DarkColorNames | LightColorNames
-	borderWidth?: StyleWithScreenSizeModifier<BorderWidth>
-	borderRadius?: StyleWithScreenSizeModifier<BorderRadius>
-	overflow?: StyleWithScreenSizeModifier<OverflowValues>
-	opacity?: StyleWithScreenSizeModifier<Opacity>
+	borderWidth?: BorderWidth
+	borderRadius?: BorderRadius
+	overflow?: OverflowValues
+	opacity?: Opacity
 	children?: React.ReactNode
 	style?: StyleProp<unknown>
 	// This is a hack to allow any other props to be passed to the component `as`
@@ -110,6 +107,7 @@ const Box = React.forwardRef(
 			flexGrow,
 			flexShrink,
 			flexDirection,
+			flexWrap,
 			gap,
 			align,
 			justify,
@@ -149,6 +147,7 @@ const Box = React.forwardRef(
 				flexGrow,
 				flexShrink,
 				flexDirection,
+				flexWrap,
 				align,
 				justify,
 				gap,
@@ -182,6 +181,7 @@ const Box = React.forwardRef(
 			flexGrow,
 			flexShrink,
 			flexDirection,
+			flexWrap,
 			align,
 			justify,
 			gap,
@@ -213,7 +213,6 @@ export { Box }
 /*                         Types                          */
 /* ====================================================== */
 
-// TODO: Move this to the box styles calculation file
 function calculateStyles({
 	w,
 	minW,
@@ -235,6 +234,8 @@ function calculateStyles({
 	flexGrow,
 	flexShrink,
 	flexDirection,
+	flexWrap,
+	gap,
 	align,
 	justify,
 	backgroundColor,
@@ -246,136 +247,113 @@ function calculateStyles({
 	opacity,
 	style
 }: {
-	w?: StyleWithScreenSizeModifier<Width>
-	minW?: StyleWithScreenSizeModifier<MinWidth>
-	h?: StyleWithScreenSizeModifier<Height>
-	minH?: StyleWithScreenSizeModifier<MinHeight>
-	mt?: StyleWithScreenSizeModifier<Margin>
-	mb?: StyleWithScreenSizeModifier<Margin>
-	ml?: StyleWithScreenSizeModifier<Margin>
-	mr?: StyleWithScreenSizeModifier<Margin>
-	mv?: StyleWithScreenSizeModifier<Margin>
-	mh?: StyleWithScreenSizeModifier<Margin>
-	pt?: StyleWithScreenSizeModifier<Padding>
-	pb?: StyleWithScreenSizeModifier<Padding>
-	pl?: StyleWithScreenSizeModifier<Padding>
-	pr?: StyleWithScreenSizeModifier<Padding>
-	pv?: StyleWithScreenSizeModifier<Padding>
-	ph?: StyleWithScreenSizeModifier<Padding>
-	flex?: StyleWithScreenSizeModifier<FlexValues>
-	flexGrow?: StyleWithScreenSizeModifier<FlexValues>
-	flexShrink?: StyleWithScreenSizeModifier<FlexValues>
-	flexDirection?: StyleWithScreenSizeModifier<FlexDirectionValues>
-	gap?: StyleWithScreenSizeModifier<Gap>
-	align?: StyleWithScreenSizeModifier<AlignValues>
-	justify?: StyleWithScreenSizeModifier<JustifyValues>
+	w?: Width
+	minW?: MinWidth
+	h?: Height
+	minH?: MinHeight
+	mt?: Margin
+	mb?: Margin
+	ml?: Margin
+	mr?: Margin
+	mv?: Margin
+	mh?: Margin
+	pt?: Padding
+	pb?: Padding
+	pl?: Padding
+	pr?: Padding
+	pv?: Padding
+	ph?: Padding
+	flex?: FlexValues
+	flexGrow?: FlexValues
+	flexShrink?: FlexValues
+	flexDirection?: FlexDirectionValues
+	flexWrap?: FlexWrapValues
+	gap?: Gap
+	align?: AlignValues
+	justify?: JustifyValues
 	backgroundColor?: DarkColorNames | LightColorNames
 	borderColor?: DarkColorNames | LightColorNames
-	borderWidth?: StyleWithScreenSizeModifier<BorderWidth>
-	borderRadius?: StyleWithScreenSizeModifier<BorderRadius>
-	overflow?: StyleWithScreenSizeModifier<OverflowValues>
-	opacity?: StyleWithScreenSizeModifier<Opacity>
+	borderWidth?: BorderWidth
+	borderRadius?: BorderRadius
+	overflow?: OverflowValues
+	opacity?: Opacity
 	style?: StyleProp<unknown>
-	colorScheme: ColorSchemeName
-}): RegisteredStyle<unknown>[] {
+	colorScheme: NonNullable<ColorSchemeName>
+}) {
 	const stylesArray = []
 
 	if (w) {
-		let normalizedWidth = w
-		if (_.isNumber(w) && _.isFinite(w)) normalizedWidth = pixelUnitHorizontal(w)
-		stylesArray.push({ width: normalizedWidth })
+		stylesArray.push({
+			width: _.isNumber(w) && _.isFinite(w) ? pixelUnitHorizontal(w) : w
+		})
 	}
 
 	if (minW) {
-		let normalizedMinWidth = minW
-		if (_.isNumber(minW) && _.isFinite(minW))
-			normalizedMinWidth = pixelUnitHorizontal(minW)
-		stylesArray.push({ minWidth: normalizedMinWidth })
+		stylesArray.push({
+			minWidth:
+				_.isNumber(minW) && _.isFinite(minW) ? pixelUnitHorizontal(minW) : minW
+		})
 	}
 
 	if (h) {
-		let normalizedHeight = h
-		if (_.isNumber(h) && _.isFinite(h)) normalizedHeight = pixelUnitVertical(h)
-		stylesArray.push({ height: normalizedHeight })
+		stylesArray.push({
+			height: _.isNumber(h) && _.isFinite(h) ? pixelUnitHorizontal(h) : h
+		})
 	}
 
 	if (minH) {
-		let normalizedMinHeight = minH
-		if (_.isNumber(minH) && _.isFinite(minH))
-			normalizedMinHeight = pixelUnitVertical(minH)
-		stylesArray.push({ minHeight: normalizedMinHeight })
+		stylesArray.push({
+			height:
+				_.isNumber(minH) && _.isFinite(minH) ? pixelUnitHorizontal(minH) : minH
+		})
 	}
 
-	if (mt) {
-		let normalizedMarginTop = mt
-		if (_.isFinite(mt)) normalizedMarginTop = pixelUnitVertical(mt)
-		stylesArray.push({ marginTop: normalizedMarginTop })
+	if (mt && _.isFinite(mt)) {
+		stylesArray.push({ marginTop: pixelUnitVertical(mt) })
 	}
 
-	if (mb) {
-		let normalizedMarginBottom = mb
-		if (_.isFinite(mb)) normalizedMarginBottom = pixelUnitVertical(mb)
-		stylesArray.push({ marginBottom: normalizedMarginBottom })
+	if (mb && _.isFinite(mb)) {
+		stylesArray.push({ marginBottom: pixelUnitVertical(mb) })
 	}
 
-	if (ml) {
-		let normalizedMarginLeft = ml
-		if (_.isFinite(ml)) normalizedMarginLeft = pixelUnitVertical(ml)
-		stylesArray.push({ marginLeft: normalizedMarginLeft })
+	if (ml && _.isFinite(ml)) {
+		stylesArray.push({ marginLeft: pixelUnitVertical(ml) })
 	}
 
-	if (mr) {
-		let normalizedMarginRight = mr
-		if (_.isFinite(mr)) normalizedMarginRight = pixelUnitVertical(mr)
-		stylesArray.push({ marginRight: normalizedMarginRight })
+	if (mr && _.isFinite(mr)) {
+		stylesArray.push({ marginRight: pixelUnitVertical(mr) })
 	}
 
-	if (mv) {
-		let normalizedMarginVertical = mv
-		if (_.isFinite(mv)) normalizedMarginVertical = pixelUnitVertical(mv)
-		stylesArray.push({ marginVertical: normalizedMarginVertical })
+	if (mv && _.isFinite(mv)) {
+		stylesArray.push({ marginVertical: pixelUnitVertical(mv) })
 	}
 
-	if (mh) {
-		let normalizedMarginHorizontal = mh
-		if (_.isFinite(mh)) normalizedMarginHorizontal = pixelUnitHorizontal(mh)
-		stylesArray.push({ marginHorizontal: normalizedMarginHorizontal })
+	if (mh && _.isFinite(mh)) {
+		stylesArray.push({ marginHorizontal: pixelUnitHorizontal(mh) })
 	}
 
-	if (pt) {
-		let normalizedPaddingTop = pt
-		if (_.isFinite(pt)) normalizedPaddingTop = pixelUnitHorizontal(pt)
-		stylesArray.push({ paddingTop: normalizedPaddingTop })
+	if (pt && _.isFinite(pt)) {
+		stylesArray.push({ paddingTop: pixelUnitHorizontal(pt) })
 	}
 
-	if (pb) {
-		let normalizedPaddingBottom = pb
-		if (_.isFinite(pb)) normalizedPaddingBottom = pixelUnitHorizontal(pb)
-		stylesArray.push({ paddingBottom: normalizedPaddingBottom })
+	if (pb && _.isFinite(pb)) {
+		stylesArray.push({ paddingBottom: pixelUnitHorizontal(pb) })
 	}
 
-	if (pl) {
-		let normalizedPaddingLeft = pl
-		if (_.isFinite(pl)) normalizedPaddingLeft = pixelUnitVertical(pl)
-		stylesArray.push({ paddingLeft: normalizedPaddingLeft })
+	if (pl && _.isFinite(pl)) {
+		stylesArray.push({ paddingLeft: pixelUnitVertical(pl) })
 	}
 
-	if (pr) {
-		let normalizedPaddingRight = pr
-		if (_.isFinite(pr)) normalizedPaddingRight = pixelUnitHorizontal(pr)
-		stylesArray.push({ paddingRight: normalizedPaddingRight })
+	if (pr && _.isFinite(pr)) {
+		stylesArray.push({ paddingRight: pixelUnitHorizontal(pr) })
 	}
 
-	if (pv) {
-		let normalizedPaddingVertical = pv
-		if (_.isFinite(pv)) normalizedPaddingVertical = pixelUnitVertical(pv)
-		stylesArray.push({ paddingVertical: normalizedPaddingVertical })
+	if (pv && _.isFinite(pv)) {
+		stylesArray.push({ paddingVertical: pixelUnitVertical(pv) })
 	}
 
-	if (ph) {
-		let normalizedPaddingHorizontal = ph
-		if (_.isFinite(ph)) normalizedPaddingHorizontal = pixelUnitHorizontal(ph)
-		stylesArray.push({ paddingHorizontal: normalizedPaddingHorizontal })
+	if (ph && _.isFinite(ph)) {
+		stylesArray.push({ paddingHorizontal: pixelUnitHorizontal(ph) })
 	}
 
 	if (flex && styles[`flex-${flex}`]) {
@@ -394,14 +372,12 @@ function calculateStyles({
 		stylesArray.push(styles[`flexDirection-${flexDirection}`])
 	}
 
-	if (gap) {
-		let normalizedGap = gap
-		if (_.isFinite(gap)) normalizedGap = pixelUnitHorizontal(gap)
-		console.log('>>>>>>', {
-			gap,
-			normalizedGap
-		})
-		stylesArray.push({ gap: normalizedGap })
+	if (flexWrap && styles[`flexWrap-${flexWrap}`]) {
+		stylesArray.push(styles[`flexWrap-${flexWrap}`])
+	}
+
+	if (gap && _.isFinite(gap)) {
+		stylesArray.push({ gap: pixelUnitHorizontal(gap) })
 	}
 
 	if (align && styles[`align-${align}`]) {
@@ -412,7 +388,6 @@ function calculateStyles({
 		stylesArray.push(styles[`justify-${justify}`])
 	}
 
-	colorScheme
 	if (
 		backgroundColor &&
 		styles[`backgroundColor-${colorScheme}-${backgroundColor}`]

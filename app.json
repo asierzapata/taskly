@@ -6,6 +6,7 @@
 		},
 		"name": "taskly",
 		"slug": "taskly",
-		"userInterfaceStyle": "automatic"
+		"userInterfaceStyle": "automatic",
+		"jsEngine": "jsc"
 	}
 }
