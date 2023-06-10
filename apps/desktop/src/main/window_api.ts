@@ -1,4 +1,3 @@
 // Add there other modules
 
-export const API = {
-}
+export const API = {}

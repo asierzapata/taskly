@@ -1,13 +1,10 @@
 import React from 'react'
 import uuid from 'react-native-uuid'
-
 /* ====================================================== */
 /*                   Actions / Selectors                  */
 /* ====================================================== */
 
 import { useAppDispatch } from '@/store/hooks'
-import { createArea } from '../task_management_slice'
-
 /* ====================================================== */
 /*                       Components                       */
 /* ====================================================== */
@@ -15,13 +12,14 @@ import { createArea } from '../task_management_slice'
 import { Box } from '@/ui/box'
 import { Button } from '@/ui/button'
 import { TextInput } from '@/ui/form/text_input'
-
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet'
 /* ====================================================== */
 /*                         Types                          */
 /* ====================================================== */
 
 import _ from 'lodash'
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet'
+
+import { createArea } from '../task_management_slice'
 
 type CreateAreaInputProps = {
 	onAreaCreated: (areaId: string) => void

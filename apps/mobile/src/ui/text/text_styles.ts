@@ -1,8 +1,7 @@
-import _ from 'lodash'
 import { StyleSheet } from 'react-native'
-import type { ColorNames } from '@/ui/colors'
-import { colors } from '@/ui/colors'
+import { colors, type ColorNames } from '@/ui/colors'
 import { fontPixel } from '@/ui/normalizer'
+import _ from 'lodash'
 
 type StylesObject<
 	K extends string,

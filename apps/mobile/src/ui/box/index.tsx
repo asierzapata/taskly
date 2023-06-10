@@ -1,6 +1,4 @@
 import * as React from 'react'
-import * as _ from 'lodash'
-
 /* ====================================================== */
 /*                   Actions / Selectors                  */
 /* ====================================================== */
@@ -9,24 +7,29 @@ import * as _ from 'lodash'
 /*                       Components                       */
 /* ====================================================== */
 
-import type { ColorSchemeName, StyleProp } from 'react-native'
-import { useColorScheme, View } from 'react-native'
-
+import {
+	useColorScheme,
+	View,
+	type ColorSchemeName,
+	type StyleProp
+} from 'react-native'
 /* ====================================================== */
 /*                         Styles                         */
 /* ====================================================== */
 
 import { pixelUnitHorizontal, pixelUnitVertical } from '@/ui/normalizer'
-import type { FlexWrapValues } from './box_styles'
+import * as _ from 'lodash'
+
 import {
+	styles,
 	type AlignValues,
+	type DarkColorNames,
 	type FlexDirectionValues,
 	type FlexValues,
+	type FlexWrapValues,
 	type JustifyValues,
-	type OverflowValues,
-	type DarkColorNames,
 	type LightColorNames,
-	styles
+	type OverflowValues
 } from './box_styles'
 
 /* ====================================================== */

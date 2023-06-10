@@ -1,5 +1,4 @@
 import React from 'react'
-
 /* ====================================================== */
 /*                   Actions / Selectors                  */
 /* ====================================================== */
@@ -9,10 +8,10 @@ import React from 'react'
 /* ====================================================== */
 
 import { Pressable } from 'react-native'
-import { Text } from '@/ui/text'
-import { Box } from '@/ui/box'
-import Checkbox from 'expo-checkbox'
 import SwipeableItem from 'react-native-swipeable-item'
+import Checkbox from 'expo-checkbox'
+import { Box } from '@/ui/box'
+import { Text } from '@/ui/text'
 
 /* ====================================================== */
 /*                         Types                          */

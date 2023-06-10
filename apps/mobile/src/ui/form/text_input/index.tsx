@@ -1,21 +1,21 @@
 import React from 'react'
-
-import type { Align, Size, Weight } from './text_input_styles'
-import type { ColorNames } from '@/ui/colors'
-
 /* ====================================================== */
 /*                       Components                       */
 /* ====================================================== */
 
 import { TextInput as NativeTextInput, useColorScheme } from 'react-native'
 import { Box } from '@/ui/box'
+import type { ColorNames } from '@/ui/colors'
+import type { BottomSheetTextInput } from '@gorhom/bottom-sheet'
 
 /* ====================================================== */
 /*                         Styles                         */
-/* ====================================================== */
-
-import { styles } from './text_input_styles'
-import type { BottomSheetTextInput } from '@gorhom/bottom-sheet'
+/* ====================================================== */ import {
+	styles,
+	type Align,
+	type Size,
+	type Weight
+} from './text_input_styles'
 
 /* ====================================================== */
 /*                    Implementation                      */

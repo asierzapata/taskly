@@ -1,15 +1,16 @@
 import * as React from 'react'
-
-import { Box } from '@/ui/box'
-import { AreaTasksList } from '@/features/task_management/area_tasks_list'
 import { StyleSheet, useColorScheme } from 'react-native'
-import { AddTaskInput } from '@/features/task_management/add_task_input'
-import type { BottomSheetFooterProps } from '@gorhom/bottom-sheet'
-import BottomSheet, { BottomSheetFooter } from '@gorhom/bottom-sheet'
-import { colors } from '@/ui/colors'
-import { Button } from '@/ui/button'
-import { ChevronLeftIcon } from 'lucide-react-native'
 import { Redirect, useLocalSearchParams, useRouter } from 'expo-router'
+import { AddTaskInput } from '@/features/task_management/add_task_input'
+import { AreaTasksList } from '@/features/task_management/area_tasks_list'
+import { Box } from '@/ui/box'
+import { Button } from '@/ui/button'
+import { colors } from '@/ui/colors'
+import BottomSheet, {
+	BottomSheetFooter,
+	type BottomSheetFooterProps
+} from '@gorhom/bottom-sheet'
+import { ChevronLeftIcon } from 'lucide-react-native'
 
 export default function Index() {
 	const { areaId } = useLocalSearchParams<{ areaId: string }>()

@@ -1,12 +1,11 @@
 import React from 'react'
+import { MainScreen } from '@renderer/screens/main_screen'
 import {
 	createHashRouter,
 	createRoutesFromElements,
 	Route,
 	RouterProvider
 } from 'react-router-dom'
-
-import { MainScreen } from '@renderer/screens/main_screen'
 
 const appRouter = createHashRouter(
 	createRoutesFromElements(

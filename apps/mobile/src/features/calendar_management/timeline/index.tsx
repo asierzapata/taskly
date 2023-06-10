@@ -1,16 +1,18 @@
-import { colors } from '@/ui/colors'
-import { groupBy } from 'lodash'
 import React from 'react'
-import type { DateData, TimelineEventProps } from 'react-native-calendars'
+import { useColorScheme } from 'react-native'
 import {
-	ExpandableCalendar,
 	CalendarProvider,
 	CalendarUtils,
-	TimelineList
+	ExpandableCalendar,
+	TimelineList,
+	type DateData,
+	type TimelineEventProps
 } from 'react-native-calendars'
-import { useColorScheme } from 'react-native'
-import { getDate } from '../utils/date'
+import { colors } from '@/ui/colors'
 import { pixelUnitVertical } from '@/ui/normalizer'
+import { groupBy } from 'lodash'
+
+import { getDate } from '../utils/date'
 
 /* ====================================================== */
 /*                   Actions / Selectors                  */

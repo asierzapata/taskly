@@ -1,38 +1,38 @@
-import type { ExpoConfig } from "@expo/config";
+import type { ExpoConfig } from '@expo/config'
 
 const defineConfig = (): ExpoConfig => ({
-	name: "taskly",
-	slug: "taskly",
-	scheme: "taskly",
-	version: "1.0.0",
-	orientation: "portrait",
-	icon: "./assets/icon.png",
-	userInterfaceStyle: "automatic",
+	name: 'taskly',
+	slug: 'taskly',
+	scheme: 'taskly',
+	version: '1.0.0',
+	orientation: 'portrait',
+	icon: './assets/icon.png',
+	userInterfaceStyle: 'automatic',
 	// splash: {
 	//   image: "./assets/icon.png",
 	//   resizeMode: "contain",
 	//   backgroundColor: "#1F104A",
 	// },
 	updates: {
-		fallbackToCacheTimeout: 0,
+		fallbackToCacheTimeout: 0
 	},
-	assetBundlePatterns: ["**/*"],
+	assetBundlePatterns: ['**/*'],
 	ios: {
 		supportsTablet: true,
-		bundleIdentifier: "com.asierzapata.taskly",
+		bundleIdentifier: 'com.asierzapata.taskly'
 	},
 	android: {
 		adaptiveIcon: {
-			foregroundImage: "./assets/icon.png",
-			backgroundColor: "#1F104A",
-		},
+			foregroundImage: './assets/icon.png',
+			backgroundColor: '#1F104A'
+		}
 	},
 	extra: {
 		eas: {
 			// projectId: "your-project-id",
-		},
+		}
 	},
-	plugins: ["./expo-plugins/with-modify-gradle.js"],
-});
+	plugins: ['./expo-plugins/with-modify-gradle.js']
+})
 
-export default defineConfig;
+export default defineConfig

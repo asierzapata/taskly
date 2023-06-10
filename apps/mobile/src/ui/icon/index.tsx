@@ -1,21 +1,19 @@
 import React from 'react'
-
+import { useColorScheme, type ColorSchemeName } from 'react-native'
 /* ====================================================== */
 /*                       Components                       */
 /* ====================================================== */
 
 import { Box } from '@/ui/box'
 import { pixelSizeVertical } from '@/ui/normalizer'
-import { colors } from '../colors'
-import { useColorScheme } from 'react-native'
+import type { LucideIcon } from 'lucide-react-native'
 
 /* ====================================================== */
 /*                         Types                          */
-/* ====================================================== */
-
-import type { ColorNames } from '../colors'
-import type { ColorSchemeName } from 'react-native'
-import type { LucideIcon } from 'lucide-react-native'
+/* ====================================================== */ import {
+	colors,
+	type ColorNames
+} from '../colors'
 
 /* ====================================================== */
 /*                    Implementation                      */

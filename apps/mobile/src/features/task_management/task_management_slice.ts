@@ -1,9 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit'
-import _ from 'lodash'
 import uuid from 'react-native-uuid'
-
 import type { RootState } from '@/store'
-import type { PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
+import _ from 'lodash'
+
 import type { Areas, Tasks } from './types'
 
 type TaskManagementState = {

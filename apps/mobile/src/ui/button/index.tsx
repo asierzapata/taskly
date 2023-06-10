@@ -1,7 +1,5 @@
 import React from 'react'
-
-import type { Size } from '../text/text_styles'
-
+import { Pressable } from 'react-native'
 /* ====================================================== */
 /*                       Components                       */
 /* ====================================================== */
@@ -9,10 +7,11 @@ import type { Size } from '../text/text_styles'
 import { Box } from '@/ui/box'
 import { Loading } from '@/ui/loading'
 import { Text } from '@/ui/text'
-import { Pressable } from 'react-native'
 import type { LucideIcon } from 'lucide-react-native'
+
 import type { DarkColorNames, LightColorNames } from '../colors'
 import { Icon } from '../icon'
+import type { Size } from '../text/text_styles'
 
 /* ====================================================== */
 /*                    Implementation                      */

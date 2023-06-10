@@ -1,18 +1,17 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit'
+import { calendarManagementReducer } from '@/features/calendar_management/calendar_management_slice'
+import { taskManagementReducer } from '@/features/task_management/task_management_slice'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import {
-	persistStore,
-	persistReducer,
 	FLUSH,
-	REHYDRATE,
 	PAUSE,
 	PERSIST,
+	persistReducer,
+	persistStore,
 	PURGE,
-	REGISTER
+	REGISTER,
+	REHYDRATE
 } from 'redux-persist'
 import expoFileSystemStorage from 'redux-persist-expo-filesystem'
-
-import { taskManagementReducer } from '@/features/task_management/task_management_slice'
-import { calendarManagementReducer } from '@/features/calendar_management/calendar_management_slice'
 
 const rootReducer = combineReducers({
 	taskManagement: taskManagementReducer,

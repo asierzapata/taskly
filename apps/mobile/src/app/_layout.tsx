@@ -1,16 +1,12 @@
+import { useColorScheme } from 'react-native'
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { Slot } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-
-import { ThemeProvider } from '@react-navigation/native'
-import { useColorScheme } from 'react-native'
-import { darkNavigationTheme, lightNavigationTheme } from '@/ui/colors'
-
-import { Box } from '@/ui/box'
-
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
-
 // Redux
 import { persistor, store } from '@/store'
+import { Box } from '@/ui/box'
+import { darkNavigationTheme, lightNavigationTheme } from '@/ui/colors'
+import { ThemeProvider } from '@react-navigation/native'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 

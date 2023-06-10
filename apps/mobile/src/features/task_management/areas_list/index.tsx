@@ -1,23 +1,21 @@
 import React from 'react'
-
+import { Pressable } from 'react-native'
 /* ====================================================== */
 /*                   Actions / Selectors                  */
 /* ====================================================== */
 
 import { useAppSelector } from '@/store/hooks'
-import { selectAreas, selectTasksWithoutArea } from '../task_management_slice'
-
+import { Box } from '@/ui/box'
+import { Icon } from '@/ui/icon'
+import { Text } from '@/ui/text'
+import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
 /* ====================================================== */
 /*                       Components                       */
 /* ====================================================== */
 
-import { InboxIcon, DatabaseIcon } from 'lucide-react-native'
-import { Text } from '@/ui/text'
-import { Icon } from '@/ui/icon'
-import { Box } from '@/ui/box'
-import { Pressable } from 'react-native'
-import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
+import { DatabaseIcon, InboxIcon, type LucideIcon } from 'lucide-react-native'
 
+import { selectAreas, selectTasksWithoutArea } from '../task_management_slice'
 /* ====================================================== */
 /*                         Styles                         */
 /* ====================================================== */
@@ -27,7 +25,6 @@ import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
 /* ====================================================== */
 
 import type { Area } from '../types'
-import type { LucideIcon } from 'lucide-react-native'
 
 type AreasListProps = {
 	onAreaPressed: (area: Area) => void

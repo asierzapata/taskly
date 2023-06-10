@@ -1,45 +1,42 @@
 import React from 'react'
+/* ====================================================== */
+/*                         Styles                         */
+/* ====================================================== */
 
+import { StyleSheet } from 'react-native'
+import { Redirect } from 'expo-router'
 /* ====================================================== */
 /*                   Actions / Selectors                  */
 /* ====================================================== */
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import {
-	completeTask,
-	selectArea,
-	selectAreaTasks,
-	uncompleteTask
-} from '../task_management_slice'
+import { Box } from '@/ui/box'
+import { pixelUnitHorizontal } from '@/ui/normalizer'
+import { Text } from '@/ui/text'
+import { BottomSheetSectionList } from '@gorhom/bottom-sheet'
 
 /* ====================================================== */
 /*                       Components                       */
 /* ====================================================== */
 
 import { TaskListElement } from '../components/task_list_element'
-import { Redirect } from 'expo-router'
-import { Text } from '@/ui/text'
-import { BottomSheetSectionList } from '@gorhom/bottom-sheet'
-import { Box } from '@/ui/box'
-
+import {
+	completeTask,
+	selectArea,
+	selectAreaTasks,
+	uncompleteTask
+} from '../task_management_slice'
 /* ====================================================== */
-/*                         Styles                         */
+/*                         Types                          */
 /* ====================================================== */
 
-import { StyleSheet } from 'react-native'
-import { pixelUnitHorizontal } from '@/ui/normalizer'
+import type { Task } from '../types'
 
 const styles = StyleSheet.create({
 	sectionListContainer: {
 		paddingHorizontal: pixelUnitHorizontal(4)
 	}
 })
-
-/* ====================================================== */
-/*                         Types                          */
-/* ====================================================== */
-
-import type { Task } from '../types'
 
 /* ====================================================== */
 /*                    Implementation                      */
@@ -50,20 +47,23 @@ const AreaTasksList = ({ areaId }: { areaId: string }) => {
 	const area = useAppSelector(selectArea(areaId))
 	const dispatch = useAppDispatch()
 
-	const handleToggleTaskCompletion = React.useCallback((task: Task) => {
-		if (!task.completedAt) {
-			return dispatch(
-				completeTask({
+	const handleToggleTaskCompletion = React.useCallback(
+		(task: Task) => {
+			if (!task.completedAt) {
+				return dispatch(
+					completeTask({
+						id: task.id
+					})
+				)
+			}
+			dispatch(
+				uncompleteTask({
 					id: task.id
 				})
 			)
-		}
-		dispatch(
-			uncompleteTask({
-				id: task.id
-			})
-		)
-	}, [dispatch])
+		},
+		[dispatch]
+	)
 
 	console.log('>>>>>> area tasks list', tasks)
 	console.log('>>>>>>', areaId, area)
@@ -78,7 +78,6 @@ const AreaTasksList = ({ areaId }: { areaId: string }) => {
 			}
 		]
 	}, [area, isAreaInbox, tasks])
-
 
 	if (!area && !isAreaInbox) {
 		return <Redirect href="/" />

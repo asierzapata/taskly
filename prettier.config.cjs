@@ -4,35 +4,38 @@
 
 /** @type { PrettierConfig | SortImportsConfig | TailwindConfig } */
 const config = {
-	arrowParens: "always",
 	printWidth: 80,
-	singleQuote: false,
+	useTabs: true,
+	semi: false,
+	singleQuote: true,
 	jsxSingleQuote: false,
-	semi: true,
-	trailingComma: "all",
+	quoteProps: 'as-needed',
+	trailingComma: 'none',
+	bracketSpacing: true,
+	jsxBracketSameLine: false,
+	arrowParens: 'avoid',
 	tabWidth: 2,
 	// pluginSearchDirs: false,
 	plugins: [
-		"@ianvs/prettier-plugin-sort-imports",
-		"prettier-plugin-tailwindcss",
+		'@ianvs/prettier-plugin-sort-imports',
+		require.resolve('prettier-plugin-tailwindcss')
 	],
-	tailwindConfig: "./packages/config/tailwind",
 	importOrder: [
-		"^(react/(.*)$)|^(react$)|^(react-native(.*)$)",
-		"^(next/(.*)$)|^(next$)",
-		"^(expo(.*)$)|^(expo$)",
-		"<THIRD_PARTY_MODULES>",
-		"",
-		"^@taskly/(.*)$",
-		"",
-		"^~/utils/(.*)$",
-		"^~/components/(.*)$",
-		"^~/styles/(.*)$",
-		"^~/(.*)$",
-		"^[./]",
+		'^(react/(.*)$)|^(react$)|^(react-native(.*)$)',
+		'^(next/(.*)$)|^(next$)',
+		'^(expo(.*)$)|^(expo$)',
+		'<THIRD_PARTY_MODULES>',
+		'',
+		'^@taskly/(.*)$',
+		'',
+		'^~/utils/(.*)$',
+		'^~/components/(.*)$',
+		'^~/styles/(.*)$',
+		'^~/(.*)$',
+		'^[./]'
 	],
-	importOrderParserPlugins: ["typescript", "jsx", "decorators-legacy"],
-	importOrderTypeScriptVersion: "5.0.4",
-};
+	importOrderParserPlugins: ['typescript', 'jsx', 'decorators-legacy'],
+	importOrderTypeScriptVersion: '5.0.4'
+}
 
-module.exports = config;
+module.exports = config

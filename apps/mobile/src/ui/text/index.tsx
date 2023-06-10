@@ -1,22 +1,20 @@
 import React from 'react'
-
 /* ====================================================== */
 /*                       Components                       */
 /* ====================================================== */
 
-import { useColorScheme, Text as NativeText } from 'react-native'
-
-/* ====================================================== */
-/*                        Styles                          */
-/* ====================================================== */
-
-import { styles } from './text_styles'
+import { Text as NativeText, useColorScheme } from 'react-native'
 
 /* ====================================================== */
 /*                        Types                           */
 /* ====================================================== */
 
 import type { ColorNames } from '../colors'
+/* ====================================================== */
+/*                        Styles                          */
+/* ====================================================== */
+
+import { styles } from './text_styles'
 
 type Size =
 	| 'header'

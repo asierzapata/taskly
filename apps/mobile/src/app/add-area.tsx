@@ -1,12 +1,11 @@
 import * as React from 'react'
-
-import { Box } from '@/ui/box'
 import { StyleSheet, useColorScheme } from 'react-native'
-import BottomSheet from '@gorhom/bottom-sheet'
-import { colors } from '@/ui/colors'
 import { useRouter } from 'expo-router'
-import { Button } from '@/ui/button'
 import { CreateAreaInput } from '@/features/task_management/create_area_input'
+import { Box } from '@/ui/box'
+import { Button } from '@/ui/button'
+import { colors } from '@/ui/colors'
+import BottomSheet from '@gorhom/bottom-sheet'
 import { ChevronLeftIcon } from 'lucide-react-native'
 
 export default function Index() {
@@ -26,9 +25,12 @@ export default function Index() {
 		router.push('/')
 	}, [router])
 
-	const handleAreaCreated = React.useCallback((areaId: string) => {
-		router.push(`/area/${areaId}`)
-	}, [router])
+	const handleAreaCreated = React.useCallback(
+		(areaId: string) => {
+			router.push(`/area/${areaId}`)
+		},
+		[router]
+	)
 
 	return (
 		<Box flex={1} justifyContent="center" alignItems="center">

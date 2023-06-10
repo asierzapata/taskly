@@ -1,16 +1,16 @@
 import React from 'react'
-import _ from 'lodash'
-
-import type { BasicColorNames } from '@/ui/colors'
-
 /* ====================================================== */
 /*                       Components                       */
 /* ====================================================== */
 
-import type { ColorValue } from 'react-native'
-import { ActivityIndicator, useColorScheme } from 'react-native'
+import {
+	ActivityIndicator,
+	useColorScheme,
+	type ColorValue
+} from 'react-native'
 import { Box } from '@/ui/box'
-import { colors } from '@/ui/colors'
+import { colors, type BasicColorNames } from '@/ui/colors'
+import _ from 'lodash'
 
 /* ====================================================== */
 /*                    Implementation                      */
