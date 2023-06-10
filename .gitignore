@@ -20,6 +20,7 @@ next-env.d.ts
 # expo
 .expo/
 dist/
+.expo-shared
 
 # production
 build
@@ -46,3 +47,8 @@ yarn-error.log*
 
 # turbo
 .turbo
+
+# webpack
+**/.webpack/**
+
+.vscode
