@@ -354,9 +354,7 @@ export {
 	darkColors,
 	lightColors,
 	darkNavigationTheme,
-	lightNavigationTheme,
-	BasicColorNames,
-	DarkColorNames,
-	LightColorNames,
-	ColorNames
+	lightNavigationTheme
 }
+
+export type { BasicColorNames, DarkColorNames, LightColorNames, ColorNames }

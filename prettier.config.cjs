@@ -19,23 +19,7 @@ const config = {
 	plugins: [
 		'@ianvs/prettier-plugin-sort-imports',
 		require.resolve('prettier-plugin-tailwindcss')
-	],
-	importOrder: [
-		'^(react/(.*)$)|^(react$)|^(react-native(.*)$)',
-		'^(next/(.*)$)|^(next$)',
-		'^(expo(.*)$)|^(expo$)',
-		'<THIRD_PARTY_MODULES>',
-		'',
-		'^@taskly/(.*)$',
-		'',
-		'^~/utils/(.*)$',
-		'^~/components/(.*)$',
-		'^~/styles/(.*)$',
-		'^~/(.*)$',
-		'^[./]'
-	],
-	importOrderParserPlugins: ['typescript', 'jsx', 'decorators-legacy'],
-	importOrderTypeScriptVersion: '5.0.4'
+	]
 }
 
 module.exports = config

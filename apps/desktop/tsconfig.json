@@ -13,7 +13,7 @@
 		"resolveJsonModule": true,
 		"paths": {
 			"@renderer/*": ["./src/renderer/*"],
-			"@main/*": ["./src/main/*"],
+			"@modules/*": ["./src/modules/*"],
 			"@/*": ["./src/*"],
 			"*": ["node_modules/*"]
 		},

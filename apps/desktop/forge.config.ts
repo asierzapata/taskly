@@ -9,17 +9,30 @@ import { mainConfig } from './webpack.main.config'
 import { rendererConfig } from './webpack.renderer.config'
 
 const config: ForgeConfig = {
-	packagerConfig: {},
+	packagerConfig: {
+		protocols: [
+			{
+				name: 'Taskly',
+				schemes: ['taskly']
+			}
+		]
+	},
 	rebuildConfig: {},
 	makers: [
 		new MakerSquirrel({}),
 		new MakerZIP({}, ['darwin']),
 		new MakerRpm({}),
-		new MakerDeb({})
+		new MakerDeb({
+			options: {
+				mimeType: ['x-scheme-handler/taskly']
+			}
+		})
 	],
 	plugins: [
 		new WebpackPlugin({
 			mainConfig,
+			devContentSecurityPolicy:
+				'connect-src fphulvfmwjdhlpgwktsr.supabase.co ws://localhost:3000/ws',
 			renderer: {
 				config: rendererConfig,
 				entryPoints: [

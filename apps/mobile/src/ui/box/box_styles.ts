@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native'
 import { colors, darkColors, lightColors } from '@/ui/colors'
 import * as _ from 'lodash'
+import { StyleSheet } from 'react-native'
 
 type StylesObject<
 	K extends string,

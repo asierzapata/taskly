@@ -17,9 +17,9 @@
 		"type-check": "turbo type-check"
 	},
 	"dependencies": {
-		"@taskly/eslint-config": "*",
 		"@ianvs/prettier-plugin-sort-imports": "^4.0.2",
 		"@manypkg/cli": "^0.20.0",
+		"@taskly/eslint-config": "*",
 		"@types/prettier": "^2.7.3",
 		"eslint": "^8.42.0",
 		"prettier": "^2.8.8",
@@ -31,6 +31,7 @@
 	"workspaces": [
 		"apps/mobile",
 		"apps/desktop",
-		"packages/config/*"
+		"packages/config/*",
+		"packages/web-ui"
 	]
 }

@@ -7,10 +7,14 @@ import {
 	RouterProvider
 } from 'react-router-dom'
 
+import { AuthenticationWrapper } from './authentication_wrapper'
+
 const appRouter = createHashRouter(
 	createRoutesFromElements(
 		<>
-			<Route path="/" element={<MainScreen />} />
+			<Route element={<AuthenticationWrapper />}>
+				<Route path="/" element={<MainScreen />} />
+			</Route>
 		</>
 	)
 )
