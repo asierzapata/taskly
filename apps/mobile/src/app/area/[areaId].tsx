@@ -14,10 +14,6 @@ import { Redirect, useLocalSearchParams, useRouter } from 'expo-router'
 export default function Index() {
 	const { areaId } = useLocalSearchParams<{ areaId: string }>()
 
-	if (!areaId) {
-		return <Redirect href="/" />
-	}
-
 	const router = useRouter()
 
 	const colorScheme = useColorScheme() ?? 'light'
@@ -32,16 +28,20 @@ export default function Index() {
 
 	const handleGoBack = React.useCallback(() => {
 		router.push('/')
-	}, [])
+	}, [router])
 
 	const renderFooter = React.useCallback(
 		(props: BottomSheetFooterProps) => (
 			<BottomSheetFooter {...props}>
-				<AddTaskInput areaId={areaId} />
+				{areaId && <AddTaskInput areaId={areaId} />}
 			</BottomSheetFooter>
 		),
-		[]
+		[areaId]
 	)
+
+	if (!areaId) {
+		return <Redirect href="/" />
+	}
 
 	return (
 		<Box flex={1} justifyContent="center" alignItems="center">

@@ -63,10 +63,12 @@ const AreaTasksList = ({ areaId }: { areaId: string }) => {
 				id: task.id
 			})
 		)
-	}, [])
+	}, [dispatch])
 
 	console.log('>>>>>> area tasks list', tasks)
 	console.log('>>>>>>', areaId, area)
+
+	const isAreaInbox = areaId === 'inbox'
 
 	const sections = React.useMemo(() => {
 		return [
@@ -75,9 +77,8 @@ const AreaTasksList = ({ areaId }: { areaId: string }) => {
 				data: tasks
 			}
 		]
-	}, [tasks])
+	}, [area, isAreaInbox, tasks])
 
-	const isAreaInbox = areaId === 'inbox'
 
 	if (!area && !isAreaInbox) {
 		return <Redirect href="/" />

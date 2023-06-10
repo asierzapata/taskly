@@ -38,7 +38,7 @@ const AddTaskInput = ({ areaId }: AddTaskInputProps) => {
 	const handleAddTask = React.useCallback(() => {
 		setTitle('')
 		dispatch(createAreaTask({ title, description: '', areaId }))
-	}, [title])
+	}, [areaId, dispatch, title])
 
 	const handleTitleChange = React.useCallback((text: string) => {
 		setTitle(text)

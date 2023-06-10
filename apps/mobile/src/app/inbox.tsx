@@ -26,7 +26,7 @@ export default function Index() {
 
 	const handleGoBack = React.useCallback(() => {
 		router.push('/')
-	}, [])
+	}, [router])
 
 	const renderFooter = React.useCallback(
 		(props: BottomSheetFooterProps) => (

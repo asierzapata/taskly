@@ -8,7 +8,6 @@ import { useRouter } from 'expo-router'
 import { Button } from '@/ui/button'
 import { CreateAreaInput } from '@/features/task_management/create_area_input'
 import { ChevronLeftIcon } from 'lucide-react-native'
-import { Area } from '@/features/task_management/types'
 
 export default function Index() {
 	const router = useRouter()
@@ -25,11 +24,11 @@ export default function Index() {
 
 	const handleGoBack = React.useCallback(() => {
 		router.push('/')
-	}, [])
+	}, [router])
 
 	const handleAreaCreated = React.useCallback((areaId: string) => {
 		router.push(`/area/${areaId}`)
-	}, [])
+	}, [router])
 
 	return (
 		<Box flex={1} justifyContent="center" alignItems="center">

@@ -39,7 +39,6 @@ const Loading = ({
 			? colors.dark.loading
 			: colors.light.loading
 	if (color !== undefined) {
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 		activityIndicatorColor = colors.basicColors[color] as ColorValue
 	}
 

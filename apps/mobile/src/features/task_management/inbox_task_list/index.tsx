@@ -60,7 +60,7 @@ const InboxTaskList = () => {
 				id: task.id
 			})
 		)
-	}, [])
+	}, [dispatch])
 
 	const sections = React.useMemo(() => {
 		return [

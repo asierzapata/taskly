@@ -9,7 +9,7 @@ import * as _ from 'lodash'
 /*                       Components                       */
 /* ====================================================== */
 
-import type { ColorSchemeName, RegisteredStyle, StyleProp } from 'react-native'
+import type { ColorSchemeName, StyleProp } from 'react-native'
 import { useColorScheme, View } from 'react-native'
 
 /* ====================================================== */
@@ -202,6 +202,8 @@ const Box = React.forwardRef(
 		)
 	}
 )
+
+Box.displayName = 'Box'
 
 /* ====================================================== */
 /*                      Public API                        */

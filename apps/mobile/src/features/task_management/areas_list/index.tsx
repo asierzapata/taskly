@@ -57,7 +57,7 @@ const AreasList = ({ onAreaPressed, onInboxPressed }: AreasListProps) => {
 
 			onAreaPressed(area)
 		},
-		[onAreaPressed]
+		[areas, onAreaPressed, onInboxPressed]
 	)
 
 	const areaItems = React.useMemo(() => {
@@ -74,7 +74,7 @@ const AreasList = ({ onAreaPressed, onInboxPressed }: AreasListProps) => {
 				numberOfTasks: area.numberOfTasks
 			}))
 		]
-	}, [areas])
+	}, [areas, inboxTasks.length])
 
 	return (
 		<BottomSheetFlatList

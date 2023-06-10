@@ -218,7 +218,7 @@ const Timeline = () => {
 			rightEdgeSpacing: 24,
 			theme: theme
 		}
-	}, [])
+	}, [approveNewEvent, createNewEvent, theme])
 
 	return (
 		<CalendarProvider

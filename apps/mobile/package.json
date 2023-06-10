@@ -50,6 +50,7 @@
 		"@expo/config-plugins": "^6.0.2",
 		"@taskly/eslint-config": "*",
 		"@types/babel__core": "^7.20.0",
+		"@types/lodash": "^4.14.195",
 		"@types/react": "^18.2.8",
 		"@types/webpack-env": "^1.18.0",
 		"babel-plugin-module-resolver": "^5.0.0",

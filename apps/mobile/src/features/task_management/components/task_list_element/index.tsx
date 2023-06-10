@@ -38,7 +38,7 @@ const TaskListElement = ({
 
 	const handleToggleTaskCompletion = React.useCallback(() => {
 		onToggleTaskCompletion(task)
-	}, [task])
+	}, [task, onToggleTaskCompletion])
 
 	const handleToggleExpanded = React.useCallback(() => {
 		setIsExpanded(_isExpanded => !_isExpanded)

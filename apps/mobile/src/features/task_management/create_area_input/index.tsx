@@ -20,7 +20,6 @@ import { TextInput } from '@/ui/form/text_input'
 /*                         Types                          */
 /* ====================================================== */
 
-import type { Area } from '../types'
 import _ from 'lodash'
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet'
 
@@ -43,7 +42,7 @@ const CreateAreaInput = ({ onAreaCreated }: CreateAreaInputProps) => {
 		areaId = _.isArray(areaId) ? areaId.join('') : areaId
 		dispatch(createArea({ id: areaId, name, description: '' }))
 		onAreaCreated(areaId)
-	}, [name])
+	}, [dispatch, name, onAreaCreated])
 
 	const handleNameChange = React.useCallback((text: string) => {
 		setName(text)

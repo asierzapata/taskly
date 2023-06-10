@@ -71,6 +71,8 @@ const TextInput = React.forwardRef(
 	}
 )
 
+TextInput.displayName = 'TextInput'
+
 /* ====================================================== */
 /*                      Public API                        */
 /* ====================================================== */
