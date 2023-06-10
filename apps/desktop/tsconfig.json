@@ -12,9 +12,19 @@
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
 		"paths": {
-			"*": ["node_modules/*"],
-			"@/*": ["./src/*"]
-		}
+			"@renderer/*": ["./src/renderer/*"],
+			"@main/*": ["./src/main/*"],
+			"@/*": ["./src/*"],
+			"*": ["node_modules/*"]
+		},
+		"jsx": "react"
 	},
-	"include": ["src/**/*"]
+	"include": [
+		"**/*.ts",
+		"src/**/*",
+		"src/**/*.tsx",
+		"src/**/*.cjs",
+		"src/**/*.mjs"
+	],
+	"exclude": ["node_modules"]
 }
