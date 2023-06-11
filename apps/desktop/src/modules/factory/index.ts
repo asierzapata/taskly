@@ -1,26 +1,32 @@
 import type { BrowserWindow, IpcMain, IpcRenderer } from 'electron'
 
-export function createMethodCalledFromMain<K extends string, I, O>(
+export function createMethodCalledFromMain<K extends string, I, O, D>(
 	id: K,
-	method: (input: I) => Promise<O>
+	method: ({
+		parameters,
+		dependencies
+	}: {
+		parameters: I
+		dependencies: D
+	}) => Promise<O>
 ) {
 	return {
-		main: (window: BrowserWindow) =>
+		main: (window: BrowserWindow, dependencies: D) =>
 			({
-				[id]: async (payload: I): Promise<O> => {
-					const response = method(payload)
+				[id]: async (parameters: I): Promise<O> => {
+					const response = await method({ parameters, dependencies })
 					window.webContents.send(id, response)
 					return response
 				}
 			} as Record<K, (payload: I) => Promise<O>>),
 		render: (ipcRenderer: IpcRenderer) =>
 			({
-				[`on${id}`]: (callback: (payload: O) => void) =>
+				[`On${id}`]: (callback: (payload: O) => void) =>
 					ipcRenderer.on(id, (_event, payload: O) => {
 						callback(payload)
 					})
 			} as Record<
-				`on${K}`,
+				`On${K}`,
 				(callback: (payload: O) => void) => Electron.IpcRenderer
 			>)
 	}
@@ -28,16 +34,20 @@ export function createMethodCalledFromMain<K extends string, I, O>(
 
 export function createMethodCalledFromRender<K extends string, I, O, D>(
 	id: K,
-	method: (
-		_event: Electron.IpcMainInvokeEvent,
-		input: I,
+	method: ({
+		_event,
+		parameters,
+		dependencies
+	}: {
+		_event: Electron.IpcMainInvokeEvent
+		parameters: I
 		dependencies: D
-	) => Promise<O>
+	}) => Promise<O>
 ) {
 	return {
 		main: (ipcMain: IpcMain, dependencies: D) => {
-			ipcMain.handle(id, (_event: Electron.IpcMainInvokeEvent, input: I) =>
-				method(_event, input, dependencies)
+			ipcMain.handle(id, (_event: Electron.IpcMainInvokeEvent, parameters: I) =>
+				method({ _event, parameters, dependencies })
 			)
 			return {}
 		},

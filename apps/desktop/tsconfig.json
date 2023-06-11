@@ -14,6 +14,7 @@
 		"paths": {
 			"@renderer/*": ["./src/renderer/*"],
 			"@modules/*": ["./src/modules/*"],
+			"@services/*": ["./src/services/*"],
 			"@/*": ["./src/*"],
 			"*": ["node_modules/*"]
 		},

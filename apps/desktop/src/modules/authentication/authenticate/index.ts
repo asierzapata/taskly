@@ -1,30 +1,31 @@
-import { deepLinks } from '@/deep_links'
-import type { Supabase } from '@/supabase'
 import { createMethodCalledFromRender } from '@modules/factory'
+import { deepLinks } from '@services/deep_links'
 import _ from 'lodash'
+import { ModuleDependencies } from '../module'
 
 type AuthenticateParameters = { email: string }
 type AuthenticateResponse = { error?: string }
-type AuthenticateDependencies = { supabase: Supabase }
 
-const Authenticate = async (
-	_event: Electron.IpcMainInvokeEvent,
-	payload: AuthenticateParameters,
-	dependencies: AuthenticateDependencies
-): Promise<AuthenticateResponse> => {
-	const { error } = await dependencies.supabase.auth.signInWithOtp({
-		email: payload.email,
+const Authenticate = async ({
+	parameters: { email },
+	dependencies: { supabase }
+}: {
+	parameters: AuthenticateParameters
+	dependencies: ModuleDependencies
+}): Promise<AuthenticateResponse> => {
+	const { error } = await supabase.auth.signInWithOtp({
+		email,
 		options: {
-			emailRedirectTo: deepLinks.loginCallback.url
+			emailRedirectTo: deepLinks.magicLinkCallback.url
 		}
 	})
 
-	return { error: error.message }
+	return { error: error?.message }
 }
 
 export const AuthenticateGenerator = createMethodCalledFromRender<
 	'Authenticate',
 	AuthenticateParameters,
 	AuthenticateResponse,
-	AuthenticateDependencies
+	ModuleDependencies
 >('Authenticate', Authenticate)
