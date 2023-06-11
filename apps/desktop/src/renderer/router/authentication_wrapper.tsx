@@ -38,21 +38,17 @@ const AuthenticationWrapper = () => {
 
 	React.useEffect(() => {
 		window.api.authentication.GetSession().then(({ session }) => {
-			console.log('>>>>>> getSession', session)
 			setSession(session)
 		})
 
 		window.api.authentication.OnAuthenticationStateChanged(({ session }) => {
-			console.log('>>>>>> OnAuthStateChange', session)
 			setSession(session)
 		})
 
 		window.api.authentication.OnAuthenticateMagicLink(response => {
-			console.log('>>>>>> OnAuthenticateMagicLink', response)
 			if (response.error) {
 				alert(response.error)
 			}
-
 			if (response.session) {
 				setSession(response.session)
 			}
@@ -92,7 +88,7 @@ function Authentication() {
 					</CardDescription>
 				</CardHeader>
 				<CardContent className="grid gap-4">
-					<div className="grid grid-cols-2 gap-6">
+					{/* <div className="grid grid-cols-2 gap-6">
 						<Button variant="outline">
 							<Icons.apple className="mr-2 h-4 w-4" />
 							Apple
@@ -111,7 +107,7 @@ function Authentication() {
 								or continue with
 							</span>
 						</div>
-					</div>
+					</div> */}
 					<div className="grid gap-2">
 						<Label htmlFor="email">Email</Label>
 						<Input
@@ -131,7 +127,7 @@ function Authentication() {
 						isLoading={loading}
 						onClick={handleLogin}
 					>
-						Create account
+						Sign in
 					</Button>
 				</CardFooter>
 			</Card>
