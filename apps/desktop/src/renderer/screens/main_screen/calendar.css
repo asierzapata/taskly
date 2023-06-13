@@ -1,0 +1,59 @@
+.rbc-today {
+	background-color: hsl(var(--muted));
+	border-bottom: 1px solid hsl(var(--border));
+	color: hsl(var(--primary));
+	@apply text-xs;
+}
+
+.rbc-current-time-indicator {
+	background-color: hsl(var(--primary));
+}
+
+.rbc-timeslot-group {
+	border-bottom: 1px solid hsl(var(--border));
+	@apply text-xs;
+}
+
+.rbc-header + .rbc-header {
+	border-bottom: 1px solid hsl(var(--border));
+	border-left: 1px solid hsl(var(--border));
+	@apply text-xs;
+}
+
+.rbc-time-header-content {
+	border-left: 1px solid hsl(var(--border));
+}
+
+.rbc-today,
+.rbc-day-bg + .rbc-day-bg {
+	border-left: 1px solid hsl(var(--border));
+}
+
+.rbc-time-view,
+.rbc-time-header.rbc-overflowing {
+	border: 0;
+}
+
+.rbc-time-content,
+.rbc-day-slot .rbc-time-slot {
+	border-top: 1px solid hsl(var(--border));
+}
+
+.rbc-time-content > * + * > * {
+	border-left: 1px solid hsl(var(--border));
+}
+
+.rbc-toolbar-label {
+	color: hsl(var(--muted-foreground));
+	@apply font-bold;
+}
+
+.rbc-toolbar {
+	flex-direction: column-reverse;
+	gap: 0.5rem;
+	margin-bottom: 1rem;
+}
+
+.rbc-btn-group > button {
+	@apply inline-flex h-10 items-center justify-center rounded-md border-none bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 active:scale-95 disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-slate-100 data-[state=open]:bg-transparent dark:text-slate-100 dark:hover:bg-slate-800 dark:hover:text-slate-100 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900 dark:data-[state=open]:bg-slate-800 dark:data-[state=open]:bg-transparent;
+}
