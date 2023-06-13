@@ -48,8 +48,11 @@
 		"typescript": "~4.5.4"
 	},
 	"dependencies": {
-		"@supabase/supabase-js": "^2.24.0",
+		"@supabase/supabase-js": "2.24.0",
 		"@taskly/web-ui": "*",
+		"@uiw/codemirror-extensions-langs": "^4.21.3",
+		"@uiw/codemirror-theme-github": "^4.21.3",
+		"@uiw/react-codemirror": "^4.21.3",
 		"electron": "^25.1.0",
 		"electron-squirrel-startup": "^1.0.0",
 		"electron-store": "^8.1.0",
@@ -61,7 +64,8 @@
 	"workspaces": {
 		"nohoist": [
 			"electron",
-			"@electron-forge/**"
+			"@electron-forge/**",
+			"@supabase/**"
 		]
 	}
 }
