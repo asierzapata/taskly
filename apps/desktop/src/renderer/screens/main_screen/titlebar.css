@@ -1,0 +1,23 @@
+.titlebar {
+	-webkit-app-region: drag;
+	display: flex;
+	border-bottom: 1px solid var(--border);
+	height: 32px;
+	width: 100%;
+}
+
+.titlebar-text {
+	@apply text-sm font-semibold;
+	opacity: 0.85;
+	width: 100%;
+	height: 100%;
+	flex-grow: 1;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0 125px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}

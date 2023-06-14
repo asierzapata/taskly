@@ -86,7 +86,9 @@ export function createMainWindow() {
 		height: height / 2,
 		webPreferences: {
 			preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
-		}
+		},
+		transparent: true,
+		titleBarStyle: 'hidden'
 	})
 
 	mainAPI = API(mainWindow)
