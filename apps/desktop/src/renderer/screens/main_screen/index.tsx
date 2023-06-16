@@ -20,6 +20,7 @@ import {
 } from '@taskly/web-ui'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { TextEditor } from '@renderer/text_editor'
 
 import './titlebar.css'
 
@@ -171,7 +172,6 @@ import add from 'date-fns/add'
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import './calendar.css'
-import TextEditor from '@renderer/editor'
 
 const locales = {
 	'en-US': enUS

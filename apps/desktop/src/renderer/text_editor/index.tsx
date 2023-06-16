@@ -151,8 +151,7 @@ const myTheme = createTheme({
 		background: 'transparent',
 		foreground: '#e1e7ef',
 		caret: 'rgba(245, 112, 76, 1)',
-		// selection: 'rgba(245, 112, 76, 0.8)',
-		// selectionMatch: 'rgba(245, 112, 76, 0.8)',
+		selectionMatch: 'rgba(255, 190, 1, 0.8)',
 		gutterBackground: 'transparent',
 		gutterForeground: '#808da3',
 		gutterBorder: '#808da3',
@@ -167,27 +166,27 @@ const myTheme = createTheme({
 		{ tag: t.variableName, color: '#f5704c' },
 		{
 			tag: t.heading1,
-			class: 'text-2xl font-bold text-accent-1'
+			class: 'tag-heading-1'
 		},
 		{
 			tag: t.heading2,
-			class: 'text-xl font-bold text-accent-2'
+			class: 'tag-heading-2'
 		},
 		{
 			tag: t.heading3,
-			class: 'text-lg font-bold text-accent-3'
+			class: 'tag-heading-3'
 		},
 		{
 			tag: t.heading4,
-			class: 'text-base font-bold text-accent-4'
+			class: 'tag-heading-4'
 		},
 		{
 			tag: t.heading5,
-			class: 'text-sm font-bold text-accent-5'
+			class: 'tag-heading-5'
 		},
 		{
 			tag: t.heading6,
-			class: 'text-xs font-bold text-accent-6'
+			class: 'tag-heading-6'
 		},
 		{
 			tag: t.contentSeparator,
@@ -195,23 +194,23 @@ const myTheme = createTheme({
 		},
 		{
 			tag: t.list,
-			class: 'text-accent-6'
+			class: 'tag-list'
 		},
 		{
 			tag: t.quote,
-			class: 'text-accent-3'
+			class: 'tag-quote'
 		},
 		{
 			tag: t.emphasis,
-			class: 'italic text-accent-5'
+			class: 'tag-emphasis'
 		},
 		{
 			tag: t.strong,
-			class: 'font-bold text-accent-1'
+			class: 'tag-bold'
 		},
 		{
 			tag: t.link,
-			class: 'text-accent-6 underline'
+			class: 'tag-link'
 		},
 		{
 			tag: t.punctuation,
@@ -219,7 +218,7 @@ const myTheme = createTheme({
 		},
 		{
 			tag: t.url,
-			class: 'text-accent-6 underline'
+			class: 'tag-url'
 		},
 		{
 			tag: t.typeName,
@@ -236,6 +235,10 @@ const myTheme = createTheme({
 		{
 			tag: t.attributeValue,
 			class: 'text-accent-2'
+		},
+		{
+			tag: t.monospace,
+			class: 'tag-monospace'
 		}
 	]
 })
@@ -315,4 +318,4 @@ const TextEditor = React.forwardRef(
 
 TextEditor.displayName = 'TextEditor'
 
-export default TextEditor
+export { TextEditor }

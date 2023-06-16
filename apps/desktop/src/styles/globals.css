@@ -160,7 +160,7 @@
 		--border: 216 34% 17%;
 		--input: 216 34% 17%;
 
-		--primary: 13 89% 63%;
+		--primary: 45 100% 50%; /* hsl(45, 100%, 50%) */
 		--primary-foreground: 6 66% 25%;
 
 		--secondary: 222.2 47.4% 11.2%;
@@ -182,6 +182,8 @@
 		--accent-4: 85, 65%, 63%; /* hsl(85, 65%, 63%) */
 		--accent-5: 156, 65%, 63%; /* hsl(156, 65%, 63%) */
 		--accent-6: 199, 65%, 63%; /* hsl(199, 65%, 63%) */
+		--accent-7: 230, 65%, 63%; /* hsl(230, 65%, 63%) */
+		--accent-8: 260, 65%, 63%; /* hsl(260, 65%, 63%) */
 	}
 }
 
@@ -224,5 +226,57 @@
 	}
 	.text-accent-6 {
 		color: hsl(var(--accent-6));
+	}
+	.text-accent-7 {
+		color: hsl(var(--accent-7));
+	}
+	.text-accent-8 {
+		color: hsl(var(--accent-8));
+	}
+	.tag-contentSeparator {
+		@apply text-accent-7;
+	}
+	.tag-heading-1 {
+		@apply text-accent-1 text-2xl font-bold;
+	}
+	.tag-heading-2 {
+		@apply text-accent-2 text-xl font-bold;
+	}
+	.tag-heading-3 {
+		@apply text-accent-3 text-lg font-bold;
+	}
+	.tag-heading-4 {
+		@apply text-accent-4 text-base font-bold;
+	}
+	.tag-heading-5 {
+		@apply text-accent-5 text-sm font-bold;
+	}
+	.tag-heading-6 {
+		@apply text-accent-6 text-xs font-bold;
+	}
+	.tag-list {
+		/* @apply text-accent-8; */
+	}
+	.tag-quote {
+		@apply text-accent-8 italic;
+	}
+	.tag-emphasis {
+		@apply text-accent-5 italic;
+	}
+	.tag-bold {
+		@apply text-accent-1 font-bold;
+	}
+	.tag-link {
+		@apply text-accent-7 underline;
+	}
+	.tag-url {
+		@apply text-accent-7 underline;
+	}
+	.tag-monospace {
+		@apply rounded-sm px-0.5 font-mono font-bold text-black;
+		background-color: hsl(var(--accent-1));
+	}
+	.tag-strikethrough {
+		@apply text-destructive line-through;
 	}
 }
