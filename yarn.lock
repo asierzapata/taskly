@@ -1263,9 +1263,9 @@
     "@codemirror/language" "^6.0.0"
     "@lezer/java" "^1.0.0"
 
-"@codemirror/lang-javascript@^6.0.0", "@codemirror/lang-javascript@^6.1.0", "@codemirror/lang-javascript@^6.1.2":
+"@codemirror/lang-javascript@^6.0.0", "@codemirror/lang-javascript@^6.1.0", "@codemirror/lang-javascript@^6.1.2", "@codemirror/lang-javascript@^6.1.9":
   version "6.1.9"
-  resolved "https://registry.npmjs.org/@codemirror/lang-javascript/-/lang-javascript-6.1.9.tgz"
+  resolved "https://registry.yarnpkg.com/@codemirror/lang-javascript/-/lang-javascript-6.1.9.tgz#19065ad32db7b3797829eca01b8d9c69da5fd0d6"
   integrity sha512-z3jdkcqOEBT2txn2a87A0jSy6Te3679wg/U8QzMeftFt+4KA6QooMwfdFzJiuC3L6fXKfTXZcDocoaxMYfGz0w==
   dependencies:
     "@codemirror/autocomplete" "^6.0.0"
@@ -1304,9 +1304,9 @@
     "@lezer/common" "^1.0.0"
     "@lezer/lezer" "^1.0.0"
 
-"@codemirror/lang-markdown@^6.0.0", "@codemirror/lang-markdown@^6.1.0":
+"@codemirror/lang-markdown@^6.0.0", "@codemirror/lang-markdown@^6.1.0", "@codemirror/lang-markdown@^6.1.1":
   version "6.1.1"
-  resolved "https://registry.npmjs.org/@codemirror/lang-markdown/-/lang-markdown-6.1.1.tgz"
+  resolved "https://registry.yarnpkg.com/@codemirror/lang-markdown/-/lang-markdown-6.1.1.tgz#ff3cdd339c277f6a02d08eb12f1090977873e771"
   integrity sha512-n87Ms6Y5UYb1UkFu8sRzTLfq/yyF1y2AYiWvaVdbBQi5WDj1tFk5N+AKA+WC0Jcjc1VxvrCCM0iizjdYYi9sFQ==
   dependencies:
     "@codemirror/lang-html" "^6.0.0"
@@ -1423,9 +1423,21 @@
     "@codemirror/language" "^6.0.0"
     "@codemirror/legacy-modes" "^6.1.0"
 
-"@codemirror/language@^6.0.0", "@codemirror/language@^6.3.0", "@codemirror/language@^6.4.0", "@codemirror/language@^6.6.0", "@codemirror/language@^6.8.0":
+"@codemirror/language@^6.0.0", "@codemirror/language@^6.3.0", "@codemirror/language@^6.4.0", "@codemirror/language@^6.6.0":
   version "6.8.0"
   resolved "https://registry.npmjs.org/@codemirror/language/-/language-6.8.0.tgz"
+  integrity sha512-r1paAyWOZkfY0RaYEZj3Kul+MiQTEbDvYqf8gPGaRvNneHXCmfSaAVFjwRUPlgxS8yflMxw2CTu6uCMp8R8A2g==
+  dependencies:
+    "@codemirror/state" "^6.0.0"
+    "@codemirror/view" "^6.0.0"
+    "@lezer/common" "^1.0.0"
+    "@lezer/highlight" "^1.0.0"
+    "@lezer/lr" "^1.0.0"
+    style-mod "^4.0.0"
+
+"@codemirror/language@^6.8.0":
+  version "6.8.0"
+  resolved "https://registry.yarnpkg.com/@codemirror/language/-/language-6.8.0.tgz#f2d7eea6b338c25593d800f2293b062d9f9856db"
   integrity sha512-r1paAyWOZkfY0RaYEZj3Kul+MiQTEbDvYqf8gPGaRvNneHXCmfSaAVFjwRUPlgxS8yflMxw2CTu6uCMp8R8A2g==
   dependencies:
     "@codemirror/state" "^6.0.0"
@@ -1460,9 +1472,9 @@
     "@codemirror/view" "^6.0.0"
     crelt "^1.0.5"
 
-"@codemirror/state@^6.0.0", "@codemirror/state@^6.1.1", "@codemirror/state@^6.1.4", "@codemirror/state@^6.2.0":
+"@codemirror/state@^6.0.0", "@codemirror/state@^6.1.1", "@codemirror/state@^6.1.4", "@codemirror/state@^6.2.0", "@codemirror/state@^6.2.1":
   version "6.2.1"
-  resolved "https://registry.npmjs.org/@codemirror/state/-/state-6.2.1.tgz"
+  resolved "https://registry.yarnpkg.com/@codemirror/state/-/state-6.2.1.tgz#6dc8d8e5abb26b875e3164191872d69a5e85bd73"
   integrity sha512-RupHSZ8+OjNT38zU9fKH2sv+Dnlr8Eb8sl4NOnnqz95mCFTZUaiRP8Xv5MeeaG0px2b8Bnfe7YGwCV3nsBhbuw==
 
 "@codemirror/theme-one-dark@^6.0.0":
@@ -2421,6 +2433,13 @@
 "@lezer/highlight@^1.0.0", "@lezer/highlight@^1.1.3":
   version "1.1.6"
   resolved "https://registry.npmjs.org/@lezer/highlight/-/highlight-1.1.6.tgz"
+  integrity sha512-cmSJYa2us+r3SePpRCjN5ymCqCPv+zyXmDl0ciWtVaNiORT/MxM7ZgOMQZADD0o51qOaOg24qc/zBViOIwAjJg==
+  dependencies:
+    "@lezer/common" "^1.0.0"
+
+"@lezer/highlight@^1.1.6":
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/@lezer/highlight/-/highlight-1.1.6.tgz#87e56468c0f43c2a8b3dc7f0b7c2804b34901556"
   integrity sha512-cmSJYa2us+r3SePpRCjN5ymCqCPv+zyXmDl0ciWtVaNiORT/MxM7ZgOMQZADD0o51qOaOg24qc/zBViOIwAjJg==
   dependencies:
     "@lezer/common" "^1.0.0"
@@ -4145,9 +4164,9 @@
     "@codemirror/state" "^6.0.0"
     "@codemirror/view" "^6.0.0"
 
-"@uiw/codemirror-extensions-langs@^4.21.3":
+"@uiw/codemirror-extensions-langs@4.21.3":
   version "4.21.3"
-  resolved "https://registry.npmjs.org/@uiw/codemirror-extensions-langs/-/codemirror-extensions-langs-4.21.3.tgz"
+  resolved "https://registry.yarnpkg.com/@uiw/codemirror-extensions-langs/-/codemirror-extensions-langs-4.21.3.tgz#64395aa735752daa95c0dec0e87692a3ee35fe8b"
   integrity sha512-oOxtrhokx7UDvqpFJ1NDotzFyA22TvB/hKN8BqmTZ5Q0ikPZ6msZaygHVuHPJRopIdtda9+0GIYmVrxJkseEqg==
   dependencies:
     "@codemirror/lang-angular" "^0.1.0"
@@ -4177,9 +4196,9 @@
     "@replit/codemirror-lang-svelte" "^6.0.0"
     codemirror-lang-mermaid "^0.2.1"
 
-"@uiw/codemirror-theme-github@^4.21.3":
+"@uiw/codemirror-theme-github@4.21.3":
   version "4.21.3"
-  resolved "https://registry.npmjs.org/@uiw/codemirror-theme-github/-/codemirror-theme-github-4.21.3.tgz"
+  resolved "https://registry.yarnpkg.com/@uiw/codemirror-theme-github/-/codemirror-theme-github-4.21.3.tgz#5384ff0c3e1329663a18684fb366de9c4b4a6358"
   integrity sha512-WnwyLWRdNC0yWebtNxwpSJwQr/AywnSqlF3FnfAxEYjtn3lV3bnROqOlFgEXaAVEfJQ5tNM01MM7thr8SlZQ2g==
   dependencies:
     "@uiw/codemirror-themes" "4.21.3"
@@ -4193,9 +4212,9 @@
     "@codemirror/state" "^6.0.0"
     "@codemirror/view" "^6.0.0"
 
-"@uiw/react-codemirror@^4.21.3":
+"@uiw/react-codemirror@4.21.3":
   version "4.21.3"
-  resolved "https://registry.npmjs.org/@uiw/react-codemirror/-/react-codemirror-4.21.3.tgz"
+  resolved "https://registry.yarnpkg.com/@uiw/react-codemirror/-/react-codemirror-4.21.3.tgz#b355105ab91b432add3d5cef2d545ad82cb655a9"
   integrity sha512-kqnsRL0ffJ+/8yQ6rKDF1RuUEugJ+WLkIDdYe/UTCcyXuREDdv3YYDkXj7YPJ5esayP1dIVLnKozoL5YMQVPxQ==
   dependencies:
     "@babel/runtime" "^7.18.6"
@@ -5550,9 +5569,9 @@ codemirror-lang-mermaid@^0.2.1:
     "@lezer/highlight" "^1.0.0"
     "@lezer/lr" "^1.0.0"
 
-codemirror@^6.0.0:
+codemirror@^6.0.0, codemirror@^6.0.1:
   version "6.0.1"
-  resolved "https://registry.npmjs.org/codemirror/-/codemirror-6.0.1.tgz"
+  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-6.0.1.tgz#62b91142d45904547ee3e0e0e4c1a79158035a29"
   integrity sha512-J8j+nZ+CdWmIeFIGXEFbFPtpiYacFMDR8GlHK3IyHQJMCaVRfGx9NT+Hxivv1ckLWPvNdZqndbr/7lVhrf/Svg==
   dependencies:
     "@codemirror/autocomplete" "^6.0.0"
@@ -6013,9 +6032,9 @@ date-arithmetic@^4.1.0:
   resolved "https://registry.npmjs.org/date-arithmetic/-/date-arithmetic-4.1.0.tgz"
   integrity sha512-QWxYLR5P/6GStZcdem+V1xoto6DMadYWpMXU82ES3/RfR3Wdwr3D0+be7mgOJ+Ov0G9D5Dmb9T17sNLQYj9XOg==
 
-date-fns@^2.30.0:
+date-fns@2.30.0:
   version "2.30.0"
-  resolved "https://registry.npmjs.org/date-fns/-/date-fns-2.30.0.tgz"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.30.0.tgz#f367e644839ff57894ec6ac480de40cae4b0f4d0"
   integrity sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==
   dependencies:
     "@babel/runtime" "^7.21.0"
@@ -6509,16 +6528,16 @@ electron-packager@^17.1.1:
     semver "^7.1.3"
     yargs-parser "^21.1.1"
 
-electron-squirrel-startup@^1.0.0:
+electron-squirrel-startup@1.0.0:
   version "1.0.0"
-  resolved "https://registry.npmjs.org/electron-squirrel-startup/-/electron-squirrel-startup-1.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/electron-squirrel-startup/-/electron-squirrel-startup-1.0.0.tgz#19b4e55933fa0ef8f556784b9c660f772546a0b8"
   integrity sha512-Oce8mvgGdFmwr+DsAcXBmFK8jFfN6yaFAP9IvyhTfupM3nFkBku/7VS/mdtJteWumImkC6P+BKGsxScoDDkv9Q==
   dependencies:
     debug "^2.2.0"
 
-electron-store@^8.1.0:
+electron-store@8.1.0:
   version "8.1.0"
-  resolved "https://registry.npmjs.org/electron-store/-/electron-store-8.1.0.tgz"
+  resolved "https://registry.yarnpkg.com/electron-store/-/electron-store-8.1.0.tgz#46a398f2bd9aa83c4a9daaae28380e2b3b9c7597"
   integrity sha512-2clHg/juMjOH0GT9cQ6qtmIvK183B39ZXR0bUoPwKwYHJsEF3quqyDzMFUAu+0OP8ijmN2CbPRAelhNbWUbzwA==
   dependencies:
     conf "^10.2.0"
@@ -6540,7 +6559,7 @@ electron-winstaller@^5.0.0:
     lodash.template "^4.2.2"
     temp "^0.9.0"
 
-electron@^25.1.0:
+electron@25.1.0:
   version "25.1.0"
   resolved "https://registry.yarnpkg.com/electron/-/electron-25.1.0.tgz#78c79aba4bef941217c337dca46745b5551b5735"
   integrity sha512-VKk4G/0euO7ysMKQKHXmI4d3/qR4uHsAtVFXK2WfQUVxBmc160OAm2R6PN9/EXmgXEioKQBtbc2/lvWyYpDbuA==
@@ -11702,9 +11721,9 @@ rcedit@^3.0.1:
   dependencies:
     cross-spawn-windows-exe "^1.1.0"
 
-react-big-calendar@^1.8.1:
+react-big-calendar@1.8.1:
   version "1.8.1"
-  resolved "https://registry.npmjs.org/react-big-calendar/-/react-big-calendar-1.8.1.tgz"
+  resolved "https://registry.yarnpkg.com/react-big-calendar/-/react-big-calendar-1.8.1.tgz#07886a66086fcae16934572c5ace8c4c433dbbed"
   integrity sha512-yEiScxReMrRCc0qFdZIKY/L6+argK4ZiYzLk5bck8CRYVbHjCCb/6Ictv42kPs/g3Q4RIb8+GUjDzk/uFtu76Q==
   dependencies:
     "@babel/runtime" "^7.20.7"
@@ -11732,7 +11751,7 @@ react-devtools-core@^4.26.1:
     shell-quote "^1.6.1"
     ws "^7"
 
-react-dom@18.2.0, react-dom@^18.2.0:
+react-dom@18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
   integrity sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==
@@ -11981,9 +12000,9 @@ react-remove-scroll@2.5.5:
     use-callback-ref "^1.3.0"
     use-sidecar "^1.1.2"
 
-react-router-dom@^6.12.1:
+react-router-dom@6.12.1:
   version "6.12.1"
-  resolved "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.12.1.tgz"
+  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.12.1.tgz#601fe7eb493071a33dc7573a20b920324a834606"
   integrity sha512-POIZN9UDKWwEDga054LvYr2KnK8V+0HR4Ny4Bwv8V7/FZCPxJgsCjYxXGxqxzHs7VBxMKZfgvtKhafuJkJSPGA==
   dependencies:
     "@remix-run/router" "1.6.3"
@@ -13298,9 +13317,9 @@ tailwind-merge@^1.10.0:
   resolved "https://registry.npmjs.org/tailwind-merge/-/tailwind-merge-1.13.1.tgz"
   integrity sha512-tRtRN22TDokGi2TuYSvuHQuuW6BJ/zlUEG+iYpAQ9i66msc/0eU/+HPccbPnNNH0mCPp0Ob8thaC8Uy9CxHitQ==
 
-tailwindcss-animate@^1.0.6:
+tailwindcss-animate@1.0.6:
   version "1.0.6"
-  resolved "https://registry.npmjs.org/tailwindcss-animate/-/tailwindcss-animate-1.0.6.tgz"
+  resolved "https://registry.yarnpkg.com/tailwindcss-animate/-/tailwindcss-animate-1.0.6.tgz#c7195037481552cc47962ea50113830360fd0c28"
   integrity sha512-4WigSGMvbl3gCCact62ZvOngA+PRqhAn7si3TQ3/ZuPuQZcIEtVap+ENSXbzWhpojKB8CpvnIsrwBu8/RnHtuw==
 
 tailwindcss@^3.3.2:
