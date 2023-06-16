@@ -88,7 +88,9 @@ export function createMainWindow() {
 			preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
 		},
 		transparent: true,
-		titleBarStyle: 'hidden'
+		titleBarStyle: 'hidden',
+		vibrancy: 'under-window',
+		visualEffectState: 'active'
 	})
 
 	mainAPI = API(mainWindow)

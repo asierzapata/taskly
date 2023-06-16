@@ -5,4 +5,8 @@ export const alias = {
 	'@renderer': path.resolve(__dirname, './src/renderer'),
 	'@modules': path.resolve(__dirname, './src/modules'),
 	'@services': path.resolve(__dirname, './src/services')
+	// '@codemirror/state': path.resolve(
+	// 	__dirname,
+	// 	'./node_modules/@codemirror/state/dist/index.cjs'
+	// )
 }

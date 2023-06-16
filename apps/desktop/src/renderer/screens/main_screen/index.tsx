@@ -136,7 +136,7 @@ function Editor() {
 	const value = localStorage.getItem('myValue') || ''
 
 	return (
-		<div className="mx-auto w-full max-w-[700px]">
+		<div className="mx-auto w-full max-w-[900px]">
 			<TextEditor
 				initialValue={value}
 				onChange={({ value }) => {
