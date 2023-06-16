@@ -147,6 +147,7 @@ const createTheme = ({
 const myTheme = createTheme({
 	theme: 'dark',
 	settings: {
+		fontFamily: 'JetBrainsMono',
 		background: 'transparent',
 		foreground: '#e1e7ef',
 		caret: 'rgba(245, 112, 76, 1)',
@@ -192,10 +193,10 @@ const myTheme = createTheme({
 			tag: t.contentSeparator,
 			class: 'text-text'
 		},
-		// {
-		// 	tag: t.list,
-		// 	class: 'text-accent-6'
-		// },
+		{
+			tag: t.list,
+			class: 'text-accent-6'
+		},
 		{
 			tag: t.quote,
 			class: 'text-accent-3'
