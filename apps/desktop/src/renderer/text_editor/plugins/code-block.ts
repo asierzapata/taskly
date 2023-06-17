@@ -1,51 +1,47 @@
-import { Extension } from '@codemirror/state';
+import { Extension, Range } from '@codemirror/state'
 import {
 	ViewPlugin,
 	DecorationSet,
 	Decoration,
 	EditorView,
 	ViewUpdate
-} from '@codemirror/view';
+} from '@codemirror/view'
 import {
 	isCursorInRange,
 	invisibleDecoration,
 	iterateTreeInVisibleRanges,
 	editorLines
-} from '../util';
-import { codeblock as classes } from '../classes';
+} from '../util'
+import { codeblock as classes } from '../classes'
 
 /**
- * Ixora code block plugin.
+ *  code block plugin.
  *
  * This plugin allows to:
  * - Add default styling to code blocks
  * - Customize visibility of code block markers and language
  */
-export const codeblock = (): Extension => [codeBlockPlugin, baseTheme];
+export const codeblock = (): Extension => [codeBlockPlugin, baseTheme]
 
 const codeBlockPlugin = ViewPlugin.fromClass(
 	class {
-		decorations: DecorationSet;
+		decorations: DecorationSet
 		constructor(view: EditorView) {
-			this.decorations = decorateCodeBlocks(view);
+			this.decorations = decorateCodeBlocks(view)
 		}
 		update(update: ViewUpdate) {
-			if (
-				update.docChanged ||
-				update.viewportChanged ||
-				update.selectionSet
-			)
-				this.decorations = decorateCodeBlocks(update.view);
+			if (update.docChanged || update.viewportChanged || update.selectionSet)
+				this.decorations = decorateCodeBlocks(update.view)
 		}
 	},
-	{ decorations: (v) => v.decorations }
-);
+	{ decorations: v => v.decorations }
+)
 
 function decorateCodeBlocks(view: EditorView) {
-	const widgets = [];
+	const widgets: Range<Decoration>[] = []
 	iterateTreeInVisibleRanges(view, {
 		enter: ({ type, from, to, node }) => {
-			if (!['FencedCode', 'CodeBlock'].includes(type.name)) return;
+			if (!['FencedCode', 'CodeBlock'].includes(type.name)) return
 			editorLines(view, from, to).forEach((block, i) => {
 				const lineDec = Decoration.line({
 					class: [
@@ -56,11 +52,11 @@ function decorateCodeBlocks(view: EditorView) {
 							? classes.widgetEnd
 							: ''
 					].join(' ')
-				});
-				widgets.push(lineDec.range(block.from));
-			});
-			if (isCursorInRange(view.state, [from, to])) return;
-			const codeBlock = node.toTree();
+				})
+				widgets.push(lineDec.range(block.from))
+			})
+			if (isCursorInRange(view.state, [from, to])) return
+			const codeBlock = node.toTree()
 			codeBlock.iterate({
 				enter: ({ type, from: nodeFrom, to: nodeTo }) => {
 					switch (type.name) {
@@ -70,15 +66,15 @@ function decorateCodeBlocks(view: EditorView) {
 							const decRange = invisibleDecoration.range(
 								from + nodeFrom,
 								from + nodeTo
-							);
-							widgets.push(decRange);
-							break;
+							)
+							widgets.push(decRange)
+							break
 					}
 				}
-			});
+			})
 		}
-	});
-	return Decoration.set(widgets, true);
+	})
+	return Decoration.set(widgets, true)
 }
 
 /**
@@ -86,12 +82,14 @@ function decorateCodeBlocks(view: EditorView) {
  */
 const baseTheme = EditorView.baseTheme({
 	['.' + classes.widget]: {
-		backgroundColor: '#CCC7'
+		backgroundColor: 'hsl(var(--muted))',
+		'padding-left': '1em',
+		'padding-right': '1em'
 	},
 	['.' + classes.widgetBegin]: {
-		borderRadius: '5px 5px 0 0'
+		borderRadius: '3px 3px 0 0'
 	},
 	['.' + classes.widgetEnd]: {
-		borderRadius: '0 0 5px 5px'
+		borderRadius: '0 0 3px 3px'
 	}
-});
+})

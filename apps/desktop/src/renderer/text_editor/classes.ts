@@ -1,5 +1,5 @@
 /**
- * A single source of truth for all the classes used for decorations in Ixora.
+ * A single source of truth for all the classes used for decorations.
  *  These are kept together here to simplify changing/adding classes later
  * and serve as a reference.
  *
@@ -50,4 +50,4 @@ export const blockquote = {
 	image = {
 		/** Image preview */
 		widget: 'cm-image'
-	};
+	}

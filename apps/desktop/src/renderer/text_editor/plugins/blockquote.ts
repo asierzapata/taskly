@@ -5,23 +5,23 @@ import {
 	ViewPlugin,
 	ViewUpdate,
 	WidgetType
-} from '@codemirror/view';
-import { Range } from '@codemirror/state';
+} from '@codemirror/view'
+import { Range } from '@codemirror/state'
 import {
 	iterateTreeInVisibleRanges,
 	editorLines,
 	isCursorInRange,
 	checkRangeSubset
-} from '../util';
-import { blockquote as classes } from '../classes';
+} from '../util'
+import { blockquote as classes } from '../classes'
 
-const quoteMarkRE = /^(\s*>+)/gm;
+const quoteMarkRE = /^(\s*>+)/gm
 
 class BlockQuoteBorderWidget extends WidgetType {
 	toDOM(): HTMLElement {
-		const dom = document.createElement('span');
-		dom.classList.add(classes.mark);
-		return dom;
+		const dom = document.createElement('span')
+		dom.classList.add(classes.mark)
+		return dom
 	}
 }
 
@@ -29,17 +29,13 @@ class BlockQuoteBorderWidget extends WidgetType {
  * Plugin to add style blockquotes.
  */
 class BlockQuotePlugin {
-	decorations: DecorationSet;
+	decorations: DecorationSet
 	constructor(view: EditorView) {
-		this.decorations = this.styleBlockquote(view);
+		this.decorations = this.styleBlockquote(view)
 	}
 	update(update: ViewUpdate) {
-		if (
-			update.docChanged ||
-			update.viewportChanged ||
-			update.selectionSet
-		) {
-			this.decorations = this.styleBlockquote(update.view);
+		if (update.docChanged || update.viewportChanged || update.selectionSet) {
+			this.decorations = this.styleBlockquote(update.view)
 		}
 	}
 	/**
@@ -48,81 +44,87 @@ class BlockQuotePlugin {
 	 * @returns The blockquote decorations to add to the editor
 	 */
 	private styleBlockquote(view: EditorView): DecorationSet {
-		const widgets: Range<Decoration>[] = [];
+		const widgets: Range<Decoration>[] = []
 		iterateTreeInVisibleRanges(view, {
 			enter: ({ name, from, to }) => {
-				if (name !== 'Blockquote') return;
-				const lines = editorLines(view, from, to);
+				if (name !== 'Blockquote') return
+				const lines = editorLines(view, from, to)
 
-				lines.forEach((line) => {
+				lines.forEach(line => {
 					const lineDec = Decoration.line({
 						class: classes.widget
-					});
-					widgets.push(lineDec.range(line.from));
-				});
+					})
+					widgets.push(lineDec.range(line.from))
+				})
 
 				if (
 					lines.every(
-						(line) =>
-							!isCursorInRange(view.state, [line.from, line.to])
+						line => !isCursorInRange(view.state, [line.from, line.to])
 					)
 				) {
 					const marks = Array.from(
 						view.state.sliceDoc(from, to).matchAll(quoteMarkRE)
 					)
-						.map((x) => from + x.index)
-						.map((i) =>
+						.map(x => from + x.index)
+						.map(i =>
 							Decoration.replace({
 								widget: new BlockQuoteBorderWidget()
 							}).range(i, i + 1)
-						);
-					lines.forEach((line) => {
+						)
+					lines.forEach(line => {
 						if (
-							!marks.some((mark) =>
-								checkRangeSubset(
-									[line.from, line.to],
-									[mark.from, mark.to]
-								)
+							!marks.some(mark =>
+								checkRangeSubset([line.from, line.to], [mark.from, mark.to])
 							)
 						)
 							marks.push(
 								Decoration.widget({
 									widget: new BlockQuoteBorderWidget()
 								}).range(line.from)
-							);
-					});
+							)
+					})
 
-					widgets.push(...marks);
+					widgets.push(...marks)
 				}
 			}
-		});
-		return Decoration.set(widgets, true);
+		})
+		return Decoration.set(widgets, true)
 	}
 }
 
 const blockQuotePlugin = ViewPlugin.fromClass(BlockQuotePlugin, {
-	decorations: (v) => v.decorations
-});
+	decorations: v => v.decorations
+})
 
 /**
  * Default styles for blockquotes.
  */
 const baseTheme = EditorView.baseTheme({
 	['.' + classes.mark]: {
-		'border-left': '4px solid #ccc'
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		width: '2px',
+		height: '100%',
+		'border-radius': '3px 0 0 3px',
+		'border-left': '4px solid hsl(var(--accent-1))'
 	},
 	['.' + classes.widget]: {
-		color: '#555'
+		color: 'hsl(var(--accent-1))',
+		'border-radius': '3px',
+		backgroundColor: 'hsl(var(--muted))',
+		padding: '1rem',
+		position: 'relative'
 	}
-});
+})
 
 /**
- * Ixora blockquote plugin.
+ *  blockquote plugin.
  *
  * This plugin allows to:
  * - Decorate blockquote marks in the editor
  * - Add default styling to blockquote marks
  */
 export function blockquote() {
-	return [blockQuotePlugin, baseTheme];
+	return [blockQuotePlugin, baseTheme]
 }

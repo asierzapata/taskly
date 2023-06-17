@@ -22,7 +22,11 @@ import { languages } from '@codemirror/language-data'
 import { highlightSelectionMatches, search } from '@codemirror/search'
 import { autocompletion, closeBrackets } from '@codemirror/autocomplete'
 import { vscodeKeymap } from '@replit/codemirror-vscode-keymap'
-import { markdown, markdownLanguage } from '@codemirror/lang-markdown'
+import {
+	markdown,
+	markdownKeymap,
+	markdownLanguage
+} from '@codemirror/lang-markdown'
 import { history } from '@codemirror/commands'
 import { blockquote } from './plugins/blockquote'
 import { codeblock } from './plugins/code-block'
@@ -306,7 +310,7 @@ const TextEditor = React.forwardRef(
 						scrollPastEnd(),
 						dropCursor(),
 						search(),
-						keymap.of([...vscodeKeymap]),
+						keymap.of([...vscodeKeymap, ...markdownKeymap]),
 						EditorView.lineWrapping,
 						blockquote(),
 						codeblock(),

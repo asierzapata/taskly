@@ -36,7 +36,7 @@ export const MainScreen = () => {
 			<div className="titlebar">
 				<div className="titlebar-text">Taskly</div>
 			</div>
-			<div className="min-h-screen-without-frame flex w-full">
+			<div className="min-h-screen-without-frame max-h-screen-without-frame relative flex w-full">
 				<SplitPane split="vertical" defaultSize={250} maxSize={300}>
 					<SideBar />
 					<SplitPane split="vertical" primary="second" defaultSize="25%">
@@ -147,7 +147,7 @@ function Editor() {
 	const value = localStorage.getItem('myValue') || ''
 
 	return (
-		<div className="mx-auto w-full max-w-[900px]">
+		<div className="mx-auto w-full max-w-[900px] overflow-y-auto p-6">
 			<TextEditor
 				initialValue={value}
 				onChange={({ value }) => {

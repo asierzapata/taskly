@@ -110,71 +110,80 @@
 
 @layer base {
 	:root {
-		--background: 0 0% 100%;
+		--background: 0 0% 100%; /* hsl(0, 0%, 100%) */
 		--transparent-background: rgba(0, 0, 0, 0.6);
-		--foreground: 222.2 47.4% 11.2%;
+		--foreground: 222 47% 11%; /* hsl(222, 47%, 11%) */
 
-		--muted: 210 40% 96.1%;
-		--muted-foreground: 215.4 16.3% 46.9%;
+		--muted: 210 40% 96%; /* hsl(210, 40%, 96%) */
+		--muted-foreground: 215 16% 46%; /* hsl(215, 16%, 46%) */
 
-		--popover: 0 0% 100%;
-		--popover-foreground: 222.2 47.4% 11.2%;
+		--popover: 0 0% 100%; /* hsl(0, 0%, 100%) */
+		--popover-foreground: 222 47% 11%; /* hsl(222, 47%, 11%) */
 
 		--card: 0 0% 100%;
-		--card-foreground: 222.2 47.4% 11.2%;
+		--card-foreground: 222 47% 11%; /* hsl(222, 47%, 11%) */
 
-		--border: 214.3 31.8% 91.4%;
-		--input: 214.3 31.8% 91.4%;
+		--border: 214 31% 91%; /* hsl(214, 31%, 91%) */
+		--input: 214 31% 91%; /* hsl(214, 31%, 91%) */
 
-		--primary: 13 89% 63%;
-		--primary-foreground: 6 66% 25%;
+		--primary: 13 89% 63%; /* hsl(13, 89%, 63%) */
+		--primary-foreground: 6 66% 25%; /* hsl(6, 66%, 25%) */
 
-		--secondary: 210 40% 96.1%;
-		--secondary-foreground: 222.2 47.4% 11.2%;
+		--secondary: 210 40% 96%; /* hsl(210, 40%, 96%) */
+		--secondary-foreground: 222 47% 11%; /* hsl(222, 47%, 11%) */
 
-		--accent: 210 40% 96.1%;
-		--accent-foreground: 222.2 47.4% 11.2%;
+		--accent: 210 40% 96%; /* hsl(210, 40%, 96%) */
+		--accent-foreground: 222 47% 11%; /* hsl(222, 47%, 11%) */
 
-		--destructive: 0 100% 50%;
-		--destructive-foreground: 210 40% 98%;
+		--destructive: 0 100% 50%; /* hsl(0, 100%, 50%) */
+		--destructive-foreground: 210 40% 98%; /* hsl(210, 40%, 98%) */
 
-		--ring: 215 20.2% 65.1%;
+		--ring: 215 20% 65%; /* hsl(215, 20%, 65%) */
 
 		--radius: 0.5rem;
+
+		--accent-1: 13, 89%, 63%; /* hsl(13, 89%, 63%) */
+		--accent-2: 30, 89%, 63%; /* hsl(30, 89%, 63%) */
+		--accent-3: 55, 75%, 72%; /* hsl(55, 75%, 72%) */
+		--accent-4: 85, 65%, 63%; /* hsl(85, 65%, 63%) */
+		--accent-5: 156, 65%, 63%; /* hsl(156, 65%, 63%) */
+		--accent-6: 199, 65%, 63%; /* hsl(199, 65%, 63%) */
+		--accent-7: 230, 65%, 63%; /* hsl(230, 65%, 63%) */
+		--accent-8: 260, 65%, 63%; /* hsl(260, 65%, 63%) */
 	}
 
 	.dark {
-		--background: 224 71% 4%;
+		--background: 224 71% 4%; /* hsl(224, 71%, 4%) */
 		--transparent-background: rgba(0, 0, 0, 0.6);
 		--foreground: 213 31% 91%; /* hsl(213, 31%, 91%) */
 
 		--muted: 223 47% 11%; /* hsl(223, 47%, 11%) */
-		--muted-foreground: 215.4 16.3% 56.9%;
+		--muted-foreground: 215 16% 56%; /* hsl(215, 16%, 59%) */
 
-		--popover: 224 71% 4%;
-		--popover-foreground: 215 20.2% 65.1%;
+		--popover: 224 71% 4%; /* hsl(224, 71%, 4%) */
+		--popover-foreground: 215 20% 65%; /* hsl(215, 20%, 65%) */
 
 		--card: 224 71% 4%; /* hsl(224, 71%, 4%) */
-		--card-foreground: 213 31% 91%;
+		--card-foreground: 213 31% 91%; /* hsl(213, 31%, 91%) */
 
 		--border: 216 34% 17%; /* hsl(216, 34%, 17%) */
-		--input: 216 34% 17%;
+		--input: 216 34% 17%; /* hsl(216, 34%, 17%) */
 
 		--primary: 45 100% 50%; /* hsl(45, 100%, 50%) */
-		--primary-foreground: 6 66% 25%;
+		--primary-foreground: 210 40% 98%; /* hsl(210, 40%, 98%) */
 
-		--secondary: 222.2 47.4% 11.2%;
-		--secondary-foreground: 210 40% 98%;
+		--secondary: 222 47% 11%; /* hsl(222, 47%, 11%) */
+		--secondary-foreground: 210 40% 98%; /* hsl(210, 40%, 98%) */
 
 		--accent: 216 34% 17%; /* hsl(216, 34%, 17%) */
-		--accent-foreground: 210 40% 98%;
+		--accent-foreground: 210 40% 98%; /* hsl(210, 40%, 98%) */
 
-		--destructive: 0 63% 31%;
-		--destructive-foreground: 210 40% 98%;
+		--destructive: 0 63% 31%; /* hsl(0, 63%, 31%) */
+		--destructive-foreground: 210 40% 98%; /* hsl(210, 40%, 98%) */
 
-		--ring: 216 34% 17%;
+		--ring: 216 34% 17%; /* hsl(216, 34%, 17%) */
 
-		--radius: 0.5rem;
+		--radius: 0.5rem; /* 8px */
 
 		--accent-1: 13, 89%, 63%; /* hsl(13, 89%, 63%) */
 		--accent-2: 30, 89%, 63%; /* hsl(30, 89%, 63%) */
@@ -208,6 +217,7 @@
 	}
 }
 
+/* TODO: Move to Text Editor CSS */
 @layer components {
 	.text-accent-1 {
 		color: hsl(var(--accent-1));
@@ -236,22 +246,28 @@
 	.tag-contentSeparator {
 		@apply text-accent-7;
 	}
-	.tag-heading-1 {
+	.tag-heading-1,
+	.cm-heading-1 {
 		@apply text-accent-1 text-2xl font-bold;
 	}
-	.tag-heading-2 {
+	.tag-heading-2,
+	.cm-heading-2 {
 		@apply text-accent-2 text-xl font-bold;
 	}
-	.tag-heading-3 {
+	.tag-heading-3,
+	.cm-heading-3 {
 		@apply text-accent-3 text-lg font-bold;
 	}
-	.tag-heading-4 {
+	.tag-heading-4,
+	.cm-heading-4 {
 		@apply text-accent-4 text-base font-bold;
 	}
-	.tag-heading-5 {
+	.tag-heading-5,
+	.cm-heading-5 {
 		@apply text-accent-5 text-sm font-bold;
 	}
-	.tag-heading-6 {
+	.tag-heading-6,
+	.cm-heading-6 {
 		@apply text-accent-6 text-xs font-bold;
 	}
 	.tag-list {

@@ -1,52 +1,52 @@
-import { Extension, Range } from '@codemirror/state';
-import { EditorView } from 'codemirror';
-import { imagePreview } from '../state/image';
-import { image as classes } from '../classes';
+import { Extension, Range } from '@codemirror/state'
+import { EditorView } from 'codemirror'
+import { imagePreview } from '../state/image'
+import { image as classes } from '../classes'
 import {
 	Decoration,
 	DecorationSet,
 	ViewPlugin,
 	ViewUpdate
-} from '@codemirror/view';
+} from '@codemirror/view'
 import {
 	iterateTreeInVisibleRanges,
 	isCursorInRange,
 	invisibleDecoration
-} from '../util';
+} from '../util'
 
 function hideNodes(view: EditorView) {
-	const widgets = new Array<Range<Decoration>>();
+	const widgets = new Array<Range<Decoration>>()
 	iterateTreeInVisibleRanges(view, {
 		enter(node) {
 			if (
 				node.name === 'Image' &&
 				!isCursorInRange(view.state, [node.from, node.to])
 			) {
-				widgets.push(invisibleDecoration.range(node.from, node.to));
+				widgets.push(invisibleDecoration.range(node.from, node.to))
 			}
 		}
-	});
-	return Decoration.set(widgets, true);
+	})
+	return Decoration.set(widgets, true)
 }
 
 const hideImageNodePlugin = ViewPlugin.fromClass(
 	class {
-		decorations: DecorationSet;
+		decorations: DecorationSet
 
 		constructor(view: EditorView) {
-			this.decorations = hideNodes(view);
+			this.decorations = hideNodes(view)
 		}
 
 		update(update: ViewUpdate) {
 			if (update.docChanged || update.selectionSet)
-				this.decorations = hideNodes(update.view);
+				this.decorations = hideNodes(update.view)
 		}
 	},
-	{ decorations: (v) => v.decorations }
-);
+	{ decorations: v => v.decorations }
+)
 
 /**
- * Ixora Image plugin.
+ *  Image plugin.
  *
  * This plugin allows to
  * - Add a preview of an image in the document.
@@ -57,7 +57,7 @@ export const image = (): Extension => [
 	imagePreview,
 	hideImageNodePlugin,
 	baseTheme
-];
+]
 
 const baseTheme = EditorView.baseTheme({
 	['.' + classes.widget]: {
@@ -68,4 +68,4 @@ const baseTheme = EditorView.baseTheme({
 		maxHeight: '100%',
 		userSelect: 'none'
 	}
-});
+})

@@ -1,0 +1,38 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"display": "@taskly/server",
+	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+		"strict": true,
+		"target": "es5",
+		"lib": ["es5"],
+		"allowJs": true,
+		"composite": false,
+		"declaration": true,
+		"declarationMap": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"inlineSources": false,
+		"isolatedModules": true,
+		"moduleResolution": "node",
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"preserveWatchOutput": true,
+		"skipLibCheck": true,
+		"noEmit": true,
+		"incremental": true,
+		"module": "NodeNext",
+		"resolveJsonModule": true,
+		"jsx": "preserve",
+		"sourceMap": true,
+		"outDir": "dist",
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": ".",
+		"paths": {
+			"@server/*": ["./src/*"]
+		},
+		"typeRoots": ["./node_modules/@types", "./src/types"]
+	},
+	"include": ["src"],
+	"exclude": ["node_modules"]
+}

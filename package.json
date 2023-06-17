@@ -30,6 +30,7 @@
 	"workspaces": [
 		"apps/mobile",
 		"apps/desktop",
+		"apps/server",
 		"packages/config/*",
 		"packages/web-ui"
 	]
