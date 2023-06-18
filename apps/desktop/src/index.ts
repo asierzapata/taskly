@@ -52,7 +52,6 @@ if (!gotTheLock) {
 
 	app.whenReady().then(() => {
 		createMainWindow()
-		createMainWindow()
 	})
 
 	app.on('open-url', (event, url) => {
