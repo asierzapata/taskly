@@ -9,7 +9,8 @@ export const schema = z.object({
 	JWT_SECRET: z.string(),
 	JWT_ALGORITHM: z.enum(['HS256', 'HS384', 'HS512']),
 	JWT_EXPIRATION: z.string(),
-	JWT_COOKIE_NAME: z.string()
+	JWT_COOKIE_NAME: z.string(),
+	MONGODB_URI: z.string()
 })
 
 export const env = {
@@ -20,5 +21,6 @@ export const env = {
 	JWT_SECRET: process.env.JWT_SECRET,
 	JWT_ALGORITHM: process.env.JWT_ALGORITHM,
 	JWT_EXPIRATION: process.env.JWT_EXPIRATION,
-	JWT_COOKIE_NAME: process.env.JWT_COOKIE_NAME
+	JWT_COOKIE_NAME: process.env.JWT_COOKIE_NAME,
+	MONGODB_URI: process.env.MONGODB_URI
 }

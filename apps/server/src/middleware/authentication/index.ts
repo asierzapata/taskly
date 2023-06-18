@@ -9,6 +9,7 @@ import { ApplicationError } from '@server/utils/application_error'
 import { fromUnixTime, isAfter, sub } from 'date-fns'
 
 import type { NextFunction, Request, Response } from 'express'
+import { SessionSource } from '@server/services/authentication/session/session_source'
 
 /* ====================================================== */
 /*                   Implementation                       */
@@ -39,9 +40,11 @@ async function authenticate(req: Request, res: Response, next: NextFunction) {
 		}).toValue()
 
 		if (!sessionData) {
+			console.log('>>>>>> unauthenticated session')
 			req.session = Session.unauthenticated({
 				id: clientSessionId,
-				device
+				device,
+				source: SessionSource.httpRequest().toValue()
 			})
 			return next()
 		}

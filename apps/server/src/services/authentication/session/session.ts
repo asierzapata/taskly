@@ -73,8 +73,8 @@ class Session {
 			id,
 			type: new SessionType(type),
 			distinctId,
-			source: new SessionSource(source),
-			device: new SessionDevice(device),
+			source: source ? new SessionSource(source) : undefined,
+			device: device ? new SessionDevice(device) : undefined,
 			authorizationStatus: new SessionAuthorizationStatus(authorizationStatus),
 			registeredAt
 		}

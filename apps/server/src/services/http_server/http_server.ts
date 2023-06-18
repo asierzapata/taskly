@@ -3,6 +3,7 @@ import type { Application } from 'express'
 // import https from 'https'
 import http, { Server } from 'http'
 import { Logger } from '../logger/logger'
+import { ApplicationError } from '@server/utils/application_error'
 // import fs from 'fs'
 // import path from 'path'
 
@@ -25,13 +26,23 @@ class HTTPServer {
 		this.status = SERVER_STATUS.UNSTARTED
 		this.app = app
 		this.port = port
+		this.server = http.createServer(this.app)
 	}
 
 	start({ logger }: { logger: Logger }) {
 		return new Promise<Application>((resolve, reject) => {
 			if (this.status === SERVER_STATUS.STARTED) return resolve(this.app)
 
-			this.server = http.createServer(this.app)
+			if (!this.server) {
+				return reject(
+					ApplicationError.Programmer({
+						errorName: 'HTTPServerNotInitialized',
+						message: 'HTTP server not initialized',
+						code: 'http-server-not-initialized'
+					})
+				)
+			}
+
 			// this.server = https.createServer(
 			// 	{
 			// 		key: fs.readFileSync(path.join(__dirname, "./key.pem")),
@@ -67,6 +78,11 @@ class HTTPServer {
 			this.server.close()
 			this.server = undefined
 		})
+	}
+
+	on(event: string, callback: (...args: any[]) => void) {
+		if (!this.server) return
+		this.server.on(event, callback)
 	}
 }
 

@@ -40,6 +40,24 @@ import { headingSlugField } from './state/heading-slug'
 import { imagePreview } from './state/image'
 import { frontmatter } from './plugins/frontmatter'
 
+import * as Y from 'yjs'
+import { yCollab } from 'y-codemirror.next'
+import { WebsocketProvider } from 'y-websocket'
+import { IndexeddbPersistence } from 'y-indexeddb'
+
+export const userColors = [
+	{ color: '#30bced', light: '#30bced33' },
+	{ color: '#6eeb83', light: '#6eeb8333' },
+	{ color: '#ffbc42', light: '#ffbc4233' },
+	{ color: '#ecd444', light: '#ecd44433' },
+	{ color: '#ee6352', light: '#ee635233' },
+	{ color: '#9ac2c9', light: '#9ac2c933' },
+	{ color: '#8acb88', light: '#8acb8833' },
+	{ color: '#1be7ff', light: '#1be7ff33' }
+]
+
+const userColor = userColors[Math.floor(Math.random() * userColors.length)]
+
 export interface CreateThemeOptions {
 	/**
 	 * Theme inheritance. Determines which styles CodeMirror will apply by default.
@@ -273,13 +291,13 @@ const TextEditor = React.forwardRef(
 		}: TextEditorProps,
 		ref
 	) => {
-		const editorViewRefInternal = useRef()
-		const containerRef = useRef()
+		const editorViewRefInternal = useRef<EditorView>()
+		const containerRef = useRef<HTMLDivElement | null>(null)
 
 		const editorViewRef = editorViewRefProp || editorViewRefInternal
 
 		useImperativeHandle(ref, () => ({
-			getValue: () => editorViewRef.current.state.doc.toString()
+			getValue: () => editorViewRef.current?.state.doc.toString()
 		}))
 
 		useEffect(() => {
@@ -295,6 +313,28 @@ const TextEditor = React.forwardRef(
 
 			if (containerRef.current) {
 				if (!editorViewRef.current) {
+					const ydoc = new Y.Doc()
+					const documentId = 'user-document'
+					const wsProvider = new WebsocketProvider(
+						'ws://localhost:8080/notes',
+						documentId,
+						ydoc
+					)
+					const indexeddbProvider = new IndexeddbPersistence(documentId, ydoc)
+					indexeddbProvider.whenSynced.then(() => {
+						console.log('loaded data from indexed db')
+					})
+
+					const ytext = ydoc.getText('codemirror')
+
+					const undoManager = new Y.UndoManager(ytext)
+
+					wsProvider.awareness.setLocalStateField('user', {
+						name: 'Anonymous ' + Math.floor(Math.random() * 100),
+						color: userColor?.color ?? '#000000',
+						colorLight: userColor?.light ?? '#ffffff'
+					})
+
 					const extensions = [
 						highlightSpecialChars(),
 						history(),
@@ -328,11 +368,12 @@ const TextEditor = React.forwardRef(
 							codeLanguages: languages
 						}),
 						updateListener,
-						...myTheme
+						...myTheme,
+						yCollab(ytext, wsProvider.awareness, { undoManager })
 					]
 					editorViewRef.current = new EditorView({
 						state: EditorState.create({
-							doc: initialValue,
+							doc: ytext.toString(),
 							extensions
 						}),
 						parent: containerRef.current
@@ -343,7 +384,7 @@ const TextEditor = React.forwardRef(
 			return () => {
 				if (editorViewRef.current) {
 					editorViewRef.current.destroy()
-					editorViewRef.current = null
+					editorViewRef.current = undefined
 				}
 			}
 		}, [containerRef, initialValue, editorViewRef, onChange])

@@ -73,7 +73,11 @@
 		"react-dom": "18.2.0",
 		"react-router-dom": "6.12.1",
 		"react-split-pane": "^0.1.92",
-		"tailwindcss-animate": "1.0.6"
+		"tailwindcss-animate": "1.0.6",
+		"y-codemirror.next": "^0.3.2",
+		"y-indexeddb": "^9.0.11",
+		"y-websocket": "^1.5.0",
+		"yjs": "^13.6.4"
 	},
 	"workspaces": {
 		"nohoist": [
