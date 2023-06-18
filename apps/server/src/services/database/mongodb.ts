@@ -71,4 +71,4 @@ class MongoDB {
 /*                      Public API                        */
 /* ====================================================== */
 
-module.exports = { MongoDB }
+export { MongoDB }

@@ -33,5 +33,16 @@ export const env = {
 		algorithm: _env.data.JWT_ALGORITHM,
 		expiration: _env.data.JWT_EXPIRATION,
 		cookieName: _env.data.JWT_COOKIE_NAME
+	},
+	mongoDb: {
+		uri: _env.data.MONGODB_URI,
+		name: _env.data.MONGODB_NAME
+	},
+	google: {
+		clientId: _env.data.GOOGLE_CLIENT_ID,
+		clientSecret: _env.data.GOOGLE_CLIENT_SECRET,
+		redirectUrl: _env.data.GOOGLE_REDIRECT_URL
 	}
 }
+
+export type Env = typeof env

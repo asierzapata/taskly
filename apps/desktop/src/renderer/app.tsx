@@ -13,7 +13,11 @@ import '../styles/globals.css'
 /* ====================================================== */
 
 export const renderReactApp = (el: string) => {
-	ReactDom.createRoot(document.querySelector(el)).render(
+	const element = document.querySelector(el)
+	if (!element) {
+		throw new Error(`Element with selector ${el} not found`)
+	}
+	ReactDom.createRoot(element).render(
 		<React.StrictMode>
 			<AppRouter />
 		</React.StrictMode>

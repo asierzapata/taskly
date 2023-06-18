@@ -31,6 +31,7 @@
 		"apps/mobile",
 		"apps/desktop",
 		"apps/server",
+		"apps/web",
 		"packages/config/*",
 		"packages/web-ui"
 	]

@@ -33,9 +33,6 @@ import './split-pane.css'
 export const MainScreen = () => {
 	return (
 		<>
-			<div className="titlebar">
-				<div className="titlebar-text">Taskly</div>
-			</div>
 			<div className="min-h-screen-without-frame max-h-screen-without-frame relative flex w-full">
 				{/* this lib is incompatible with react18. To fix     // children: React.ReactNode; needs to be added to SplitPaneProps.
 				// @ts-ignore TS2322 */}
@@ -44,8 +41,8 @@ export const MainScreen = () => {
 					{/* this lib is incompatible with react18. To fix     // children: React.ReactNode; needs to be added to SplitPaneProps.
 					 // @ts-ignore TS2322 */}
 					<SplitPane split="vertical" primary="second" defaultSize="25%">
-						<Editor />
-						<Calendar />
+						{/* <Editor /> */}
+						{/* <Calendar /> */}
 					</SplitPane>
 				</SplitPane>
 			</div>

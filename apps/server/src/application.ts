@@ -1,6 +1,8 @@
 import { env } from './env'
+import modules from './modules'
 import { Server } from './server'
 import { AuthenticationService } from './services/authentication'
+import { GoogleAuthenticationService } from './services/google_auth'
 import { Logger } from './services/logger/logger'
 
 /* ====================================================== */
@@ -29,7 +31,15 @@ class Application {
 					algorithm: env.authentication.algorithm,
 					expiration: env.authentication.expiration,
 					cookieName: env.authentication.cookieName
-				})
+				}),
+				googleAuthenticationService: new GoogleAuthenticationService({
+					webClient: {
+						clientId: env.google.clientId,
+						clientSecret: env.google.clientSecret,
+						redirectUrl: env.google.redirectUrl
+					}
+				}),
+				modules
 			})
 			this.logger.info('Application Started!')
 			return { app, logger: this.logger }

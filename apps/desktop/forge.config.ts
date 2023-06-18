@@ -32,7 +32,7 @@ const config: ForgeConfig = {
 		new WebpackPlugin({
 			mainConfig,
 			devContentSecurityPolicy:
-				'connect-src fphulvfmwjdhlpgwktsr.supabase.co ws://localhost:3000/ws ws://localhost:8080',
+				'connect-src fphulvfmwjdhlpgwktsr.supabase.co ws://localhost:3000/ws ws://localhost:8080 http://localhost:8080',
 			renderer: {
 				config: rendererConfig,
 				entryPoints: [
