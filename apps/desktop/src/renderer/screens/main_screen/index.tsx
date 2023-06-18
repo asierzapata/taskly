@@ -20,7 +20,7 @@ import {
 } from '@taskly/web-ui'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { TextEditor } from '@renderer/text_editor'
+import { NoteEditor } from '@renderer/note_editor'
 import SplitPane from 'react-split-pane'
 
 import './titlebar.css'
@@ -37,22 +37,17 @@ export const MainScreen = () => {
 				<div className="titlebar-text">Taskly</div>
 			</div>
 			<div className="min-h-screen-without-frame max-h-screen-without-frame relative flex w-full">
+				{/* this lib is incompatible with react18. To fix     // children: React.ReactNode; needs to be added to SplitPaneProps.
+				// @ts-ignore TS2322 */}
 				<SplitPane split="vertical" defaultSize={250} maxSize={300}>
 					<SideBar />
+					{/* this lib is incompatible with react18. To fix     // children: React.ReactNode; needs to be added to SplitPaneProps.
+					 // @ts-ignore TS2322 */}
 					<SplitPane split="vertical" primary="second" defaultSize="25%">
 						<Editor />
 						<Calendar />
 					</SplitPane>
 				</SplitPane>
-				{/* <div className="max-h-screen-without-frame h-screen max-w-xs">
-					<SideBar />
-				</div>
-				<div className="max-h-screen-without-frame relative flex-1 overflow-y-auto">
-					<Editor />
-				</div>
-				<div className="max-h-screen-without-frame relative w-[350px] max-w-[400px] overflow-y-auto p-3 pb-6">
-					<Calendar />
-				</div> */}
 			</div>
 		</>
 	)
@@ -148,12 +143,7 @@ function Editor() {
 
 	return (
 		<div className="mx-auto w-full max-w-[900px] overflow-y-auto p-6">
-			<TextEditor
-				initialValue={value}
-				onChange={({ value }) => {
-					localStorage.setItem('myValue', value)
-				}}
-			/>
+			<NoteEditor noteId="user-document" />
 		</div>
 	)
 }

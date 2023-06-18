@@ -16,11 +16,6 @@ import { uuid } from './services/uuid'
 
 import { AuthenticationService } from './services/authentication'
 
-import WebSocket from 'ws'
-import * as Y from 'yjs'
-import { MongodbPersistence } from 'y-mongodb-provider'
-import yUtils from 'y-websocket/bin/utils'
-
 /* ====================================================== */
 /*                      Middleware                        */
 /* ====================================================== */
@@ -34,6 +29,7 @@ import { authenticate } from './middleware/authentication'
 
 import health from './health'
 import * as api from './api'
+import { NotesWebSocket } from './services/notes_web_socket'
 
 /* ====================================================== */
 /*                     Implementation                     */
@@ -42,10 +38,16 @@ import * as api from './api'
 class Server {
 	app
 	server
+	notesWebSocket
 
 	constructor() {
 		this.app = express()
 		this.server = new HTTPServer({ app: this.app, port: env.PORT })
+		this.notesWebSocket = new NotesWebSocket({
+			route: '/notes',
+			server: this.server,
+			env
+		})
 	}
 
 	async start({
@@ -123,60 +125,10 @@ class Server {
 
 		this.app.use(router)
 
-		// Websocket
-		// ---------
-
-		// y-websocket
-		const wss = new WebSocket.Server({
-			noServer: true
-		})
-		wss.on('connection', yUtils.setupWSConnection)
-		this.server.on('upgrade', (request, socket, head) => {
-			if (request.url.startsWith('/notes')) {
-				wss.handleUpgrade(request, socket, head, (ws: WebSocket) => {
-					// TODO: check authentication to see if user is allowed to access this document
-					wss.emit('connection', ws, request)
-				})
-				return
-			}
-
-			socket.destroy()
-		})
-
-		const mdb = new MongodbPersistence(env.MONGODB_URI, {
-			collectionName: 'notes',
-			flushSize: 100
-			// multipleCollections: true
-		})
-
-		yUtils.setPersistence({
-			bindState: async (docName: string, ydoc: Y.Doc) => {
-				// Here you listen to granular document updates and store them in the database
-				// You don't have to do this, but it ensures that you don't lose content when the server crashes
-				// See https://github.com/yjs/yjs#Document-Updates for documentation on how to encode
-				// document updates
-
-				// official default code from: https://github.com/yjs/y-websocket/blob/37887badc1f00326855a29fc6b9197745866c3aa/bin/utils.js#L36
-				const persistedYdoc = await mdb.getYDoc(docName)
-				const newUpdates = Y.encodeStateAsUpdate(ydoc)
-				mdb.storeUpdate(docName, newUpdates)
-				Y.applyUpdate(ydoc, Y.encodeStateAsUpdate(persistedYdoc))
-				ydoc.on('update', async update => {
-					mdb.storeUpdate(docName, update)
-				})
-			},
-			writeState: async (docName: string, ydoc: Y.Doc) => {
-				// This is called when all connections to the document are closed.
-				const persistedYdoc = await mdb.getYDoc(docName)
-				const newUpdates = Y.encodeStateAsUpdate(ydoc)
-				mdb.storeUpdate(docName, newUpdates)
-				Y.applyUpdate(ydoc, Y.encodeStateAsUpdate(persistedYdoc))
-			}
-		})
-
 		// In testing we don't actually need the http server
 		// to start in order to test the app
 		if (!env.isTesting) {
+			this.notesWebSocket.start()
 			await this.server.start({ logger: expressApplicationLogger })
 		}
 

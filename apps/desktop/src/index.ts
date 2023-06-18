@@ -26,7 +26,7 @@ let mainWindow: BrowserWindow
 let mainAPI: MainApi
 
 if (process.defaultApp) {
-	if (process.argv.length >= 2) {
+	if (process.argv.length >= 2 && process.argv[1]) {
 		app.setAsDefaultProtocolClient('taskly', process.execPath, [
 			path.resolve(process.argv[1])
 		])
@@ -47,7 +47,10 @@ if (!gotTheLock) {
 			mainWindow.focus()
 		}
 
-		handleDeepLink(commandLine.pop().slice(0, -1), mainAPI)
+		const commandLineLastElement = commandLine.pop()
+		if (commandLineLastElement) {
+			handleDeepLink(commandLineLastElement.slice(0, -1), mainAPI)
+		}
 	})
 
 	app.whenReady().then(() => {
