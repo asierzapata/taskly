@@ -30,9 +30,9 @@ const handlers = (globalDependencies: GlobalDependencies) => ({
 		})
 })
 
-const dependencies = ({ db }: { db: Db }): ModuleDependencies => {
+const dependencies = ({ userDb }: GlobalDependencies): ModuleDependencies => {
 	return {
-		repository: new MongoDBAccountRepository({ db })
+		repository: new MongoDBAccountRepository({ db: userDb })
 	}
 }
 

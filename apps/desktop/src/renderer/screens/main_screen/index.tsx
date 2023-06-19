@@ -42,7 +42,7 @@ export const MainScreen = () => {
 					 // @ts-ignore TS2322 */}
 					<SplitPane split="vertical" primary="second" defaultSize="25%">
 						{/* <Editor /> */}
-						{/* <Calendar /> */}
+						<Calendar />
 					</SplitPane>
 				</SplitPane>
 			</div>

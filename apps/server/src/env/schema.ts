@@ -11,7 +11,8 @@ export const schema = z.object({
 	JWT_EXPIRATION: z.string(),
 	JWT_COOKIE_NAME: z.string(),
 	MONGODB_URI: z.string(),
-	MONGODB_NAME: z.string(),
+	MONGODB_DATA_DB_NAME: z.string(),
+	MONGODB_USER_DB_NAME: z.string(),
 	GOOGLE_CLIENT_ID: z.string(),
 	GOOGLE_CLIENT_SECRET: z.string(),
 	GOOGLE_REDIRECT_URL: z.string()
@@ -27,7 +28,8 @@ export const env = {
 	JWT_EXPIRATION: process.env.JWT_EXPIRATION,
 	JWT_COOKIE_NAME: process.env.JWT_COOKIE_NAME,
 	MONGODB_URI: process.env.MONGODB_URI,
-	MONGODB_NAME: process.env.MONGODB_NAME,
+	MONGODB_DATA_DB_NAME: process.env.MONGODB_DATA_DB_NAME,
+	MONGODB_USER_DB_NAME: process.env.MONGODB_USER_DB_NAME,
 	GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
 	GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
 	GOOGLE_REDIRECT_URL: process.env.GOOGLE_REDIRECT_URL

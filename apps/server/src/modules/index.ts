@@ -1,9 +1,11 @@
 import { GlobalDependencies } from '@server/types/shared'
 import accountModule from './account'
+import userModule from './user'
 
 function modules(globalDependencies: GlobalDependencies) {
 	return {
-		account: accountModule(globalDependencies)
+		account: accountModule(globalDependencies),
+		user: userModule(globalDependencies)
 	}
 }
 

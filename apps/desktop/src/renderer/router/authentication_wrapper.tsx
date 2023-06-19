@@ -38,11 +38,17 @@ const AuthenticationWrapper = () => {
 	const [session, setSession] = React.useState<Session | null>(null)
 
 	React.useEffect(() => {
-		window.api.authentication.OnSignInWithGoogleCallback(({ code }) => {
+		window.api.authentication.OnSignInWithGoogleCallback(async ({ code }) => {
 			console.log('>>>>>> code', code)
-			axios.post('http://localhost:8080/api/v1/authentication/google', {
-				code
-			})
+			const response = await axios.post(
+				'http://localhost:8080/api/v1/authentication/google',
+				{
+					code
+				}
+			)
+			const { data } = response
+			console.log('>>>>>>', data.data.user)
+			setSession(data.data.user)
 		})
 	}, [])
 

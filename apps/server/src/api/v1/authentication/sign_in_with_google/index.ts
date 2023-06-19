@@ -37,7 +37,17 @@ async function signInWithGoogleController(
 				provider: 'google',
 				providerAccountId: googleUser.id
 			})
+
+			await req.modules.user.createUser({
+				userId,
+				email: googleUser.email,
+				firstName: googleUser.firstName,
+				lastName: googleUser.lastName,
+				picture: googleUser.picture
+			})
 		}
+
+		const user = await req.modules.user.getUserById({ id: userId })
 
 		const session = Session.user({
 			...req.session,
@@ -53,13 +63,14 @@ async function signInWithGoogleController(
 		return successReponse({
 			res,
 			statusCode: 200,
-			data: {},
+			data: {
+				user
+			},
 			meta: {
 				token: jwtToken
 			}
 		})
 	} catch (error) {
-		console.log('>>>>>>', error)
 		return next(error)
 	}
 }

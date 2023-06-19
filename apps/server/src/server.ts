@@ -43,7 +43,8 @@ class Server {
 	app
 	server
 	notesWebSocket
-	mongoDb
+	mongoDbData
+	mongoDbUser
 
 	constructor() {
 		this.app = express()
@@ -53,15 +54,21 @@ class Server {
 			server: this.server,
 			env
 		})
-		this.mongoDb = new MongoDB({
+		const dbLogger = new Logger({
+			name: LOGGER_SOURCES.MONGO_DB,
+			enabled: env.logging.enabled,
+			level: env.logging.level,
+			prettyPrint: true
+		})
+		this.mongoDbData = new MongoDB({
 			url: env.mongoDb.uri,
-			name: env.mongoDb.name,
-			logger: new Logger({
-				name: LOGGER_SOURCES.MONGO_DB,
-				enabled: env.logging.enabled,
-				level: env.logging.level,
-				prettyPrint: true
-			})
+			name: env.mongoDb.dataDbName,
+			logger: dbLogger
+		})
+		this.mongoDbUser = new MongoDB({
+			url: env.mongoDb.uri,
+			name: env.mongoDb.userDbName,
+			logger: dbLogger
 		})
 	}
 
@@ -121,13 +128,14 @@ class Server {
 		// Database
 		// --------
 
-		await this.mongoDb.connect()
+		await this.mongoDbData.connect()
+		await this.mongoDbUser.connect()
 
 		// Dependency Injection
 		// --------------------
 
 		router.use((req: Request, res: Response, next: NextFunction) => {
-			if (!this.mongoDb.db) {
+			if (!this.mongoDbData.db || !this.mongoDbUser.db) {
 				throw ApplicationError.Programmer({
 					errorName: 'MongoDBNotConnected',
 					message: 'MongoDB is not connected',
@@ -140,7 +148,8 @@ class Server {
 			req.googleAuthenticationService = googleAuthenticationService
 
 			req.modules = modules({
-				db: this.mongoDb.db
+				dataDb: this.mongoDbData.db,
+				userDb: this.mongoDbUser.db
 			})
 
 			return next()

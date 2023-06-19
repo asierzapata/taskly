@@ -36,7 +36,8 @@ export const env = {
 	},
 	mongoDb: {
 		uri: _env.data.MONGODB_URI,
-		name: _env.data.MONGODB_NAME
+		dataDbName: _env.data.MONGODB_DATA_DB_NAME,
+		userDbName: _env.data.MONGODB_USER_DB_NAME
 	},
 	google: {
 		clientId: _env.data.GOOGLE_CLIENT_ID,
