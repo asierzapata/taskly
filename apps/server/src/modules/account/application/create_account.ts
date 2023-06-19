@@ -6,8 +6,9 @@
 /*                        Types                           */
 /* ====================================================== */
 
-import type { Provider, ProviderAccountId, UserId } from '../domain/account'
+import type { Session } from '@server/services/authentication'
 import type { ModuleDependencies } from '../index'
+import type { Provider, ProviderAccountId, UserId } from '../domain/account'
 
 type CreateAccountParameters = {
 	userId: UserId
@@ -19,22 +20,34 @@ type CreateAccountParameters = {
 /*                    Implementation                      */
 /* ====================================================== */
 
-function createAccount(
-	{ userId, provider, providerAccountId }: CreateAccountParameters,
+async function createAccount(
+	parameters: CreateAccountParameters,
 	dependencies: ModuleDependencies
 ) {
 	const { repository } = dependencies
 
 	return repository.saveAccount({
 		_id: repository.generateId(),
-		userId,
-		provider,
-		providerAccountId
+		createdAt: new Date().getTime(),
+		updatedAt: new Date().getTime(),
+		...parameters
 	})
+}
+
+/* ====================================================== */
+/*                       Authorize                        */
+/* ====================================================== */
+
+async function authorizeCreateAccount(
+	parameters: CreateAccountParameters,
+	dependencies: ModuleDependencies,
+	session: Session
+) {
+	return
 }
 
 /* ====================================================== */
 /*                      Public API                        */
 /* ====================================================== */
 
-export { createAccount, type CreateAccountParameters }
+export { createAccount, type CreateAccountParameters, authorizeCreateAccount }

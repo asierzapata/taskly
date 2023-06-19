@@ -6,8 +6,9 @@
 /*                        Types                           */
 /* ====================================================== */
 
-import { Email, FirstName, Id, LastName, Picture } from '../domain/user'
+import type { Session } from '@server/services/authentication'
 import type { ModuleDependencies } from '../index'
+import { Email, FirstName, Id, LastName, Picture } from '../domain/user'
 
 type CreateUserParameters = {
 	userId: Id
@@ -21,24 +22,34 @@ type CreateUserParameters = {
 /*                    Implementation                      */
 /* ====================================================== */
 
-function createUser(
+async function createUser(
 	parameters: CreateUserParameters,
 	dependencies: ModuleDependencies
 ) {
 	const { repository } = dependencies
-	const { userId, email, firstName, lastName, picture } = parameters
 
 	return repository.saveUser({
-		_id: userId,
-		email,
-		firstName,
-		lastName,
-		picture
+		_id: repository.generateId(),
+		createdAt: new Date().getTime(),
+		updatedAt: new Date().getTime(),
+		...parameters
 	})
+}
+
+/* ====================================================== */
+/*                       Authorize                        */
+/* ====================================================== */
+
+async function authorizeCreateUser(
+	parameters: CreateUserParameters,
+	dependencies: ModuleDependencies,
+	session: Session
+) {
+	return
 }
 
 /* ====================================================== */
 /*                      Public API                        */
 /* ====================================================== */
 
-export { createUser, type CreateUserParameters }
+export { createUser, type CreateUserParameters, authorizeCreateUser }

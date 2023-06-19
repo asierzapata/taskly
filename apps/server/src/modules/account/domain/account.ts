@@ -6,6 +6,8 @@ export type RefreshToken = string
 export type AccessToken = string
 export type ExpiresAt = number
 export type TokenType = string
+export type CreatedAt = number
+export type UpdatedAt = number
 
 export type Account = {
 	_id: Id
@@ -16,4 +18,6 @@ export type Account = {
 	accessToken?: AccessToken
 	expiresAt?: ExpiresAt
 	tokenType?: TokenType
+	createdAt: CreatedAt
+	updatedAt: UpdatedAt
 }

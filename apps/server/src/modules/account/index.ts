@@ -1,9 +1,10 @@
+import { createHandler } from '../shared/handler_factory'
 import {
-	CreateAccountParameters,
+	authorizeCreateAccount,
 	createAccount
 } from './application/create_account'
 import {
-	GetAccountByProviderAndProviderAccountIdParameters,
+	authorizeGetAccountByProviderAndProviderAccountId,
 	getAccountByProviderAndProviderAccountId
 } from './application/get_account_by_provider_and_provider_account_id'
 import { AccountRepository } from './infrastructure/repository'
@@ -15,18 +16,22 @@ export type ModuleDependencies = {
 }
 
 const handlers = (globalDependencies: GlobalDependencies) => ({
-	createAccount: (parameters: CreateAccountParameters) =>
-		createAccount(parameters, {
+	createAccount: createHandler({
+		authorize: authorizeCreateAccount,
+		handler: createAccount,
+		dependencies: {
 			...globalDependencies,
 			...dependencies(globalDependencies)
-		}),
-	getAccountByProviderAndProviderAccountId: (
-		parameters: GetAccountByProviderAndProviderAccountIdParameters
-	) =>
-		getAccountByProviderAndProviderAccountId(parameters, {
+		}
+	}),
+	getAccountByProviderAndProviderAccountId: createHandler({
+		authorize: authorizeGetAccountByProviderAndProviderAccountId,
+		handler: getAccountByProviderAndProviderAccountId,
+		dependencies: {
 			...globalDependencies,
 			...dependencies(globalDependencies)
-		})
+		}
+	})
 })
 
 const dependencies = ({ userDb }: GlobalDependencies): ModuleDependencies => {

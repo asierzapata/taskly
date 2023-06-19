@@ -6,8 +6,9 @@
 /*                        Types                           */
 /* ====================================================== */
 
-import type { Provider, ProviderAccountId } from '../domain/account'
+import type { Session } from '@server/services/authentication'
 import type { ModuleDependencies } from '../index'
+import type { Provider, ProviderAccountId } from '../domain/account'
 
 type GetAccountByProviderAndProviderAccountIdParameters = {
 	provider: Provider
@@ -18,13 +19,28 @@ type GetAccountByProviderAndProviderAccountIdParameters = {
 /*                    Implementation                      */
 /* ====================================================== */
 
-function getAccountByProviderAndProviderAccountId(
+async function getAccountByProviderAndProviderAccountId(
 	parameters: GetAccountByProviderAndProviderAccountIdParameters,
 	dependencies: ModuleDependencies
 ) {
 	const { repository } = dependencies
 
-	return repository.getAccountByProviderAndProviderAccountId(parameters)
+	return repository.getAccountByProviderAndProviderAccountId({
+		provider: parameters.provider,
+		providerAccountId: parameters.providerAccountId
+	})
+}
+
+/* ====================================================== */
+/*                       Authorize                        */
+/* ====================================================== */
+
+async function authorizeGetAccountByProviderAndProviderAccountId(
+	parameters: GetAccountByProviderAndProviderAccountIdParameters,
+	dependencies: ModuleDependencies,
+	session: Session
+) {
+	return
 }
 
 /* ====================================================== */
@@ -33,5 +49,6 @@ function getAccountByProviderAndProviderAccountId(
 
 export {
 	getAccountByProviderAndProviderAccountId,
-	type GetAccountByProviderAndProviderAccountIdParameters
+	type GetAccountByProviderAndProviderAccountIdParameters,
+	authorizeGetAccountByProviderAndProviderAccountId
 }
