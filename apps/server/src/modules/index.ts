@@ -1,11 +1,15 @@
 import { GlobalDependencies } from '@server/types/shared'
 import accountModule from './account'
 import userModule from './user'
+import areaModule from './area'
+import projectModule from './project'
 
 function modules(globalDependencies: GlobalDependencies) {
 	return {
 		account: accountModule(globalDependencies),
-		user: userModule(globalDependencies)
+		user: userModule(globalDependencies),
+		area: areaModule(globalDependencies),
+		project: projectModule(globalDependencies)
 	}
 }
 
