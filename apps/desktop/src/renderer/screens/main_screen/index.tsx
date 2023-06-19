@@ -4,18 +4,10 @@
 
 import {
 	Button,
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
 	Collapsible,
 	CollapsibleContent,
 	CollapsibleTrigger,
 	Icons,
-	Input,
-	Label,
 	classnames
 } from '@taskly/web-ui'
 import React from 'react'

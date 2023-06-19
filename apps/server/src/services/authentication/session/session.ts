@@ -124,24 +124,6 @@ class Session {
 		})
 	}
 
-	static admin({
-		distinctId,
-		device = SessionDevice.undetectable().toValue(),
-		source
-	}: {
-		distinctId: string
-		device?: SessionDeviceValue
-		source?: SessionSourceValue
-	}) {
-		return new this({
-			type: SessionType.admin().toValue(),
-			distinctId,
-			source,
-			device,
-			authorizationStatus: SessionAuthorizationStatus.unauthorized().toValue()
-		})
-	}
-
 	static fromEvent(session: Session) {
 		return new this({
 			type: session._value.type.toValue(),
@@ -179,10 +161,6 @@ class Session {
 
 	isAuthenticated() {
 		return this._value.type.isAuthenticated()
-	}
-
-	isAdmin() {
-		return this._value.type.isAdmin()
 	}
 
 	getType() {

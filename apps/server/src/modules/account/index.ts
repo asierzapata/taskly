@@ -1,4 +1,3 @@
-import { Db } from 'mongodb'
 import {
 	CreateAccountParameters,
 	createAccount

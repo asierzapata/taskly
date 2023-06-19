@@ -71,10 +71,6 @@ class SessionType {
 		return new this(SESSION_TYPES.AUTHENTICATED)
 	}
 
-	static admin() {
-		return new this(SESSION_TYPES.ADMIN)
-	}
-
 	// Methods
 	// -------
 

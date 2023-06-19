@@ -17,7 +17,6 @@ const GoogleCallback = () => {
 	React.useEffect(() => {
 		const params = new URLSearchParams(searchParams)
 		const code = params.get('code')
-		console.log('>>>>>>', code)
 		if (!code) {
 			setError('No code provided')
 			return
