@@ -7,10 +7,11 @@ import { Project } from '../../domain/project'
 
 import { Collection, Db, ObjectId } from 'mongodb'
 
-type DBProject = Omit<Project, '_id' | 'userId' | 'areaId'> & {
+type DBProject = Omit<Project, '_id' | 'userId' | 'areaId' | 'noteId'> & {
 	_id: ObjectId
 	userId: ObjectId
 	areaId: ObjectId
+	noteId: ObjectId
 }
 
 class MongoDBProjectRepository implements ProjectRepository {
@@ -98,6 +99,7 @@ class MongoDBProjectRepository implements ProjectRepository {
 			_id: new ObjectId(project._id),
 			userId: new ObjectId(project.userId),
 			areaId: new ObjectId(project.areaId),
+			noteId: new ObjectId(project.noteId),
 			name: project.name,
 			description: project.description,
 			createdAt: project.createdAt,
@@ -138,11 +140,15 @@ class MongoDBProjectRepository implements ProjectRepository {
 			...project,
 			_id: project._id.toHexString(),
 			userId: project.userId.toHexString(),
-			areaId: project.areaId.toHexString()
+			areaId: project.areaId.toHexString(),
+			noteId: project.noteId.toHexString()
 		}
 	}
 
-	ensureIndex() {}
+	ensureIndex() {
+		this.collection.createIndex({ userId: 1 })
+		this.collection.createIndex({ areaId: 1 })
+	}
 }
 
 export { MongoDBProjectRepository }

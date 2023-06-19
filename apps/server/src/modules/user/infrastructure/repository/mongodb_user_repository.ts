@@ -29,7 +29,9 @@ class MongoDBUserRepository implements UserRepository {
 			firstName: user.firstName,
 			lastName: user.lastName,
 			picture: user.picture,
-			email: user.email
+			email: user.email,
+			createdAt: user.createdAt,
+			updatedAt: user.updatedAt
 		})
 	}
 

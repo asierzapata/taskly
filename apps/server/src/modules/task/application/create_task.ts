@@ -9,34 +9,27 @@ import { UnauthenticatedError } from '@server/services/authentication/errors/una
 /* ====================================================== */
 
 import type { Session } from '@server/services/authentication'
-import type {
-	AreaId,
-	Description,
-	Name,
-	NoteId,
-	UserId
-} from '../domain/project'
+import type { AreaId, Name, NoteId, UserId } from '../domain/task'
 import type { ModuleDependencies } from '../index'
 
-type CreateProjectParameters = {
+type CreateTaskParameters = {
 	userId: UserId
-	areaId: AreaId
+	projectId: AreaId
 	noteId: NoteId
 	name: Name
-	description: Description
 }
 
 /* ====================================================== */
 /*                    Implementation                      */
 /* ====================================================== */
 
-function createProject(
-	parameters: CreateProjectParameters,
+function createTask(
+	parameters: CreateTaskParameters,
 	dependencies: ModuleDependencies
 ) {
 	const { repository } = dependencies
 
-	return repository.saveProject({
+	return repository.saveTask({
 		_id: repository.generateId(),
 		createdAt: new Date().getTime(),
 		updatedAt: new Date().getTime(),
@@ -48,8 +41,8 @@ function createProject(
 /*                       Authorize                        */
 /* ====================================================== */
 
-async function authorizeCreateProject(
-	parameters: CreateProjectParameters,
+async function authorizeCreateTask(
+	parameters: CreateTaskParameters,
 	dependencies: ModuleDependencies,
 	session: Session
 ) {
@@ -62,4 +55,4 @@ async function authorizeCreateProject(
 /*                      Public API                        */
 /* ====================================================== */
 
-export { createProject, type CreateProjectParameters, authorizeCreateProject }
+export { createTask, type CreateTaskParameters, authorizeCreateTask }

@@ -2,59 +2,50 @@
 /*                        Domain                          */
 /* ====================================================== */
 
-import { UnauthenticatedError } from '@server/services/authentication/errors/unauthenticated_error'
-
 /* ====================================================== */
 /*                        Types                           */
 /* ====================================================== */
 
 import type { Session } from '@server/services/authentication'
-import type {
-	AreaId,
-	Description,
-	Name,
-	NoteId,
-	UserId
-} from '../domain/project'
 import type { ModuleDependencies } from '../index'
+import { UserId } from '../domain/task'
+import { UnauthenticatedError } from '@server/services/authentication/errors/unauthenticated_error'
+import { UserCanNotAccessTaskError } from '../domain/errors/user_can_not_access_task'
 
-type CreateProjectParameters = {
+type GetUserTasksParameters = {
 	userId: UserId
-	areaId: AreaId
-	noteId: NoteId
-	name: Name
-	description: Description
+	orderBy: 'name' | 'createdAt' | 'updatedAt'
+	order: 'asc' | 'desc'
+	limit: number
+	cursor: string
 }
 
 /* ====================================================== */
 /*                    Implementation                      */
 /* ====================================================== */
 
-function createProject(
-	parameters: CreateProjectParameters,
+async function getUserTasks(
+	parameters: GetUserTasksParameters,
 	dependencies: ModuleDependencies
 ) {
-	const { repository } = dependencies
-
-	return repository.saveProject({
-		_id: repository.generateId(),
-		createdAt: new Date().getTime(),
-		updatedAt: new Date().getTime(),
-		...parameters
-	})
+	return dependencies.repository.getTasksByUserId(parameters)
 }
 
 /* ====================================================== */
 /*                       Authorize                        */
 /* ====================================================== */
 
-async function authorizeCreateProject(
-	parameters: CreateProjectParameters,
+async function authorizeGetUserTasks(
+	parameters: GetUserTasksParameters,
 	dependencies: ModuleDependencies,
 	session: Session
 ) {
 	if (!session.isAuthenticated()) {
 		throw UnauthenticatedError.create()
+	}
+
+	if (session.getDistinctId() !== parameters.userId) {
+		throw UserCanNotAccessTaskError.create()
 	}
 }
 
@@ -62,4 +53,4 @@ async function authorizeCreateProject(
 /*                      Public API                        */
 /* ====================================================== */
 
-export { createProject, type CreateProjectParameters, authorizeCreateProject }
+export { getUserTasks, type GetUserTasksParameters, authorizeGetUserTasks }

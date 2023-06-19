@@ -40,7 +40,9 @@ class MongoDBAccountRepository implements AccountRepository {
 			refreshToken: account.refreshToken,
 			accessToken: account.accessToken,
 			expiresAt: account.expiresAt,
-			tokenType: account.tokenType
+			tokenType: account.tokenType,
+			createdAt: account.createdAt,
+			updatedAt: account.updatedAt
 		})
 	}
 

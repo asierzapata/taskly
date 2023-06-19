@@ -3,17 +3,15 @@ export type UserId = Id
 export type AreaId = Id
 export type NoteId = Id
 export type Name = string
-export type Description = string
 export type CreatedAt = number
 export type UpdatedAt = number
 
-export type Project = {
+export type Task = {
 	_id: Id
 	userId: UserId
-	areaId: AreaId
+	projectId: AreaId
 	noteId: NoteId
 	name: Name
-	description: Description
 	createdAt: CreatedAt
 	updatedAt: UpdatedAt
 }
