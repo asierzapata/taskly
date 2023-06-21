@@ -95,6 +95,8 @@ export function createMainWindow() {
 	})
 
 	mainAPI = API(mainWindow)
+
+	registerPouchDB()
 }
 
 export function createChildWindow(url: string, options: WindowOptions = {}) {
@@ -121,3 +123,16 @@ app.on('activate', () => {
 		createMainWindow()
 	}
 })
+
+import PouchDB from 'pouchdb'
+
+async function registerPouchDB() {
+	try {
+		const db = new PouchDB('https://taskly-couchdb.fly.dev:5984/asierzapata')
+		const info = await db.info()
+
+		console.info(info)
+	} catch (error) {
+		console.error(error)
+	}
+}

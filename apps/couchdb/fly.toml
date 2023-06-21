@@ -1,0 +1,39 @@
+# fly.toml app configuration file generated for taskly-couchdb on 2023-06-21T07:42:07+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "taskly-couchdb"
+primary_region = "mad"
+
+kill_signal = "SIGINT"
+kill_timeout = 20
+
+[build]
+  image = "apache/couchdb"
+
+[mounts]
+  source="taskly_couchdb_data"
+  destination="/opt/couchbase/var"
+
+[[services]]
+  internal_port = 5984
+  protocol = "tcp"
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 5984
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"
