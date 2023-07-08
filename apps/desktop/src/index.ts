@@ -95,6 +95,8 @@ export function createMainWindow() {
 	})
 
 	mainAPI = API(mainWindow)
+
+	void mainAPI.noteFileSystem.EnsureSystemFolders()
 }
 
 export function createChildWindow(url: string, options: WindowOptions = {}) {

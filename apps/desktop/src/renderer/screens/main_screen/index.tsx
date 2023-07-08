@@ -43,6 +43,15 @@ export const MainScreen = () => {
 }
 
 function SideBar() {
+	React.useEffect(() => {
+		;(async () => {
+			const response = await window.api.noteFileSystem.ListNoteFolder({
+				path: '/'
+			})
+
+			console.log('>>>>>>', response)
+		})()
+	}, [])
 	return (
 		<div className="relative flex h-full flex-col items-center justify-between rounded-lg shadow-md">
 			<div className="w-full p-3">

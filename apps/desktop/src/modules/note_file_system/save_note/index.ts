@@ -1,0 +1,33 @@
+import _ from 'lodash'
+
+import { createMethodCalledFromRender } from '@modules/factory'
+import { ModuleDependencies } from '../module'
+
+type SaveNoteParameters = {
+	path: string
+	content: string
+}
+type SaveNoteResponse = void
+
+export const SaveNote = async ({
+	parameters: { path, content },
+	dependencies
+}: {
+	parameters: SaveNoteParameters
+	dependencies: ModuleDependencies
+}): Promise<SaveNoteResponse> => {
+	const absolutePath = dependencies.notesPath.getPathInNotesFolder(path)
+
+	await dependencies.fs.writeFile(absolutePath, content, {
+		encoding: 'utf-8'
+	})
+
+	return
+}
+
+export const SaveNoteGenerator = createMethodCalledFromRender<
+	'SaveNote',
+	SaveNoteParameters,
+	SaveNoteResponse,
+	ModuleDependencies
+>('SaveNote', SaveNote)

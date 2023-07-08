@@ -49,6 +49,8 @@ async function authenticate(req: Request, res: Response, next: NextFunction) {
 			return next()
 		}
 
+		console.log('>>>>>>', sessionData)
+
 		const session = new Session({
 			id: clientSessionId,
 			type: sessionData.type,

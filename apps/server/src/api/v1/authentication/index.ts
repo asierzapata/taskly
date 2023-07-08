@@ -1,11 +1,13 @@
 import { Router } from 'express'
-import { signInWithGoogleController } from './sign_in_with_google'
 
 const router = Router()
 
 /* ====================================================== */
 /*                      Controllers                       */
 /* ====================================================== */
+
+import { signInWithGoogleController } from './sign_in_with_google'
+import { getAuthenticatedUserController } from './get_authenticated_user'
 
 /* ====================================================== */
 /*                    Implementation                      */
@@ -14,6 +16,7 @@ const router = Router()
 const route = '/authentication'
 
 router.post('/google', signInWithGoogleController)
+router.get('/me', getAuthenticatedUserController)
 
 /* ====================================================== */
 /*                      Public API                        */

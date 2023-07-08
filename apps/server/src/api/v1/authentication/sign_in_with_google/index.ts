@@ -14,6 +14,13 @@ async function signInWithGoogleController(
 	next: NextFunction
 ) {
 	try {
+		if (!req.session) {
+			throw new Error('Session is not defined')
+		}
+
+		// We set the session as authorized because we are going to sign in into an account or create one
+		req.session.setAsAuthorized()
+
 		const code = checkString(req.body.code)
 
 		const googleUser =
@@ -22,32 +29,41 @@ async function signInWithGoogleController(
 			})
 
 		const account =
-			await req.modules.account.getAccountByProviderAndProviderAccountId({
-				provider: 'google',
-				providerAccountId: googleUser.id
-			})
+			await req.modules.account.getAccountByProviderAndProviderAccountId(
+				{
+					provider: 'google',
+					providerAccountId: googleUser.id
+				},
+				req.session
+			)
 
 		let userId = account?.userId
 
 		if (!userId) {
 			userId = generateDBId()
 
-			await req.modules.account.createAccount({
-				userId,
-				provider: 'google',
-				providerAccountId: googleUser.id
-			})
+			await req.modules.account.createAccount(
+				{
+					userId,
+					provider: 'google',
+					providerAccountId: googleUser.id
+				},
+				req.session
+			)
 
-			await req.modules.user.createUser({
-				userId,
-				email: googleUser.email,
-				firstName: googleUser.firstName,
-				lastName: googleUser.lastName,
-				picture: googleUser.picture
-			})
+			await req.modules.user.createUser(
+				{
+					userId,
+					email: googleUser.email,
+					firstName: googleUser.firstName,
+					lastName: googleUser.lastName,
+					picture: googleUser.picture
+				},
+				req.session
+			)
 		}
 
-		const user = await req.modules.user.getUserById({ id: userId })
+		const user = await req.modules.user.getUserById({ userId }, req.session)
 
 		const session = Session.user({
 			...req.session,

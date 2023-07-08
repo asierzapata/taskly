@@ -16,7 +16,9 @@ export const createHandler = <P, D, R>({
 	dependencies: D
 }) => {
 	return async (parameters: P, session: Session) => {
-		await authorize(parameters, dependencies, session)
+		if (!session.isAuthorized) {
+			await authorize(parameters, dependencies, session)
+		}
 		return handler(parameters, dependencies)
 	}
 }

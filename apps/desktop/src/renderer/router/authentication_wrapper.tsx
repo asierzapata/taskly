@@ -21,36 +21,63 @@ import {
 	CardTitle,
 	Icons,
 	Input,
-	Label
+	Label,
+	Spinner
 } from '@taskly/web-ui'
 
 /* ====================================================== */
 /*                         Types                          */
 /* ====================================================== */
 
-import type { Session } from '@supabase/supabase-js'
+import { authentication } from '@renderer/api'
+import { User } from '@renderer/api/parsers/user'
 
 /* ====================================================== */
 /*                    Implementation                      */
 /* ====================================================== */
 
 const AuthenticationWrapper = () => {
-	const [session, setSession] = React.useState<Session | null>(null)
+	const [loading, setLoading] = React.useState(true)
+	const [session, setSession] = React.useState<User | null>(null)
+
+	React.useEffect(() => {
+		;(async () => {
+			try {
+				const user = await authentication.getAuthenticatedUser()
+
+				if (user) {
+					setSession(user)
+				}
+			} catch (error) {
+				console.error(error)
+			}
+
+			setLoading(false)
+		})()
+	}, [])
 
 	React.useEffect(() => {
 		window.api.authentication.OnSignInWithGoogleCallback(async ({ code }) => {
-			console.log('>>>>>> code', code)
-			const response = await axios.post(
-				'http://localhost:8080/api/v1/authentication/google',
-				{
-					code
-				}
-			)
-			const { data } = response
-			console.log('>>>>>>', data.data.user)
-			setSession(data.data.user)
+			const user = await authentication.signInWithGoogle({
+				code
+			})
+			setSession(user)
 		})
 	}, [])
+
+	if (loading) {
+		return (
+			<div className="flex min-h-screen flex-col items-center justify-center gap-4">
+				<span>
+					Loading{' '}
+					<span className="bg-gradient-to-tl from-amber-400 to-orange-600 bg-clip-text text-transparent">
+						Taskly
+					</span>
+				</span>
+				<Spinner />
+			</div>
+		)
+	}
 
 	return !session ? <Authentication /> : <Outlet />
 }

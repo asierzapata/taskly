@@ -44,7 +44,7 @@ class AuthenticationService {
 	async authenticate(session: Session) {
 		if (!session) throw new Error('AuthenticationService.authenticate')
 		const token = await this.jwtService.generateToken({
-			type: session.getType(),
+			type: session.getType().toValue(),
 			distinctId: session.getDistinctId()
 		})
 		return {
