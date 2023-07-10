@@ -43,6 +43,10 @@ export const MainScreen = () => {
 }
 
 function SideBar() {
+	const sideBarRef = React.useRef<HTMLDivElement>(null)
+	const [files, setFiles] = React.useState<File[]>([])
+	const [folders, setFolders] = React.useState<Folder[]>([])
+
 	React.useEffect(() => {
 		;(async () => {
 			const response = await window.api.noteFileSystem.ListNoteFolder({
@@ -50,10 +54,34 @@ function SideBar() {
 			})
 
 			console.log('>>>>>>', response)
+			setFiles(response.files)
+			setFolders(response.folders)
 		})()
 	}, [])
+
+	React.useEffect(() => {
+		// We register to the contextmenu event on the sidebar to open the context menu
+		// on the sidebar itself.
+		const onContextMenu = (event: MouseEvent) => {
+			if (sideBarRef.current?.contains(event.target as Node)) {
+				event.preventDefault()
+				event.stopPropagation()
+				window.api.noteFileSystem.OpenNoteFileSystemMenu()
+			}
+		}
+
+		window.addEventListener('contextmenu', onContextMenu)
+
+		return () => {
+			window.removeEventListener('contextmenu', onContextMenu)
+		}
+	}, [])
+
 	return (
-		<div className="relative flex h-full flex-col items-center justify-between rounded-lg shadow-md">
+		<div
+			ref={sideBarRef}
+			className="relative flex h-full flex-col items-center justify-between rounded-lg shadow-md"
+		>
 			<div className="w-full p-3">
 				<Button
 					variant="ghost"
@@ -71,7 +99,33 @@ function SideBar() {
 				</Button>
 			</div>
 			<div className="w-full flex-1 overflow-y-auto p-3">
-				<nav aria-label="Main Nav" className="flex flex-col space-y-1">
+				{folders.map(folder => (
+					<Button
+						as="a"
+						variant="ghost"
+						className={classnames(
+							'flex w-full items-center gap-3',
+							'justify-start'
+						)}
+						// onClick={isSmallViewport ? onToggle : _.noop}
+					>
+						{folder.name}
+					</Button>
+				))}
+				{files.map(file => (
+					<Button
+						as="a"
+						variant="ghost"
+						className={classnames(
+							'flex w-full items-center gap-3',
+							'justify-start'
+						)}
+						// onClick={isSmallViewport ? onToggle : _.noop}
+					>
+						{file.name}
+					</Button>
+				))}
+				{/* <nav aria-label="Main Nav" className="flex flex-col space-y-1">
 					<Link to={`/`}>
 						<Button
 							as="a"
@@ -83,9 +137,7 @@ function SideBar() {
 							// onClick={isSmallViewport ? onToggle : _.noop}
 						>
 							<Icons.calendarClock size={20} />
-							{/* {isOpen ? ( */}
 							<span className="text-sm font-medium"> Today </span>
-							{/* ) : null} */}
 						</Button>
 					</Link>
 				</nav>
@@ -130,7 +182,7 @@ function SideBar() {
 							</Button>
 						</CollapsibleContent>
 					</Collapsible>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	)
@@ -171,6 +223,7 @@ import add from 'date-fns/add'
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import './calendar.css'
+import { File, Folder } from '@modules/note_file_system/types'
 
 const locales = {
 	'en-US': enUS
