@@ -13,6 +13,7 @@ import { CreateNoteGenerator } from './create_note'
 import { EnsureSystemFoldersGenerator } from './ensure_system_folders'
 import { DeleteNoteGenerator } from './delete_note'
 import { OpenNoteFileSystemMenuGenerator } from './open_note_file_system_menu'
+import { GetFullTreeGenerator } from './get_full_tree'
 
 const dependencies = {
 	fs: {
@@ -38,6 +39,7 @@ const methods = (window: BrowserWindow) => ({
 	...DeleteNoteGenerator.main(ipcMain, dependencies),
 	...CreateFolderGenerator.main(ipcMain, dependencies),
 	...OpenNoteFileSystemMenuGenerator.main(ipcMain, dependencies),
+	...GetFullTreeGenerator.main(ipcMain, dependencies),
 	...EnsureSystemFoldersGenerator.main(window, dependencies)
 })
 

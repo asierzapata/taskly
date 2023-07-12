@@ -49,13 +49,11 @@ function SideBar() {
 
 	React.useEffect(() => {
 		;(async () => {
-			const response = await window.api.noteFileSystem.ListNoteFolder({
-				path: '/'
-			})
+			const response = await window.api.noteFileSystem.GetFullTree()
 
 			console.log('>>>>>>', response)
-			setFiles(response.files)
-			setFolders(response.folders)
+			// setFiles(response.files)
+			// setFolders(response.folders)
 		})()
 	}, [])
 
@@ -64,6 +62,7 @@ function SideBar() {
 		// on the sidebar itself.
 		const onContextMenu = (event: MouseEvent) => {
 			if (sideBarRef.current?.contains(event.target as Node)) {
+				console.log('>>>>>>', event.target)
 				event.preventDefault()
 				event.stopPropagation()
 				window.api.noteFileSystem.OpenNoteFileSystemMenu()
@@ -101,7 +100,6 @@ function SideBar() {
 			<div className="w-full flex-1 overflow-y-auto p-3">
 				{folders.map(folder => (
 					<Button
-						as="a"
 						variant="ghost"
 						className={classnames(
 							'flex w-full items-center gap-3',
@@ -114,7 +112,6 @@ function SideBar() {
 				))}
 				{files.map(file => (
 					<Button
-						as="a"
 						variant="ghost"
 						className={classnames(
 							'flex w-full items-center gap-3',
