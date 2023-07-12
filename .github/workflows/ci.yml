@@ -2,9 +2,9 @@ name: CI
 
 on:
   pull_request:
-    branches: ["*"]
+    branches: ['*']
   push:
-    branches: ["main"]
+    branches: ['main']
   merge_group:
 
 # You can leverage Vercel Remote Caching with Turbo to speed up your builds
@@ -24,7 +24,7 @@ jobs:
       - name: 🏗 Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 18.16
+          node-version: 18.16.0
           cache: yarn
 
       - name: Install deps (with cache)
