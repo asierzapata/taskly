@@ -12,8 +12,11 @@ import { CreateFolderGenerator } from './create_folder'
 import { CreateNoteGenerator } from './create_note'
 import { EnsureSystemFoldersGenerator } from './ensure_system_folders'
 import { DeleteNoteGenerator } from './delete_note'
-import { OpenNoteFileSystemMenuGenerator } from './open_note_file_system_menu'
+import { OpenNoteSystemMenuGenerator } from './open_note_system_menu'
 import { GetFullTreeGenerator } from './get_full_tree'
+import { OpenSystemMenuGenerator } from './open_system_menu'
+import { RenameNoteGenerator } from './rename_note'
+import { RenameFolderGenerator } from './rename_folder'
 
 const methods = () => ({
 	...ListNoteFolderGenerator.render(ipcRenderer),
@@ -22,8 +25,11 @@ const methods = () => ({
 	...CreateFolderGenerator.render(ipcRenderer),
 	...DeleteNoteGenerator.render(ipcRenderer),
 	...CreateNoteGenerator.render(ipcRenderer),
+	...RenameNoteGenerator.render(ipcRenderer),
+	...RenameFolderGenerator.render(ipcRenderer),
 	...EnsureSystemFoldersGenerator.render(ipcRenderer),
-	...OpenNoteFileSystemMenuGenerator.render(ipcRenderer),
+	// ...OpenNoteSystemMenuGenerator.render(ipcRenderer),
+	...OpenSystemMenuGenerator.render(ipcRenderer),
 	...GetFullTreeGenerator.render(ipcRenderer)
 })
 

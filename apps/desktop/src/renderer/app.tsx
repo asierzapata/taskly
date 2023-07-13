@@ -1,7 +1,12 @@
 import React from 'react'
 import ReactDom from 'react-dom/client'
 
+import { persistor, store } from '@renderer/store'
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+
 import { AppRouter } from './router'
+
 /* ====================================================== */
 /*                         Styles                        */
 /* ====================================================== */
@@ -19,7 +24,11 @@ export const renderReactApp = (el: string) => {
 	}
 	ReactDom.createRoot(element).render(
 		<React.StrictMode>
-			<AppRouter />
+			<Provider store={store}>
+				<PersistGate loading={null} persistor={persistor}>
+					<AppRouter />
+				</PersistGate>
+			</Provider>
 		</React.StrictMode>
 	)
 }

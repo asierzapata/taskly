@@ -48,7 +48,7 @@ async function getPathFoldersAndFiles(
 		.filter(
 			fileOrFolder => fileOrFolder.isFile() && fileOrFolder.name.endsWith('.md')
 		)
-		.map(file => file.name)
+		.map(file => file.name.replace(/\.md$/, ''))
 
 	const folders = filesAndFolders
 		.filter(fileOrFolder => fileOrFolder.isDirectory())

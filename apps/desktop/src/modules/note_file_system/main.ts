@@ -1,7 +1,15 @@
 import { ipcMain } from 'electron'
 import type { BrowserWindow } from 'electron/main'
 
-import { readFile, writeFile, readdir, stat, mkdir, rm } from 'fs/promises'
+import {
+	readFile,
+	writeFile,
+	readdir,
+	stat,
+	mkdir,
+	rm,
+	rename
+} from 'fs/promises'
 
 import { NAME } from './module'
 import { ListNoteFolderGenerator } from './list_note_folder'
@@ -12,8 +20,11 @@ import { CreateFolderGenerator } from './create_folder'
 import { CreateNoteGenerator } from './create_note'
 import { EnsureSystemFoldersGenerator } from './ensure_system_folders'
 import { DeleteNoteGenerator } from './delete_note'
-import { OpenNoteFileSystemMenuGenerator } from './open_note_file_system_menu'
+import { OpenNoteSystemMenuGenerator } from './open_note_system_menu'
 import { GetFullTreeGenerator } from './get_full_tree'
+import { OpenSystemMenuGenerator } from './open_system_menu'
+import { RenameNoteGenerator } from './rename_note'
+import { RenameFolderGenerator } from './rename_folder'
 
 const dependencies = {
 	fs: {
@@ -22,7 +33,8 @@ const dependencies = {
 		readdir,
 		stat,
 		mkdir,
-		rm
+		rm,
+		rename
 	},
 	notesPath: {
 		getNotesPath,
@@ -37,8 +49,11 @@ const methods = (window: BrowserWindow) => ({
 	...SaveNoteGenerator.main(ipcMain, dependencies),
 	...CreateNoteGenerator.main(ipcMain, dependencies),
 	...DeleteNoteGenerator.main(ipcMain, dependencies),
+	...RenameNoteGenerator.main(ipcMain, dependencies),
+	...RenameFolderGenerator.main(ipcMain, dependencies),
 	...CreateFolderGenerator.main(ipcMain, dependencies),
-	...OpenNoteFileSystemMenuGenerator.main(ipcMain, dependencies),
+	// ...OpenNoteSystemMenuGenerator.main(ipcMain, dependencies),
+	...OpenSystemMenuGenerator.main(ipcMain, dependencies),
 	...GetFullTreeGenerator.main(ipcMain, dependencies),
 	...EnsureSystemFoldersGenerator.main(window, dependencies)
 })

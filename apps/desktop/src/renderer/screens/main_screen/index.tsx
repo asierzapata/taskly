@@ -43,44 +43,8 @@ export const MainScreen = () => {
 }
 
 function SideBar() {
-	const sideBarRef = React.useRef<HTMLDivElement>(null)
-	const [files, setFiles] = React.useState<File[]>([])
-	const [folders, setFolders] = React.useState<Folder[]>([])
-
-	React.useEffect(() => {
-		;(async () => {
-			const response = await window.api.noteFileSystem.GetFullTree()
-
-			console.log('>>>>>>', response)
-			// setFiles(response.files)
-			// setFolders(response.folders)
-		})()
-	}, [])
-
-	React.useEffect(() => {
-		// We register to the contextmenu event on the sidebar to open the context menu
-		// on the sidebar itself.
-		const onContextMenu = (event: MouseEvent) => {
-			if (sideBarRef.current?.contains(event.target as Node)) {
-				console.log('>>>>>>', event.target)
-				event.preventDefault()
-				event.stopPropagation()
-				window.api.noteFileSystem.OpenNoteFileSystemMenu()
-			}
-		}
-
-		window.addEventListener('contextmenu', onContextMenu)
-
-		return () => {
-			window.removeEventListener('contextmenu', onContextMenu)
-		}
-	}, [])
-
 	return (
-		<div
-			ref={sideBarRef}
-			className="relative flex h-full flex-col items-center justify-between rounded-lg shadow-md"
-		>
+		<div className="relative flex h-full flex-col items-center justify-between rounded-lg shadow-md">
 			<div className="w-full p-3">
 				<Button
 					variant="ghost"
@@ -98,88 +62,7 @@ function SideBar() {
 				</Button>
 			</div>
 			<div className="w-full flex-1 overflow-y-auto p-3">
-				{folders.map(folder => (
-					<Button
-						variant="ghost"
-						className={classnames(
-							'flex w-full items-center gap-3',
-							'justify-start'
-						)}
-						// onClick={isSmallViewport ? onToggle : _.noop}
-					>
-						{folder.name}
-					</Button>
-				))}
-				{files.map(file => (
-					<Button
-						variant="ghost"
-						className={classnames(
-							'flex w-full items-center gap-3',
-							'justify-start'
-						)}
-						// onClick={isSmallViewport ? onToggle : _.noop}
-					>
-						{file.name}
-					</Button>
-				))}
-				{/* <nav aria-label="Main Nav" className="flex flex-col space-y-1">
-					<Link to={`/`}>
-						<Button
-							as="a"
-							variant="ghost"
-							className={classnames(
-								'flex w-full items-center gap-3',
-								'justify-start'
-							)}
-							// onClick={isSmallViewport ? onToggle : _.noop}
-						>
-							<Icons.calendarClock size={20} />
-							<span className="text-sm font-medium"> Today </span>
-						</Button>
-					</Link>
-				</nav>
-				<div className="mh-4 mv-6 h-0.5 w-full bg-gradient-to-tl from-amber-400 to-orange-600" />
-
-				<div className="mt-5">
-					<Collapsible>
-						<span
-							className={classnames(
-								'flex items-center justify-between rounded px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-800',
-								Math.random() > 0.5 && 'bg-slate-100 dark:bg-slate-800'
-							)}
-						>
-							<Link to={`/`} className="w-full">
-								<span className="ml-4 flex-1 text-sm">This is an Area!</span>
-							</Link>
-
-							<CollapsibleTrigger asChild>
-								<Button
-									variant="ghost"
-									size="xs"
-									className="data-[state=open]:bg-slate-200 data-[state=open]:dark:bg-slate-700 [&[data-state=open]>svg]:rotate-180"
-								>
-									<Icons.chevronDown
-										size={14}
-										className="transition-transform duration-200"
-									/>
-								</Button>
-							</CollapsibleTrigger>
-						</span>
-						<CollapsibleContent>
-							<Button
-								as="a"
-								variant="ghost"
-								size="xs"
-								className={classnames(
-									'flex items-center justify-between rounded px-4 py-4 hover:bg-slate-200 dark:hover:bg-slate-800',
-									Math.random() > 0.5 && 'bg-slate-200 dark:bg-slate-800'
-								)}
-							>
-								<span className="ml-4 flex-1 text-xs">This is a project!</span>
-							</Button>
-						</CollapsibleContent>
-					</Collapsible>
-				</div> */}
+				<NotesTree />
 			</div>
 		</div>
 	)
@@ -221,6 +104,7 @@ import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import './calendar.css'
 import { File, Folder } from '@modules/note_file_system/types'
+import { NotesTree } from '@renderer/features/note_management/notes_tree'
 
 const locales = {
 	'en-US': enUS

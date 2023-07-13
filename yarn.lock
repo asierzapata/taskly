@@ -6747,7 +6747,7 @@ electron-squirrel-startup@1.0.0:
   dependencies:
     debug "^2.2.0"
 
-electron-store@8.1.0:
+electron-store@^8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/electron-store/-/electron-store-8.1.0.tgz#46a398f2bd9aa83c4a9daaae28380e2b3b9c7597"
   integrity sha512-2clHg/juMjOH0GT9cQ6qtmIvK183B39ZXR0bUoPwKwYHJsEF3quqyDzMFUAu+0OP8ijmN2CbPRAelhNbWUbzwA==
@@ -13014,6 +13014,18 @@ react-redux@^8.0.5:
     react-is "^18.0.0"
     use-sync-external-store "^1.0.0"
 
+react-redux@^8.1.1:
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-8.1.1.tgz#8e740f3fd864a4cd0de5ba9cdc8ad39cc9e7c81a"
+  integrity sha512-5W0QaKtEhj+3bC0Nj0NkqkhIv8gLADH/2kYFMTHxCVqQILiWzLv6MaLuV5wJU3BQEdHKzTfcvPN0WMS6SC1oyA==
+  dependencies:
+    "@babel/runtime" "^7.12.1"
+    "@types/hoist-non-react-statics" "^3.3.1"
+    "@types/use-sync-external-store" "^0.0.3"
+    hoist-non-react-statics "^3.3.2"
+    react-is "^18.0.0"
+    use-sync-external-store "^1.0.0"
+
 react-refresh@^0.4.0:
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.4.3.tgz#966f1750c191672e76e16c2efa569150cc73ab53"
@@ -13223,6 +13235,11 @@ recyclerlistview@^4.0.0:
     lodash.debounce "4.0.8"
     prop-types "15.8.1"
     ts-object-utils "0.0.5"
+
+redux-persist-electron-storage@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/redux-persist-electron-storage/-/redux-persist-electron-storage-2.1.0.tgz#8e9c2d4aeb451a5e00786456efed2f3d3f03dfa8"
+  integrity sha512-8VhAttDPqrwZlGIiHB3/PzZZChCliom8qcex8Q+eW3lHpSMkbqAaYpoedRm29e3FoVnan3VT+UV22NGFXKPmCg==
 
 redux-persist-expo-filesystem@^2.0.0:
   version "2.0.0"

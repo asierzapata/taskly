@@ -7,18 +7,18 @@ import { BrowserWindow, IpcMainInvokeEvent, Menu } from 'electron'
 import { CreateNote } from '../create_note'
 import { CreateFolder } from '../create_folder'
 
-type OpenNoteFileSystemMenuParameters = void
-type OpenNoteFileSystemMenuResponse = void
+type OpenNoteSystemMenuParameters = void
+type OpenNoteSystemMenuResponse = void
 
-export const OpenNoteFileSystemMenu = async ({
+export const OpenNoteSystemMenu = async ({
 	_event,
 	parameters,
 	dependencies
 }: {
 	_event: IpcMainInvokeEvent
-	parameters: OpenNoteFileSystemMenuParameters
+	parameters: OpenNoteSystemMenuParameters
 	dependencies: ModuleDependencies
-}): Promise<OpenNoteFileSystemMenuResponse> => {
+}): Promise<OpenNoteSystemMenuResponse> => {
 	const template = [
 		{
 			label: 'Create Note',
@@ -49,9 +49,9 @@ export const OpenNoteFileSystemMenu = async ({
 	})
 }
 
-export const OpenNoteFileSystemMenuGenerator = createMethodCalledFromRender<
-	'OpenNoteFileSystemMenu',
-	OpenNoteFileSystemMenuParameters,
-	OpenNoteFileSystemMenuResponse,
+export const OpenNoteSystemMenuGenerator = createMethodCalledFromRender<
+	'OpenNoteSystemMenu',
+	OpenNoteSystemMenuParameters,
+	OpenNoteSystemMenuResponse,
 	ModuleDependencies
->('OpenNoteFileSystemMenu', OpenNoteFileSystemMenu)
+>('OpenNoteSystemMenu', OpenNoteSystemMenu)

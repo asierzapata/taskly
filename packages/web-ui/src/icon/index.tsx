@@ -28,7 +28,9 @@ import {
 	CalendarClock,
 	ChevronDown,
 	type Icon as LucideIcon,
-	ChevronUp
+	ChevronUp,
+	Folder,
+	FolderOpen
 } from 'lucide-react'
 
 export type Icon = LucideIcon
@@ -74,6 +76,8 @@ export const Icons = {
 	moon: Moon,
 	laptop: Laptop,
 	calendarClock: CalendarClock,
+	folder: Folder,
+	folderOpen: FolderOpen,
 	gitHub: (props: LucideProps) => (
 		<svg viewBox="0 0 438.549 438.549" {...props}>
 			<path

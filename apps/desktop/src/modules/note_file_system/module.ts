@@ -11,6 +11,7 @@ export type ModuleDependencies = {
 		stat: typeof fs.stat
 		mkdir: typeof fs.mkdir
 		rm: typeof fs.rm
+		rename: typeof fs.rename
 	}
 	notesPath: {
 		getNotesPath: () => string
