@@ -16,3 +16,10 @@ export const getCleanNotePath = (notePath: string, fileName: string) => {
 export const getAbsoluteNotePath = (notePath: string, fileName: string) => {
 	return path.join(getNotesPath(), notePath, `${fileName}.md`)
 }
+
+export const getAbsoluteFolderPath = (
+	folderPath: string,
+	folderName: string
+) => {
+	return path.join(getNotesPath(), folderPath, folderName)
+}

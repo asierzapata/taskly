@@ -10,7 +10,7 @@ export const deepLinks = {
 } as const
 
 export const handleDeepLink = (url: string, mainApi: MainApi) => {
-	console.log('>>>>>>dep liink initial', url)
+	console.log('>>>>>> depliink initial', url)
 	const urlObject = new URL(url)
 	const isTasklyProtocol = urlObject.protocol === `${protocol}:`
 	if (!isTasklyProtocol) return

@@ -8,6 +8,8 @@ import { useAppDispatch, useAppSelector } from '@renderer/store/hooks'
 import {
 	rebuildTree,
 	selectFolder,
+	startRenamingFolder,
+	startRenamingNote,
 	toggleDirectory
 } from '../note_management_slice'
 import { Directory, Folder, Note } from '../types'
@@ -68,7 +70,10 @@ const Directory = ({
 }) => {
 	const tree = useAppSelector(state => state.noteManagement.tree)
 	const isOpen = directory.isOpen
+	const isRenaming = directory.isRenaming
 	const dispatch = useAppDispatch()
+
+	console.log('>>>>>>', 'rendering directory', directory)
 
 	const folderRef = React.useRef<HTMLButtonElement>(null)
 
@@ -78,9 +83,51 @@ const Directory = ({
 				event.preventDefault()
 				event.stopPropagation()
 				dispatch(selectFolder({ path: directory.path }))
-				// window.menus.ShowFolderMenu({
-				// 	folderPath: directory.path
-				// })
+				window.contextMenu.createContextMenu([
+					{
+						label: 'New Note',
+						click: () => {
+							window.api.noteFileSystem.CreateNote({
+								path: directory.path,
+								name: 'New Note'
+							})
+						}
+					},
+					{
+						label: 'New Folder',
+						click: () => {
+							window.api.noteFileSystem.CreateFolder({
+								path: directory.path,
+								name: 'New Folder'
+							})
+						}
+					},
+					{
+						type: 'separator'
+					},
+					{
+						label: 'Rename',
+						click: () => {
+							dispatch(startRenamingFolder({ path: directory.path }))
+						}
+					},
+					{
+						label: 'Delete',
+						click: () => {
+							const directoryPath = directory.path
+								.split('/')
+								.slice(0, -1)
+								.join('/')
+							const directoryName = directory.path.split('/').slice(-1)[0]
+							console.log('>>>>>>', directoryPath, directoryName)
+							if (!directoryPath || !directoryName) return
+							window.api.noteFileSystem.DeleteFolder({
+								path: directoryPath,
+								name: directoryName
+							})
+						}
+					}
+				])
 			}
 		}
 
@@ -119,11 +166,13 @@ const Directory = ({
 			{isOpen || isRoot ? (
 				<div className={!isRoot ? 'ml-4' : ''}>
 					{directory.folders.map(folder => {
-						const _directory = tree[folder.path]
+						const folderPath = isRoot ? '' : folder.path
+						const _directory = tree[folderPath + '/' + folder.name]
+						console.log('>>>>>>', 'rendering folder', folder, _directory)
 						if (!_directory) return null
 						return (
 							<Directory
-								key={folder.path}
+								key={folderPath + '/' + folder.name}
 								name={folder.name}
 								directory={_directory}
 							/>
@@ -140,6 +189,7 @@ const Directory = ({
 
 const Note = ({ note }: { note: Note }) => {
 	const noteRef = React.useRef<HTMLButtonElement>(null)
+	const dispatch = useAppDispatch()
 
 	React.useEffect(() => {
 		const onContextMenu = (event: MouseEvent) => {
@@ -150,13 +200,16 @@ const Note = ({ note }: { note: Note }) => {
 					{
 						label: 'Rename',
 						click: () => {
-							console.log('Rename')
+							dispatch(startRenamingNote({ path: note.path }))
 						}
 					},
 					{
 						label: 'Delete',
 						click: () => {
-							console.log('Delete')
+							window.api.noteFileSystem.DeleteNote({
+								path: note.path,
+								name: note.name
+							})
 						}
 					}
 				])

@@ -1,6 +1,7 @@
 export type Note = {
 	name: string
 	path: Path
+	isRenaming: boolean
 }
 
 export type Folder = {
@@ -11,6 +12,7 @@ export type Folder = {
 export type Directory = {
 	path: Path
 	isOpen: boolean
+	isRenaming: boolean
 	folders: Folder[]
 	notes: Note[]
 }

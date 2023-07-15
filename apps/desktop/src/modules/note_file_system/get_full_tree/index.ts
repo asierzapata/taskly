@@ -76,11 +76,11 @@ async function getPathFoldersAndFiles(
 		[path]: {
 			files: _.sortBy(files).map(file => ({
 				name: file,
-				path: dependencies.notesPath.getCleanNotePath(path, file)
+				path
 			})),
 			folders: _.sortBy(folders).map(folder => ({
 				name: folder,
-				path: dependencies.notesPath.getCleanNotePath(path, folder)
+				path
 			}))
 		},
 		...response

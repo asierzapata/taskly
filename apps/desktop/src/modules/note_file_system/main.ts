@@ -19,7 +19,8 @@ import {
 	getCleanNotePath,
 	getNotesPath,
 	getPathInNotesFolder,
-	getAbsoluteNotePath
+	getAbsoluteNotePath,
+	getAbsoluteFolderPath
 } from './utils'
 import { CreateFolderGenerator } from './create_folder'
 import { CreateNoteGenerator } from './create_note'
@@ -44,7 +45,8 @@ const dependencies = {
 		getNotesPath,
 		getPathInNotesFolder,
 		getCleanNotePath,
-		getAbsoluteNotePath
+		getAbsoluteNotePath,
+		getAbsoluteFolderPath
 	}
 }
 

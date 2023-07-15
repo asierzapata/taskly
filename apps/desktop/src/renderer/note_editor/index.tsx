@@ -57,14 +57,22 @@ import { IndexeddbPersistence } from 'y-indexeddb'
 
 type NoteEditorProps = {
 	editorViewRef?: React.MutableRefObject<EditorView>
-	noteId: string
+	initialDocument?: string
+	onChange?: (value: string) => void
 }
 
 // Component
 // ---------
 
 const NoteEditor = React.forwardRef(
-	({ editorViewRef: editorViewRefProp, noteId }: NoteEditorProps, ref) => {
+	(
+		{
+			editorViewRef: editorViewRefProp,
+			initialDocument,
+			onChange
+		}: NoteEditorProps,
+		ref
+	) => {
 		const editorViewRefInternal = useRef<EditorView>()
 		const containerRef = useRef<HTMLDivElement | null>(null)
 
@@ -77,33 +85,6 @@ const NoteEditor = React.forwardRef(
 		useEffect(() => {
 			if (containerRef.current) {
 				if (!editorViewRef.current) {
-					const ydoc = new Y.Doc()
-					// TODO: Change host to correct url
-					// Investigate env variables
-					const wsProvider = new WebsocketProvider(
-						'ws://localhost:8080/notes',
-						noteId,
-						ydoc,
-						{
-							maxBackoffTime: 10000
-						}
-					)
-					const indexeddbProvider = new IndexeddbPersistence(noteId, ydoc)
-					indexeddbProvider.whenSynced.then(() => {
-						console.log('loaded data from indexed db')
-					})
-
-					const ytext = ydoc.getText('codemirror')
-
-					const undoManager = new Y.UndoManager(ytext)
-
-					const userColor = getRandomUserColor()
-					wsProvider.awareness.setLocalStateField('user', {
-						name: 'Anonymous ' + Math.floor(Math.random() * 100),
-						color: userColor.color,
-						colorLight: userColor.light
-					})
-
 					const extensions = [
 						highlightSpecialChars(),
 						history(),
@@ -136,12 +117,11 @@ const NoteEditor = React.forwardRef(
 							extensions: [frontmatter],
 							codeLanguages: languages
 						}),
-						...NoteEditorTheme,
-						yCollab(ytext, wsProvider.awareness, { undoManager })
+						...NoteEditorTheme
 					]
 					editorViewRef.current = new EditorView({
 						state: EditorState.create({
-							doc: ytext.toString(),
+							doc: initialDocument || '',
 							extensions
 						}),
 						parent: containerRef.current

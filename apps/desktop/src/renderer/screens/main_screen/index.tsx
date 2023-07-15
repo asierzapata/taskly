@@ -73,7 +73,7 @@ function Editor() {
 
 	return (
 		<div className="mx-auto w-full max-w-[900px] overflow-y-auto p-6">
-			<NoteEditor noteId="user-document" />
+			<NoteEditor initialDocument={value} onChange={() => {}} />
 		</div>
 	)
 }

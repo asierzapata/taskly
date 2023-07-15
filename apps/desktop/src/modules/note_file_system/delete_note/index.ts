@@ -5,19 +5,21 @@ import { ModuleDependencies } from '../module'
 
 type DeleteNoteParameters = {
 	path: string
+	name: string
 }
 type DeleteNoteResponse = {
 	path: string
+	name: string
 }
 
 export const DeleteNote = async ({
-	parameters: { path },
+	parameters: { path, name },
 	dependencies
 }: {
 	parameters: DeleteNoteParameters
 	dependencies: ModuleDependencies
 }): Promise<DeleteNoteResponse> => {
-	const absolutePath = dependencies.notesPath.getPathInNotesFolder(path)
+	const absolutePath = dependencies.notesPath.getAbsoluteNotePath(path, name)
 
 	// We need to make sure the path is valid
 	// and that it is a file
@@ -30,7 +32,8 @@ export const DeleteNote = async ({
 	await dependencies.fs.rm(absolutePath)
 
 	return {
-		path
+		path,
+		name
 	}
 }
 
