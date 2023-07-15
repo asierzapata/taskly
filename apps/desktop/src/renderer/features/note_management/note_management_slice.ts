@@ -3,17 +3,21 @@ import type { RootState } from '@renderer/store'
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import _ from 'lodash'
 
-import type { NoteTree } from './types'
+import type { Folder, Note, NoteTree } from './types'
 import { createAppAsyncThunk } from '@renderer/store/hooks'
 
 type NoteManagementState = {
 	tree: NoteTree
+	notes: Record<string, Note>
+	folders: Record<string, Folder>
 	selectedPath: string
 	isRebuilding: boolean
 }
 
 const initialState: NoteManagementState = {
 	tree: {},
+	notes: {},
+	folders: {},
 	selectedPath: '/',
 	isRebuilding: false
 }
@@ -22,52 +26,51 @@ const initialState: NoteManagementState = {
 // ------
 
 export const rebuildTree = createAppAsyncThunk<
-	NoteTree,
+	{
+		noteTree: NoteTree
+		notes: Record<string, Note>
+		folders: Record<string, Folder>
+	},
 	void,
 	{ state: RootState }
 >('noteManagement/rebuildTree', async (_, { getState, extra }) => {
 	const tree = await extra.windowApi.noteFileSystem.GetFullTree()
-	console.log(
-		'>>>>>>',
-		Object.keys(tree).reduce((acc, key) => {
-			acc[key] = {
-				path: key,
-				isOpen: false,
+
+	const notes: Record<string, Note> = {}
+	const folders: Record<string, Folder> = {}
+	const noteTree = Object.keys(tree).reduce((acc, key) => {
+		const nodeNotes =
+			tree[key]?.files?.map(file => ({
+				id: ulid(),
+				type: 'note' as const,
+				name: file.name,
+				path: file.path,
+				isRenaming: false
+			})) ?? []
+		nodeNotes.forEach(note => {
+			notes[note.id] = note
+		})
+
+		const nodeFolders =
+			tree[key]?.folders?.map(folder => ({
+				id: ulid(),
+				type: 'folder' as const,
+				name: folder.name,
+				path: folder.path,
 				isRenaming: false,
-				notes:
-					tree[key]?.files?.map(file => ({
-						name: file.name,
-						path: file.path,
-						isRenaming: false
-					})) ?? [],
-				folders:
-					tree[key]?.folders?.map(folder => ({
-						name: folder.name,
-						path: folder.path
-					})) ?? []
-			}
-			return acc
-		}, {} as NoteTree)
-	)
-	return Object.keys(tree).reduce((acc, key) => {
+				isOpen: false
+			})) ?? []
+		nodeFolders.forEach(folder => {
+			folders[folder.id] = folder
+		})
+
 		acc[key] = {
-			path: key,
-			isOpen: false,
-			isRenaming: false,
-			notes:
-				tree[key]?.files?.map(file => ({
-					name: file.name,
-					path: file.path,
-					isRenaming: false
-				})) ?? [],
-			folders:
-				tree[key]?.folders?.map(folder => ({
-					name: folder.name,
-					path: folder.path
-				})) ?? []
+			notes: nodeNotes.map(note => ({ id: note.id })),
+			folders: nodeFolders.map(folder => ({ id: folder.id }))
 		}
 		return acc
 	}, {} as NoteTree)
+	return { noteTree, notes, folders }
 })
 
 // Slice
@@ -81,15 +84,11 @@ export const noteManagement = createSlice({
 	name: 'noteManagement',
 	initialState,
 	reducers: {
-		toggleDirectory: (state, action: PayloadAction<{ path: string }>) => {
-			const { path } = action.payload
-			const directory = state.tree[path]
-
-			console.log('>>>>>>', path, directory)
-
-			if (directory) {
-				directory.isOpen = !directory.isOpen
-				state.selectedPath = path
+		toggleFolder: (state, action: PayloadAction<{ id: string }>) => {
+			const { id } = action.payload
+			const folder = state.folders[id]
+			if (folder) {
+				folder.isOpen = !folder.isOpen
 			}
 		},
 		selectFolder: (state, action: PayloadAction<{ path: string }>) => {
@@ -105,50 +104,60 @@ export const noteManagement = createSlice({
 			action: PayloadAction<{ path: string; name: string }>
 		) => {
 			const { path, name } = action.payload
+			const newFolder = {
+				id: ulid(),
+				type: 'folder' as const,
+				path,
+				name,
+				isRenaming: false,
+				isOpen: false
+			}
 			if (!state.tree[path]) {
 				state.tree[path] = {
-					path: path,
-					isOpen: false,
-					isRenaming: false,
 					notes: [],
 					folders: []
 				}
 			}
 			state.tree[path]?.folders?.push({
-				name,
-				path
+				id: newFolder.id
 			})
+			state.folders[newFolder.id] = newFolder
 		},
 		noteCreated: (
 			state,
 			action: PayloadAction<{ path: string; name: string }>
 		) => {
 			const { path, name } = action.payload
+			const newNote = {
+				id: ulid(),
+				type: 'note' as const,
+				path,
+				name,
+				isRenaming: false
+			}
 			if (!state.tree[path]) {
 				state.tree[path] = {
-					path: path,
-					isOpen: false,
-					isRenaming: false,
 					notes: [],
 					folders: []
 				}
 			}
 			state.tree[path]?.notes?.push({
-				name,
-				path,
-				isRenaming: false
+				id: newNote.id
 			})
+			state.notes[newNote.id] = newNote
 		},
 		folderDeleted: (
 			state,
 			action: PayloadAction<{ path: string; name: string }>
 		) => {
 			const { path, name } = action.payload
-			const directory = state.tree[path]
-			if (directory) {
-				directory.folders = directory.folders.filter(
-					folder => folder.path !== path && folder.name !== name
-				)
+			const folder = _.find(
+				state.folders,
+				folder => folder.path === path && folder.name === name
+			)
+			if (folder) {
+				delete state.folders[folder.id]
+				state.tree[path]?.folders?.filter(folder => folder.id !== folder.id)
 			}
 		},
 		noteDeleted: (
@@ -156,11 +165,13 @@ export const noteManagement = createSlice({
 			action: PayloadAction<{ path: string; name: string }>
 		) => {
 			const { path, name } = action.payload
-			const directory = state.tree[path]
-			if (directory) {
-				directory.notes = directory.notes.filter(
-					note => note.path !== path && note.name !== name
-				)
+			const note = _.find(
+				state.notes,
+				note => note.path === path && note.name === name
+			)
+			if (note) {
+				delete state.notes[note.id]
+				state.tree[path]?.notes?.filter(note => note.id !== note.id)
 			}
 		},
 		noteRenamed: (
@@ -168,31 +179,26 @@ export const noteManagement = createSlice({
 			action: PayloadAction<{ path: string; name: string }>
 		) => {
 			const { path, name } = action.payload
-			const directory = state.tree[path]
-			if (directory) {
-				const note = directory.notes.find(
-					note => note.path === path && note.name !== name
-				)
-				if (note) {
-					note.name = name
-				}
+			const note = _.find(
+				state.notes,
+				note => note.path === path && note.name === name
+			)
+			if (note) {
+				note.isRenaming = false
 			}
 		},
-		startRenamingNote: (state, action: PayloadAction<{ path: string }>) => {
-			const { path } = action.payload
-			const directory = state.tree[path]
-			if (directory) {
-				const note = directory.notes.find(note => note.path === path)
-				if (note) {
-					note.isRenaming = true
-				}
+		startRenamingNote: (state, action: PayloadAction<{ id: string }>) => {
+			const { id } = action.payload
+			const note = state.notes[id]
+			if (note) {
+				note.isRenaming = true
 			}
 		},
-		startRenamingFolder: (state, action: PayloadAction<{ path: string }>) => {
-			const { path } = action.payload
-			const directory = state.tree[path]
-			if (directory) {
-				directory.isRenaming = true
+		startRenamingFolder: (state, action: PayloadAction<{ id: string }>) => {
+			const { id } = action.payload
+			const folder = state.folders[id]
+			if (folder) {
+				folder.isRenaming = true
 			}
 		}
 	},
@@ -206,7 +212,14 @@ export const noteManagement = createSlice({
 			.addCase(rebuildTree.fulfilled, (state, action) => {
 				if (state.isRebuilding) {
 					state.isRebuilding = false
-					state.tree = action.payload
+					state.tree = action.payload.noteTree
+					state.notes = action.payload.notes
+					state.folders = action.payload.folders
+					console.log('>>>>>>', {
+						noteTree: action.payload.noteTree,
+						notes: action.payload.notes,
+						folders: action.payload.folders
+					})
 				}
 			})
 			.addCase(rebuildTree.rejected, (state, action) => {
@@ -221,7 +234,7 @@ export const noteManagementReducer = noteManagement.reducer
 // -------
 
 export const {
-	toggleDirectory,
+	toggleFolder,
 	selectFolder,
 	selectNote,
 	folderCreated,

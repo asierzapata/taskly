@@ -43,12 +43,12 @@ async function getPathFoldersAndFiles(
 		withFileTypes: true
 	})
 
-	// We only want files with the .md extension
+	// We only want files with the .md extension for now
 	const files = filesAndFolders
 		.filter(
 			fileOrFolder => fileOrFolder.isFile() && fileOrFolder.name.endsWith('.md')
 		)
-		.map(file => file.name.replace(/\.md$/, ''))
+		.map(file => file.name)
 
 	const folders = filesAndFolders
 		.filter(fileOrFolder => fileOrFolder.isDirectory())
@@ -71,7 +71,7 @@ async function getPathFoldersAndFiles(
 			response[folder] = _folder
 		})
 	})
-
+	console.log('>>>>>>', path, response)
 	return {
 		[path]: {
 			files: _.sortBy(files).map(file => ({

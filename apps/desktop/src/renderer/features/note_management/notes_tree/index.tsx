@@ -10,11 +10,12 @@ import {
 	selectFolder,
 	startRenamingFolder,
 	startRenamingNote,
-	toggleDirectory
+	toggleFolder
 } from '../note_management_slice'
-import { Directory, Folder, Note } from '../types'
+import { Folder, Note } from '../types'
 import { Dir } from 'original-fs'
 import { Icons, Spinner } from '@taskly/web-ui'
+import { useContextMenu } from '@renderer/lib/context_menu'
 
 /* ====================================================== */
 /*                       Components                       */
@@ -39,8 +40,6 @@ const NotesTree = ({}) => {
 		dispatch(rebuildTree()).unwrap()
 	}, [])
 
-	const rootDirectory = tree['/']
-
 	if (isRebuildingTree) {
 		return (
 			<div className="mt-6 flex w-full flex-col items-center justify-center gap-4">
@@ -52,134 +51,126 @@ const NotesTree = ({}) => {
 
 	return (
 		<div className="w-full">
-			{rootDirectory && (
-				<Directory isRoot name="Notes" directory={rootDirectory} />
-			)}
+			<NotesTreeRoot />
 		</div>
 	)
 }
 
-const Directory = ({
-	isRoot,
-	name,
-	directory
-}: {
-	isRoot?: boolean
-	name: string
-	directory: Directory
-}) => {
-	const tree = useAppSelector(state => state.noteManagement.tree)
-	const isOpen = directory.isOpen
-	const isRenaming = directory.isRenaming
-	const dispatch = useAppDispatch()
+const NotesTreeRoot = () => {
+	const treeNode = useAppSelector(state => state.noteManagement.tree['/'])
 
-	console.log('>>>>>>', 'rendering directory', directory)
+	return (
+		<div className="h-full w-full">
+			{treeNode?.folders.map(folder => (
+				<Folder id={folder.id} />
+			))}
+			{treeNode?.notes.map(note => (
+				<Note id={note.id} />
+			))}
+		</div>
+	)
+}
+
+const Folder = ({ id }: { id: string }) => {
+	const folder = useAppSelector(state => state.noteManagement.folders[id])
+	const folderFullPath = folder?.path.endsWith('/')
+		? `${folder.path}${folder.name}`
+		: `${folder?.path}/${folder?.name}`
+	const treeNode = useAppSelector(state =>
+		folder
+			? state.noteManagement.tree[folderFullPath]
+			: {
+					folders: [],
+					notes: []
+			  }
+	)
+	const isOpen = folder?.isOpen
+	const isRenaming = folder?.isRenaming
+	const dispatch = useAppDispatch()
 
 	const folderRef = React.useRef<HTMLButtonElement>(null)
 
-	React.useEffect(() => {
-		const onContextMenu = (event: MouseEvent) => {
-			if (folderRef.current?.contains(event.target as Node)) {
-				event.preventDefault()
-				event.stopPropagation()
-				dispatch(selectFolder({ path: directory.path }))
-				window.contextMenu.createContextMenu([
-					{
-						label: 'New Note',
-						click: () => {
-							window.api.noteFileSystem.CreateNote({
-								path: directory.path,
-								name: 'New Note'
-							})
-						}
-					},
-					{
-						label: 'New Folder',
-						click: () => {
-							window.api.noteFileSystem.CreateFolder({
-								path: directory.path,
-								name: 'New Folder'
-							})
-						}
-					},
-					{
-						type: 'separator'
-					},
-					{
-						label: 'Rename',
-						click: () => {
-							dispatch(startRenamingFolder({ path: directory.path }))
-						}
-					},
-					{
-						label: 'Delete',
-						click: () => {
-							const directoryPath = directory.path
-								.split('/')
-								.slice(0, -1)
-								.join('/')
-							const directoryName = directory.path.split('/').slice(-1)[0]
-							console.log('>>>>>>', directoryPath, directoryName)
-							if (!directoryPath || !directoryName) return
-							window.api.noteFileSystem.DeleteFolder({
-								path: directoryPath,
-								name: directoryName
-							})
-						}
-					}
-				])
+	const onContextMenu = () => {
+		if (!folder) return
+		dispatch(selectFolder({ path: folder.path }))
+		window.contextMenu.createContextMenu([
+			{
+				label: 'New Note',
+				click: () => {
+					console.log('>>>>>>', 'folderFullPath', folderFullPath)
+					window.api.noteFileSystem.CreateNote({
+						path: folderFullPath,
+						name: 'New Note'
+					})
+				}
+			},
+			{
+				label: 'New Folder',
+				click: () => {
+					console.log('>>>>>>', 'folderFullPath', folderFullPath)
+					window.api.noteFileSystem.CreateFolder({
+						path: folderFullPath,
+						name: 'New Folder'
+					})
+				}
+			},
+			{
+				type: 'separator'
+			},
+			{
+				label: 'Rename',
+				click: () => {
+					console.log('>>>>>>', 'folder', folder)
+					dispatch(startRenamingFolder({ id: folder.id }))
+				}
+			},
+			{
+				label: 'Delete',
+				click: () => {
+					console.log('>>>>>>', 'folder', folder)
+					window.api.noteFileSystem.DeleteFolder({
+						path: folder.path,
+						name: folder.name
+					})
+				}
 			}
-		}
-
-		window.addEventListener('contextmenu', onContextMenu)
-
-		return () => {
-			window.removeEventListener('contextmenu', onContextMenu)
-		}
-	}, [])
-
-	const onToggleDirectory = () => {
-		dispatch(toggleDirectory({ path: directory.path }))
+		])
 	}
+
+	useContextMenu({ ref: folderRef, onContextMenu })
+
+	const onToggleFolder = () => {
+		dispatch(toggleFolder({ id }))
+	}
+
+	if (!folder) return null
 
 	return (
 		<div className="flex flex-col">
-			{!isRoot && (
-				<button
-					ref={folderRef}
-					onClick={onToggleDirectory}
-					className="flex w-full flex-row items-center justify-start rounded-md bg-transparent p-1 text-sm font-medium transition-colors hover:bg-slate-100 focus:outline-none focus:ring-1 focus:ring-slate-400 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-slate-100 data-[state=open]:bg-transparent dark:text-slate-100 dark:hover:bg-slate-800  dark:hover:text-slate-100 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900 dark:data-[state=open]:bg-slate-800 dark:data-[state=open]:bg-transparent"
-				>
-					{isOpen ? (
-						<Icons.chevronDown size={16} />
-					) : (
-						<Icons.chevronRight size={16} />
-					)}
-					{isOpen ? (
-						<Icons.folderOpen size={16} className="ml-1" />
-					) : (
-						<Icons.folder size={16} className="ml-1" />
-					)}
-					<div className="ml-2">{name}</div>
-				</button>
-			)}
-			{isOpen || isRoot ? (
-				<div className={!isRoot ? 'ml-4' : ''}>
-					{directory.folders.map(folder => {
-						const folderPath = isRoot ? '' : folder.path
-						const _directory = tree[folderPath + '/' + folder.name]
-						console.log('>>>>>>', 'rendering folder', folder, _directory)
-						if (!_directory) return null
-						return (
-							<Directory
-								key={folderPath + '/' + folder.name}
-								name={folder.name}
-								directory={_directory}
-							/>
-						)
+			<button
+				ref={folderRef}
+				onClick={onToggleFolder}
+				className="flex w-full flex-row items-center justify-start rounded-md bg-transparent p-1 text-sm font-medium transition-colors hover:bg-slate-100 focus:outline-none focus:ring-1 focus:ring-slate-400 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-slate-100 data-[state=open]:bg-transparent dark:text-slate-100 dark:hover:bg-slate-800  dark:hover:text-slate-100 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900 dark:data-[state=open]:bg-slate-800 dark:data-[state=open]:bg-transparent"
+			>
+				{isOpen ? (
+					<Icons.chevronDown size={16} />
+				) : (
+					<Icons.chevronRight size={16} />
+				)}
+				{isOpen ? (
+					<Icons.folderOpen size={16} className="ml-1" />
+				) : (
+					<Icons.folder size={16} className="ml-1" />
+				)}
+				<div className="ml-2">{folder.name}</div>
+			</button>
+			{isOpen ? (
+				<div className={'ml-4'}>
+					{treeNode?.folders.map(folder => {
+						return <Folder key={folder.id} id={folder.id} />
 					})}
-					{directory.notes.map(note => (
-						<Note key={note.path} note={note} />
+					{treeNode?.notes.map(note => (
+						<Note key={note.id} id={note.id} />
 					))}
 				</div>
 			) : null}
@@ -187,41 +178,35 @@ const Directory = ({
 	)
 }
 
-const Note = ({ note }: { note: Note }) => {
+const Note = ({ id }: { id: string }) => {
+	const note = useAppSelector(state => state.noteManagement.notes[id])
 	const noteRef = React.useRef<HTMLButtonElement>(null)
 	const dispatch = useAppDispatch()
 
-	React.useEffect(() => {
-		const onContextMenu = (event: MouseEvent) => {
-			if (noteRef.current?.contains(event.target as Node)) {
-				event.preventDefault()
-				event.stopPropagation()
-				window.contextMenu.createContextMenu([
-					{
-						label: 'Rename',
-						click: () => {
-							dispatch(startRenamingNote({ path: note.path }))
-						}
-					},
-					{
-						label: 'Delete',
-						click: () => {
-							window.api.noteFileSystem.DeleteNote({
-								path: note.path,
-								name: note.name
-							})
-						}
-					}
-				])
+	const onContextMenu = () => {
+		window.contextMenu.createContextMenu([
+			{
+				label: 'Rename',
+				click: () => {
+					dispatch(startRenamingNote({ id }))
+				}
+			},
+			{
+				label: 'Delete',
+				click: () => {
+					if (!note) return
+					window.api.noteFileSystem.DeleteNote({
+						path: note.path,
+						name: note.name
+					})
+				}
 			}
-		}
+		])
+	}
 
-		window.addEventListener('contextmenu', onContextMenu)
+	useContextMenu({ ref: noteRef, onContextMenu })
 
-		return () => {
-			window.removeEventListener('contextmenu', onContextMenu)
-		}
-	}, [])
+	if (!note) return null
 
 	return (
 		<button

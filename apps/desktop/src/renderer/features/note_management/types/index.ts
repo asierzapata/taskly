@@ -1,22 +1,28 @@
 export type Note = {
-	name: string
+	id: string
+	type: 'note'
 	path: Path
+	name: string // It contains the extension
 	isRenaming: boolean
 }
 
 export type Folder = {
+	id: string
+	type: 'folder'
+	path: Path
 	name: string
-	path: Path
-}
-
-export type Directory = {
-	path: Path
-	isOpen: boolean
 	isRenaming: boolean
-	folders: Folder[]
-	notes: Note[]
+	isOpen: boolean
 }
 
+// A node is an array of notes and folders
+export type TreeNode = {
+	notes: { id: string }[]
+	folders: { id: string }[]
+}
+
+// A path is a string that represents the path to a note or folder
+// without the name of the note or folder
 export type Path = string
 
-export type NoteTree = Record<Path, Directory>
+export type NoteTree = Record<Path, TreeNode>
