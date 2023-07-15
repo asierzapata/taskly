@@ -1,28 +1,32 @@
 import _ from 'lodash'
 
-import { createMethodCalledFromRender } from '@modules/factory'
+import { createCommand } from '@modules/factory'
 import { ModuleDependencies } from '../module'
 
 type CreateFolderParameters = {
 	path: string
+	name: string
 }
-type CreateFolderResponse = void
+type CreateFolderResponse = {
+	path: string
+	name: string
+}
 
 export const CreateFolder = async ({
-	parameters: { path },
+	parameters: { path, name },
 	dependencies
 }: {
 	parameters: CreateFolderParameters
 	dependencies: ModuleDependencies
 }): Promise<CreateFolderResponse> => {
-	const absolutePath = dependencies.notesPath.getPathInNotesFolder(path)
+	const absolutePath = dependencies.notesPath.getAbsoluteNotePath(path, name)
 
 	await dependencies.fs.mkdir(absolutePath)
 
-	return
+	return { path, name }
 }
 
-export const CreateFolderGenerator = createMethodCalledFromRender<
+export const CreateFolderGenerator = createCommand<
 	'CreateFolder',
 	CreateFolderParameters,
 	CreateFolderResponse,

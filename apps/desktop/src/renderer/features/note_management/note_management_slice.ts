@@ -12,11 +12,13 @@ import { createAppAsyncThunk } from '@renderer/store/hooks'
 
 type NoteManagementState = {
 	tree: NoteTree
+	selectedPath: string
 	isRebuilding: boolean
 }
 
 const initialState: NoteManagementState = {
 	tree: {},
+	selectedPath: '/',
 	isRebuilding: false
 }
 
@@ -62,6 +64,67 @@ export const noteManagement = createSlice({
 
 			if (directory) {
 				directory.isOpen = !directory.isOpen
+				state.selectedPath = path
+			}
+		},
+		selectFolder: (state, action: PayloadAction<{ path: string }>) => {
+			const { path } = action.payload
+			state.selectedPath = path
+		},
+		selectNote: (state, action: PayloadAction<{ path: string }>) => {
+			const { path } = action.payload
+			state.selectedPath = path
+		},
+		folderCreated: (
+			state,
+			action: PayloadAction<{ path: string; name: string }>
+		) => {
+			const { path, name } = action.payload
+			if (!state.tree[path]) {
+				state.tree[path] = {
+					path: path,
+					isOpen: false,
+					notes: [],
+					folders: []
+				}
+			}
+			state.tree[path]?.folders?.push({
+				name: name,
+				path: `${path}/${name}`
+			})
+		},
+		noteCreated: (
+			state,
+			action: PayloadAction<{ path: string; name: string }>
+		) => {
+			const { path, name } = action.payload
+			if (!state.tree[path]) {
+				state.tree[path] = {
+					path: path,
+					isOpen: false,
+					notes: [],
+					folders: []
+				}
+			}
+			state.tree[path]?.notes?.push({
+				name: name,
+				path: `${path}/${name}`
+			})
+		},
+		folderDeleted: (state, action: PayloadAction<{ path: string }>) => {
+			const { path } = action.payload
+			const directory = state.tree[path]
+			if (directory) {
+				directory.folders = directory.folders.filter(
+					folder => folder.path !== path
+				)
+			}
+		},
+		noteDeleted: (state, action: PayloadAction<{ path: string }>) => {
+			const { path } = action.payload
+			const directory = state.tree[path]
+			if (directory) {
+				directory.notes = directory.notes.filter(note => note.path !== path)
 			}
 		}
 	},
@@ -89,7 +152,15 @@ export const noteManagementReducer = noteManagement.reducer
 // Actions
 // -------
 
-export const { toggleDirectory } = noteManagement.actions
+export const {
+	toggleDirectory,
+	selectFolder,
+	selectNote,
+	folderCreated,
+	noteCreated,
+	folderDeleted,
+	noteDeleted
+} = noteManagement.actions
 
 // Selectors
 // ---------

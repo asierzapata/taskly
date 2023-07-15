@@ -1,4 +1,4 @@
-import { createMethodCalledFromRender } from '@modules/factory'
+import { createCommand } from '@modules/factory'
 import _ from 'lodash'
 import { ModuleDependencies } from '../module'
 import { shell } from 'electron'
@@ -15,7 +15,7 @@ const SignInWithGoogle = async (): Promise<SignInWithGoogleResponse> => {
 	return
 }
 
-export const SignInWithGoogleGenerator = createMethodCalledFromRender<
+export const SignInWithGoogleGenerator = createCommand<
 	'SignInWithGoogle',
 	SignInWithGoogleParameters,
 	SignInWithGoogleResponse,

@@ -17,5 +17,6 @@ export type ModuleDependencies = {
 		getNotesPath: () => string
 		getPathInNotesFolder: (path: string) => string
 		getCleanNotePath: (notePath: string, fileName: string) => string
+		getAbsoluteNotePath: (notePath: string, fileName: string) => string
 	}
 }

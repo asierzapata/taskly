@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-import { createMethodCalledFromRender } from '@modules/factory'
+import { createCommand } from '@modules/factory'
 import { ModuleDependencies } from '../module'
 import { Folder, File } from '../types'
 
@@ -54,7 +54,7 @@ export const ListNoteFolder = async ({
 	}
 }
 
-export const ListNoteFolderGenerator = createMethodCalledFromRender<
+export const ListNoteFolderGenerator = createCommand<
 	'ListNoteFolder',
 	ListNoteFolderParameters,
 	ListNoteFolderResponse,

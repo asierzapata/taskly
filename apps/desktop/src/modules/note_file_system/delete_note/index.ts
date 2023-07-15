@@ -1,12 +1,14 @@
 import _ from 'lodash'
 
-import { createMethodCalledFromRender } from '@modules/factory'
+import { createCommand } from '@modules/factory'
 import { ModuleDependencies } from '../module'
 
 type DeleteNoteParameters = {
 	path: string
 }
-type DeleteNoteResponse = void
+type DeleteNoteResponse = {
+	path: string
+}
 
 export const DeleteNote = async ({
 	parameters: { path },
@@ -27,10 +29,12 @@ export const DeleteNote = async ({
 
 	await dependencies.fs.rm(absolutePath)
 
-	return
+	return {
+		path
+	}
 }
 
-export const DeleteNoteGenerator = createMethodCalledFromRender<
+export const DeleteNoteGenerator = createCommand<
 	'DeleteNote',
 	DeleteNoteParameters,
 	DeleteNoteResponse,

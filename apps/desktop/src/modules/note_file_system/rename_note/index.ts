@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-import { createMethodCalledFromRender } from '@modules/factory'
+import { createCommand } from '@modules/factory'
 import { ModuleDependencies } from '../module'
 
 type RenameNoteParameters = {
@@ -32,7 +32,7 @@ export const RenameNote = async ({
 	return
 }
 
-export const RenameNoteGenerator = createMethodCalledFromRender<
+export const RenameNoteGenerator = createCommand<
 	'RenameNote',
 	RenameNoteParameters,
 	RenameNoteResponse,

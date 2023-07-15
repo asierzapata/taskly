@@ -33,7 +33,7 @@ export const MainScreen = () => {
 					{/* this lib is incompatible with react18. To fix     // children: React.ReactNode; needs to be added to SplitPaneProps.
 					 // @ts-ignore TS2322 */}
 					<SplitPane split="vertical" primary="second" defaultSize="25%">
-						{/* <Editor /> */}
+						<Editor />
 						<Calendar />
 					</SplitPane>
 				</SplitPane>

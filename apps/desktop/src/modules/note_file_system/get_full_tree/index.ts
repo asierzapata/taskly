@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-import { createMethodCalledFromRender } from '@modules/factory'
+import { createCommand } from '@modules/factory'
 import { ModuleDependencies } from '../module'
 import { Folder, File } from '../types'
 
@@ -27,7 +27,7 @@ export const GetFullTree = async ({
 	return filesAndFolders
 }
 
-export const GetFullTreeGenerator = createMethodCalledFromRender<
+export const GetFullTreeGenerator = createCommand<
 	'GetFullTree',
 	GetFullTreeParameters,
 	GetFullTreeResponse,

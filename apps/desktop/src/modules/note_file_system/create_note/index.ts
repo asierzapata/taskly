@@ -1,30 +1,37 @@
 import _ from 'lodash'
 
-import { createMethodCalledFromRender } from '@modules/factory'
+import { createCommand } from '@modules/factory'
 import { ModuleDependencies } from '../module'
 
 type CreateNoteParameters = {
 	path: string
+	name: string
 }
-type CreateNoteResponse = void
+type CreateNoteResponse = {
+	path: string
+	name: string
+}
 
 export const CreateNote = async ({
-	parameters: { path },
+	parameters: { path, name },
 	dependencies
 }: {
 	parameters: CreateNoteParameters
 	dependencies: ModuleDependencies
 }): Promise<CreateNoteResponse> => {
-	const absolutePath = dependencies.notesPath.getPathInNotesFolder(path)
+	const absolutePath = dependencies.notesPath.getAbsoluteNotePath(path, name)
 
-	await dependencies.fs.writeFile(absolutePath, 'Untitled', {
+	await dependencies.fs.writeFile(absolutePath, '', {
 		encoding: 'utf-8'
 	})
 
-	return
+	return {
+		path,
+		name
+	}
 }
 
-export const CreateNoteGenerator = createMethodCalledFromRender<
+export const CreateNoteGenerator = createCommand<
 	'CreateNote',
 	CreateNoteParameters,
 	CreateNoteResponse,

@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-import { createMethodCalledFromRender } from '@modules/factory'
+import { createCommand } from '@modules/factory'
 import { ModuleDependencies } from '../module'
 
 type SaveNoteParameters = {
@@ -25,7 +25,7 @@ export const SaveNote = async ({
 	return
 }
 
-export const SaveNoteGenerator = createMethodCalledFromRender<
+export const SaveNoteGenerator = createCommand<
 	'SaveNote',
 	SaveNoteParameters,
 	SaveNoteResponse,

@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-import { createMethodCalledFromRender } from '@modules/factory'
+import { createCommand } from '@modules/factory'
 import { ModuleDependencies } from '../module'
 
 type RenameFolderParameters = {
@@ -24,7 +24,7 @@ export const RenameFolder = async ({
 	return
 }
 
-export const RenameFolderGenerator = createMethodCalledFromRender<
+export const RenameFolderGenerator = createCommand<
 	'RenameFolder',
 	RenameFolderParameters,
 	RenameFolderResponse,

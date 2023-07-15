@@ -3,20 +3,20 @@ import _ from 'lodash'
 import { createCommand } from '@modules/factory'
 import { ModuleDependencies } from '../module'
 
-type ReadNoteParameters = {
+type DeleteFolderParameters = {
 	path: string
 }
-type ReadNoteResponse = {
-	content: string
+type DeleteFolderResponse = {
+	path: string
 }
 
-export const ReadNote = async ({
+export const DeleteFolder = async ({
 	parameters: { path },
 	dependencies
 }: {
-	parameters: ReadNoteParameters
+	parameters: DeleteFolderParameters
 	dependencies: ModuleDependencies
-}): Promise<ReadNoteResponse> => {
+}): Promise<DeleteFolderResponse> => {
 	const absolutePath = dependencies.notesPath.getPathInNotesFolder(path)
 
 	// We need to make sure the path is valid
@@ -27,18 +27,16 @@ export const ReadNote = async ({
 		throw new Error('Path is not a file')
 	}
 
-	const content = await dependencies.fs.readFile(absolutePath, {
-		encoding: 'utf-8'
-	})
+	await dependencies.fs.rm(absolutePath)
 
 	return {
-		content
+		path
 	}
 }
 
-export const ReadNoteGenerator = createCommand<
-	'ReadNote',
-	ReadNoteParameters,
-	ReadNoteResponse,
+export const DeleteFolderGenerator = createCommand<
+	'DeleteFolder',
+	DeleteFolderParameters,
+	DeleteFolderResponse,
 	ModuleDependencies
->('ReadNote', ReadNote)
+>('DeleteFolder', DeleteFolder)

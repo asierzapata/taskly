@@ -9,8 +9,8 @@ import { SignInWithGoogleCallbackGenerator } from './sign_in_with_google_callbac
 const dependencies = undefined
 
 const methods = (window: BrowserWindow) => ({
-	...SignInWithGoogleGenerator.main(ipcMain, dependencies),
-	...SignInWithGoogleCallbackGenerator.main(window, dependencies)
+	...SignInWithGoogleGenerator.main({ ipcMain, window, dependencies }),
+	...SignInWithGoogleCallbackGenerator.main({ ipcMain, window, dependencies })
 })
 
 export { NAME, methods }

@@ -15,16 +15,20 @@ import { NAME } from './module'
 import { ListNoteFolderGenerator } from './list_note_folder'
 import { ReadNoteGenerator } from './read_note'
 import { SaveNoteGenerator } from './save_note'
-import { getCleanNotePath, getNotesPath, getPathInNotesFolder } from './utils'
+import {
+	getCleanNotePath,
+	getNotesPath,
+	getPathInNotesFolder,
+	getAbsoluteNotePath
+} from './utils'
 import { CreateFolderGenerator } from './create_folder'
 import { CreateNoteGenerator } from './create_note'
 import { EnsureSystemFoldersGenerator } from './ensure_system_folders'
 import { DeleteNoteGenerator } from './delete_note'
-import { OpenNoteSystemMenuGenerator } from './open_note_system_menu'
 import { GetFullTreeGenerator } from './get_full_tree'
-import { OpenSystemMenuGenerator } from './open_system_menu'
 import { RenameNoteGenerator } from './rename_note'
 import { RenameFolderGenerator } from './rename_folder'
+import { DeleteFolderGenerator } from './delete_folder'
 
 const dependencies = {
 	fs: {
@@ -39,23 +43,23 @@ const dependencies = {
 	notesPath: {
 		getNotesPath,
 		getPathInNotesFolder,
-		getCleanNotePath
+		getCleanNotePath,
+		getAbsoluteNotePath
 	}
 }
 
 const methods = (window: BrowserWindow) => ({
-	...ListNoteFolderGenerator.main(ipcMain, dependencies),
-	...ReadNoteGenerator.main(ipcMain, dependencies),
-	...SaveNoteGenerator.main(ipcMain, dependencies),
-	...CreateNoteGenerator.main(ipcMain, dependencies),
-	...DeleteNoteGenerator.main(ipcMain, dependencies),
-	...RenameNoteGenerator.main(ipcMain, dependencies),
-	...RenameFolderGenerator.main(ipcMain, dependencies),
-	...CreateFolderGenerator.main(ipcMain, dependencies),
-	// ...OpenNoteSystemMenuGenerator.main(ipcMain, dependencies),
-	...OpenSystemMenuGenerator.main(ipcMain, dependencies),
-	...GetFullTreeGenerator.main(ipcMain, dependencies),
-	...EnsureSystemFoldersGenerator.main(window, dependencies)
+	...ListNoteFolderGenerator.main({ ipcMain, window, dependencies }),
+	...ReadNoteGenerator.main({ ipcMain, window, dependencies }),
+	...SaveNoteGenerator.main({ ipcMain, window, dependencies }),
+	...CreateNoteGenerator.main({ ipcMain, window, dependencies }),
+	...DeleteNoteGenerator.main({ ipcMain, window, dependencies }),
+	...DeleteFolderGenerator.main({ ipcMain, window, dependencies }),
+	...RenameNoteGenerator.main({ ipcMain, window, dependencies }),
+	...RenameFolderGenerator.main({ ipcMain, window, dependencies }),
+	...CreateFolderGenerator.main({ ipcMain, window, dependencies }),
+	...GetFullTreeGenerator.main({ ipcMain, window, dependencies }),
+	...EnsureSystemFoldersGenerator.main({ ipcMain, window, dependencies })
 })
 
 export { NAME, methods }

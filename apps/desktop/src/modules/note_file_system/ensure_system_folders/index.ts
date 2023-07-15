@@ -1,4 +1,4 @@
-import { createMethodCalledFromMain } from '@modules/factory'
+import { createCommand } from '@modules/factory'
 import _ from 'lodash'
 import { ModuleDependencies } from '../module'
 
@@ -14,10 +14,16 @@ const EnsureSystemFolders = async ({
 	// We need to ensure that the following folders exist:
 	// - notes
 
-	await dependencies.fs.mkdir(dependencies.notesPath.getNotesPath())
+	const stats = await dependencies.fs.stat(
+		dependencies.notesPath.getNotesPath()
+	)
+
+	if (!stats.isDirectory()) {
+		await dependencies.fs.mkdir(dependencies.notesPath.getNotesPath())
+	}
 }
 
-export const EnsureSystemFoldersGenerator = createMethodCalledFromMain<
+export const EnsureSystemFoldersGenerator = createCommand<
 	'EnsureSystemFolders',
 	EnsureSystemFoldersParameters,
 	EnsureSystemFoldersResponse,

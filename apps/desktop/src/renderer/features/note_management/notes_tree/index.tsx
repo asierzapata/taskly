@@ -5,10 +5,14 @@ import React from 'react'
 /* ====================================================== */
 
 import { useAppDispatch, useAppSelector } from '@renderer/store/hooks'
-import { rebuildTree, toggleDirectory } from '../note_management_slice'
+import {
+	rebuildTree,
+	selectFolder,
+	toggleDirectory
+} from '../note_management_slice'
 import { Directory, Folder, Note } from '../types'
 import { Dir } from 'original-fs'
-import { Icons } from '@taskly/web-ui'
+import { Icons, Spinner } from '@taskly/web-ui'
 
 /* ====================================================== */
 /*                       Components                       */
@@ -24,6 +28,9 @@ import { Icons } from '@taskly/web-ui'
 
 const NotesTree = ({}) => {
 	const tree = useAppSelector(state => state.noteManagement.tree)
+	const isRebuildingTree = useAppSelector(
+		state => state.noteManagement.isRebuilding
+	)
 	const dispatch = useAppDispatch()
 
 	React.useEffect(() => {
@@ -31,6 +38,15 @@ const NotesTree = ({}) => {
 	}, [])
 
 	const rootDirectory = tree['/']
+
+	if (isRebuildingTree) {
+		return (
+			<div className="mt-6 flex w-full flex-col items-center justify-center gap-4">
+				<span>Building Tree...</span>
+				<Spinner />
+			</div>
+		)
+	}
 
 	return (
 		<div className="w-full">
@@ -61,41 +77,10 @@ const Directory = ({
 			if (folderRef.current?.contains(event.target as Node)) {
 				event.preventDefault()
 				event.stopPropagation()
-				window.api.noteFileSystem.OpenSystemMenu({
-					template: [
-						{
-							label: 'New Note',
-							click: () => {
-								window.api.noteFileSystem.CreateNote({
-									path: directory.path
-								})
-							}
-						},
-						{
-							label: 'New Folder',
-							click: () => {
-								window.api.noteFileSystem.CreateFolder({
-									path: directory.path
-								})
-							}
-						},
-						{
-							type: 'separator'
-						},
-						{
-							label: 'Rename',
-							click: () => {
-								// TODO: Implement
-							}
-						},
-						{
-							label: 'Delete',
-							click: () => {
-								// window.api.noteFileSystem.DeleteFolder()
-							}
-						}
-					]
-				})
+				dispatch(selectFolder({ path: directory.path }))
+				// window.menus.ShowFolderMenu({
+				// 	folderPath: directory.path
+				// })
 			}
 		}
 
@@ -161,25 +146,20 @@ const Note = ({ note }: { note: Note }) => {
 			if (noteRef.current?.contains(event.target as Node)) {
 				event.preventDefault()
 				event.stopPropagation()
-				window.api.noteFileSystem.OpenSystemMenu({
-					template: [
-						{
-							label: 'Rename',
-							click: () => {
-								// TODO: Implement rename
-								console.log('>>>>>>', 'Rename')
-							}
-						},
-						{
-							label: 'Delete',
-							click: () => {
-								window.api.noteFileSystem.DeleteNote({
-									path: note.path
-								})
-							}
+				window.contextMenu.createContextMenu([
+					{
+						label: 'Rename',
+						click: () => {
+							console.log('Rename')
 						}
-					]
-				})
+					},
+					{
+						label: 'Delete',
+						click: () => {
+							console.log('Delete')
+						}
+					}
+				])
 			}
 		}
 

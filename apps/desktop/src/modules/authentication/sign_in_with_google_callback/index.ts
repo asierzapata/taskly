@@ -1,4 +1,4 @@
-import { createMethodCalledFromMain } from '@modules/factory'
+import { createCommand } from '@modules/factory'
 import _ from 'lodash'
 import { ModuleDependencies } from '../module'
 
@@ -21,7 +21,8 @@ const SignInWithGoogleCallback = async ({
 	}
 }
 
-export const SignInWithGoogleCallbackGenerator = createMethodCalledFromMain<
+// TODO: Refactor this to be an event
+export const SignInWithGoogleCallbackGenerator = createCommand<
 	'SignInWithGoogleCallback',
 	SignInWithGoogleCallbackParameters,
 	SignInWithGoogleCallbackResponse,

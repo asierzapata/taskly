@@ -7,6 +7,8 @@ import { PersistGate } from 'redux-persist/integration/react'
 
 import { AppRouter } from './router'
 
+import { NoteManagementListener } from './features/note_management/note_management_listener'
+
 /* ====================================================== */
 /*                         Styles                        */
 /* ====================================================== */
@@ -26,6 +28,7 @@ export const renderReactApp = (el: string) => {
 		<React.StrictMode>
 			<Provider store={store}>
 				<PersistGate loading={null} persistor={persistor}>
+					<NoteManagementListener />
 					<AppRouter />
 				</PersistGate>
 			</Provider>
