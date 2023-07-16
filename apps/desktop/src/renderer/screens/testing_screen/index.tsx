@@ -3,7 +3,7 @@
 /* ====================================================== */
 
 import React from 'react'
-import { NoteEditor } from '@renderer/note_editor'
+import { Editor } from '@renderer/editor'
 import SplitPane from 'react-split-pane'
 
 import './split-pane.css'
@@ -23,7 +23,7 @@ export const MainScreen = () => {
 					{/* this lib is incompatible with react18. To fix     // children: React.ReactNode; needs to be added to SplitPaneProps.
 					 // @ts-ignore TS2322 */}
 					<SplitPane split="vertical" primary="second" defaultSize="25%">
-						<Editor />
+						<_Editor />
 						<Calendar />
 					</SplitPane>
 				</SplitPane>
@@ -42,12 +42,12 @@ function SideBar() {
 	)
 }
 
-function Editor() {
+function _Editor() {
 	const value = localStorage.getItem('myValue') || ''
 
 	return (
 		<div className="mx-auto w-full max-w-[900px] overflow-y-auto p-6">
-			<NoteEditor initialDocument={value} onChange={() => {}} />
+			<Editor initialDocument={value} onChange={() => {}} />
 		</div>
 	)
 }

@@ -17,10 +17,12 @@ import { RenameNoteGenerator } from './rename_note'
 import { RenameFolderGenerator } from './rename_folder'
 import { DeleteFolderGenerator } from './delete_folder'
 import { UpdateNoteFileSystemPathGenerator } from './update_note_file_system_path'
+import { WriteNoteGenerator } from './write_note'
 
 const methods = () => ({
 	...ListNoteFolderGenerator.render(ipcRenderer),
 	...ReadNoteGenerator.render(ipcRenderer),
+	...WriteNoteGenerator.render(ipcRenderer),
 	...SaveNoteGenerator.render(ipcRenderer),
 	...CreateFolderGenerator.render(ipcRenderer),
 	...DeleteNoteGenerator.render(ipcRenderer),

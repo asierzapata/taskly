@@ -34,10 +34,18 @@ import {
 } from '@taskly/web-ui'
 
 /* ====================================================== */
+/*                       Types                            */
+/* ====================================================== */
+
+type NotesTreeProps = {
+	onNoteSelected: (note: Note) => void
+}
+
+/* ====================================================== */
 /*                    Implementation                      */
 /* ====================================================== */
 
-const NotesTree = () => {
+const NotesTree = ({ onNoteSelected }: NotesTreeProps) => {
 	const isRebuildingTree = useAppSelector(
 		state => state.noteManagement.isRebuilding
 	)
@@ -58,27 +66,37 @@ const NotesTree = () => {
 
 	return (
 		<div className="w-full">
-			<NotesTreeRoot />
+			<NotesTreeRoot onNoteSelected={onNoteSelected} />
 		</div>
 	)
 }
 
-const NotesTreeRoot = () => {
+const NotesTreeRoot = ({
+	onNoteSelected
+}: {
+	onNoteSelected: (note: Note) => void
+}) => {
 	const treeNode = useAppSelector(state => state.noteManagement.tree['/'])
 
 	return (
 		<div className="h-full w-full">
 			{treeNode?.folders.map(folder => (
-				<Folder id={folder.id} />
+				<Folder id={folder.id} onNoteSelected={onNoteSelected} />
 			))}
 			{treeNode?.notes.map(note => (
-				<Note id={note.id} />
+				<Note id={note.id} onNoteSelected={onNoteSelected} />
 			))}
 		</div>
 	)
 }
 
-const Folder = ({ id }: { id: string }) => {
+const Folder = ({
+	id,
+	onNoteSelected
+}: {
+	id: string
+	onNoteSelected: (note: Note) => void
+}) => {
 	const folder = useAppSelector(state => state.noteManagement.folders[id])
 	const folderFullPath = folder?.path.endsWith('/')
 		? `${folder.path}${folder.name}`
@@ -177,10 +195,16 @@ const Folder = ({ id }: { id: string }) => {
 			{isOpen ? (
 				<div className={'ml-4'}>
 					{treeNode?.folders.map(folder => {
-						return <Folder key={folder.id} id={folder.id} />
+						return (
+							<Folder
+								key={folder.id}
+								id={folder.id}
+								onNoteSelected={onNoteSelected}
+							/>
+						)
 					})}
 					{treeNode?.notes.map(note => (
-						<Note key={note.id} id={note.id} />
+						<Note key={note.id} id={note.id} onNoteSelected={onNoteSelected} />
 					))}
 				</div>
 			) : null}
@@ -188,7 +212,13 @@ const Folder = ({ id }: { id: string }) => {
 	)
 }
 
-const Note = ({ id }: { id: string }) => {
+const Note = ({
+	id,
+	onNoteSelected
+}: {
+	id: string
+	onNoteSelected: (note: Note) => void
+}) => {
 	const note = useAppSelector(state => state.noteManagement.notes[id])
 	const noteRef = React.useRef<HTMLButtonElement>(null)
 	const dispatch = useAppDispatch()
@@ -233,6 +263,7 @@ const Note = ({ id }: { id: string }) => {
 			ref={noteRef}
 			className="flex w-full flex-row items-center justify-start rounded-md bg-transparent p-1 text-sm font-medium transition-colors hover:bg-slate-100 focus:outline-none focus:ring-1 focus:ring-slate-400 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-slate-100 data-[state=open]:bg-transparent dark:text-slate-100 dark:hover:bg-slate-800  dark:hover:text-slate-100 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900 dark:data-[state=open]:bg-slate-800 dark:data-[state=open]:bg-transparent"
 			onKeyDown={handleKeyDown}
+			onClick={() => onNoteSelected(note)}
 		>
 			<Icons.page size={16} className="ml-1 min-h-[16px] min-w-[16px]" />
 			{!note.isRenaming ? (

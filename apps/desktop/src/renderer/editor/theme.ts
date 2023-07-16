@@ -161,7 +161,7 @@ const createTheme = ({
 	return extension
 }
 
-export const NoteEditorTheme = createTheme({
+export const EditorTheme = createTheme({
 	theme: 'dark',
 	settings: {
 		fontFamily: 'JetBrainsMono',

@@ -32,6 +32,7 @@ import { RenameFolderGenerator } from './rename_folder'
 import { DeleteFolderGenerator } from './delete_folder'
 import { UpdateNoteFileSystemPathGenerator } from './update_note_file_system_path'
 import { store } from './utils/store'
+import { WriteNoteGenerator } from './write_note'
 
 const dependencies = {
 	fs: {
@@ -56,6 +57,7 @@ const dependencies = {
 const methods = (window: BrowserWindow) => ({
 	...ListNoteFolderGenerator.main({ ipcMain, window, dependencies }),
 	...ReadNoteGenerator.main({ ipcMain, window, dependencies }),
+	...WriteNoteGenerator.main({ ipcMain, window, dependencies }),
 	...SaveNoteGenerator.main({ ipcMain, window, dependencies }),
 	...CreateNoteGenerator.main({ ipcMain, window, dependencies }),
 	...DeleteNoteGenerator.main({ ipcMain, window, dependencies }),

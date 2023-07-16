@@ -76,7 +76,7 @@ export function createWindow(url: string, options: WindowOptions = {}) {
 		window.show()
 	})
 
-	if (process.env.NODE_ENV === 'development') window.webContents.openDevTools()
+	// if (process.env.NODE_ENV === 'development') window.webContents.openDevTools()
 
 	return window
 }

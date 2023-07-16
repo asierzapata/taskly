@@ -1,7 +1,7 @@
 .titlebar {
 	-webkit-app-region: drag;
 	display: flex;
-	border-bottom: 1px solid var(--border);
+	border-bottom: 1px solid hsl(var(--border));
 	height: 32px;
 	width: 100%;
 }

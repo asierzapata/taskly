@@ -3,48 +3,48 @@ import _ from 'lodash'
 import { createCommand } from '@modules/factory'
 import { ModuleDependencies } from '../module'
 
-type ReadNoteParameters = {
+type WriteNoteParameters = {
 	path: string
 	name: string
+	content: string
 }
-type ReadNoteResponse = {
+type WriteNoteResponse = {
+	path: string
+	name: string
 	content: string
 }
 
-export const ReadNote = async ({
-	parameters: { path, name },
+export const WriteNote = async ({
+	parameters: { path, name, content },
 	dependencies
 }: {
-	parameters: ReadNoteParameters
+	parameters: WriteNoteParameters
 	dependencies: ModuleDependencies
-}): Promise<ReadNoteResponse> => {
+}): Promise<WriteNoteResponse> => {
 	const absolutePath = dependencies.notesPath.getAbsoluteNotePath(path, name)
 
 	// We need to make sure the path is valid
 	// and that it is a file
 	const stats = await dependencies.fs.stat(absolutePath)
 
-	console.log('>>>>>>', {
-		absolutePath,
-		stats
-	})
-
 	if (!stats.isFile()) {
 		throw new Error('Path is not a file')
 	}
 
-	const content = await dependencies.fs.readFile(absolutePath, {
+	await dependencies.fs.writeFile(absolutePath, content, {
 		encoding: 'utf-8'
 	})
 
 	return {
+		path,
+		name,
 		content
 	}
 }
 
-export const ReadNoteGenerator = createCommand<
-	'ReadNote',
-	ReadNoteParameters,
-	ReadNoteResponse,
+export const WriteNoteGenerator = createCommand<
+	'WriteNote',
+	WriteNoteParameters,
+	WriteNoteResponse,
 	ModuleDependencies
->('ReadNote', ReadNote)
+>('WriteNote', WriteNote)

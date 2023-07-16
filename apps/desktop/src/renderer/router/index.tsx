@@ -1,5 +1,5 @@
 import React from 'react'
-import { MainScreen } from '@renderer/screens/main_screen'
+// import { MainScreen } from '@renderer/screens/main_screen'
 import {
 	createHashRouter,
 	createRoutesFromElements,
@@ -10,6 +10,9 @@ import {
 import { AuthenticationWrapper } from './authentication_wrapper'
 import { SafeSelection } from '@renderer/screens/safe_selection'
 import { SafeCreation } from '@renderer/screens/safe_creation'
+import { SafeLayout } from '@renderer/screens/safe_layout'
+import { SafeWelcome } from '@renderer/screens/safe_welcome'
+import { Note } from '@renderer/screens/note'
 
 const appRouter = createHashRouter(
 	createRoutesFromElements(
@@ -17,7 +20,10 @@ const appRouter = createHashRouter(
 			<Route element={<AuthenticationWrapper />}>
 				<Route path="/" element={<SafeSelection />} />
 				<Route path="/create_safe" element={<SafeCreation />} />
-				<Route path="/safe/:id" element={<MainScreen />} />
+				<Route path="/safe/:safeId" element={<SafeLayout />}>
+					<Route path="" element={<SafeWelcome />} />
+					<Route path="note/:noteId" element={<Note />} />
+				</Route>
 			</Route>
 		</>
 	)

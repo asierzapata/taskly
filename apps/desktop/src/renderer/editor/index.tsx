@@ -42,20 +42,12 @@ import { frontmatter } from './plugins/frontmatter'
 // Theme
 // -----
 
-import { NoteEditorTheme, getRandomUserColor } from './theme'
-
-// Yjs
-// ---
-
-import * as Y from 'yjs'
-import { yCollab } from 'y-codemirror.next'
-import { WebsocketProvider } from 'y-websocket'
-import { IndexeddbPersistence } from 'y-indexeddb'
+import { EditorTheme } from './theme'
 
 // Types
 // -----
 
-type NoteEditorProps = {
+type EditorProps = {
 	editorViewRef?: React.MutableRefObject<EditorView>
 	initialDocument?: string
 	onChange?: (value: string) => void
@@ -64,13 +56,13 @@ type NoteEditorProps = {
 // Component
 // ---------
 
-const NoteEditor = React.forwardRef(
+const Editor = React.forwardRef(
 	(
 		{
 			editorViewRef: editorViewRefProp,
 			initialDocument,
 			onChange
-		}: NoteEditorProps,
+		}: EditorProps,
 		ref
 	) => {
 		const editorViewRefInternal = useRef<EditorView>()
@@ -83,6 +75,14 @@ const NoteEditor = React.forwardRef(
 		}))
 
 		useEffect(() => {
+			const updateListener = EditorView.updateListener.of(v => {
+				if (v.docChanged) {
+					if (typeof onChange === 'function') {
+						onChange(v.state.doc.toString())
+					}
+				}
+			})
+
 			if (containerRef.current) {
 				if (!editorViewRef.current) {
 					const extensions = [
@@ -117,7 +117,8 @@ const NoteEditor = React.forwardRef(
 							extensions: [frontmatter],
 							codeLanguages: languages
 						}),
-						...NoteEditorTheme
+						updateListener,
+						...EditorTheme
 					]
 					editorViewRef.current = new EditorView({
 						state: EditorState.create({
@@ -141,6 +142,6 @@ const NoteEditor = React.forwardRef(
 	}
 )
 
-NoteEditor.displayName = 'NoteEditor'
+Editor.displayName = 'Editor'
 
-export { NoteEditor }
+export { Editor }
