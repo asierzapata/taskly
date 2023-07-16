@@ -107,7 +107,7 @@ export const noteManagement = createSlice({
 				type: 'folder' as const,
 				path,
 				name,
-				isRenaming: false,
+				isRenaming: true,
 				isOpen: false
 			}
 			if (!state.tree[path]) {
@@ -131,7 +131,7 @@ export const noteManagement = createSlice({
 				type: 'note' as const,
 				path,
 				name,
-				isRenaming: false
+				isRenaming: true
 			}
 			if (!state.tree[path]) {
 				state.tree[path] = {

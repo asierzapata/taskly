@@ -5,7 +5,6 @@ import { store } from './store'
 
 export const getNotesPath = () => {
 	const currentSafePath = store.get('currentSafePath') as string | undefined
-	console.log('>>>>>>', currentSafePath)
 	return currentSafePath
 		? currentSafePath
 		: path.join(app.getPath('userData'), 'notes')
@@ -20,7 +19,7 @@ export const getCleanNotePath = (notePath: string, fileName: string) => {
 }
 
 export const getAbsoluteNotePath = (notePath: string, fileName: string) => {
-	return path.join(getNotesPath(), notePath, `${fileName}.md`)
+	return path.join(getNotesPath(), notePath, fileName)
 }
 
 export const getAbsoluteFolderPath = (

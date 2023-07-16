@@ -10,13 +10,16 @@ export function createEvent<K extends string, I, E>(id: K) {
 			} as Record<K, (event: E) => void>),
 		render: (ipcRenderer: IpcRenderer) =>
 			({
-				[`On${id}`]: (callback: (event: E) => void) =>
-					ipcRenderer.on(id, (_event, event: E) => {
+				[`On${id}`]: (callback: (event: E) => void) => {
+					const handler = (_event: unknown, event: E) => {
 						callback(event)
-					})
+					}
+					ipcRenderer.on(id, handler)
+					return () => ipcRenderer.removeListener(id, handler)
+				}
 			} as Record<
 				`On${K}`,
-				(callback: (event: E) => void) => Electron.IpcRenderer
+				(callback: (event: E) => void) => () => Electron.IpcRenderer
 			>)
 	}
 }
@@ -54,6 +57,7 @@ export function createCommand<K extends string, I, O, D>(
 			return {
 				[id]: async (parameters: I): Promise<O> => {
 					const response = await method({ parameters, dependencies })
+					console.log('>>>>>>', 'send', 'id', id)
 					window.webContents.send(id, response)
 					return response
 				}
@@ -61,17 +65,20 @@ export function createCommand<K extends string, I, O, D>(
 		},
 		render: (ipcRenderer: IpcRenderer) =>
 			({
-				[`On${id}`]: (callback: (payload: O) => void) =>
-					ipcRenderer.on(id, (_event, payload: O) => {
+				[`On${id}`]: (callback: (payload: O) => void) => {
+					const handler = (_event: unknown, payload: O) => {
 						callback(payload)
-					}),
+					}
+					ipcRenderer.on(id, handler)
+					return () => ipcRenderer.removeListener(id, handler)
+				},
 				[id]: async (payload: I): Promise<O> => {
 					const response = ipcRenderer.invoke(id, payload)
 					return response as Promise<O>
 				}
 			} as Record<
 				`On${K}`,
-				(callback: (payload: O) => void) => Electron.IpcRenderer
+				(callback: (payload: O) => void) => () => Electron.IpcRenderer
 			> &
 				Record<K, (payload: I) => Promise<O>>)
 	}

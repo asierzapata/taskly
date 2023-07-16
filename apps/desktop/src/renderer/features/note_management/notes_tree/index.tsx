@@ -282,7 +282,7 @@ const NoteRenameInput = ({ id }: { id: string }) => {
 	}
 
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === 'Escape') {
+		if (e.key === 'Escape' && _.isEmpty(errors.name)) {
 			dispatch(stopRenamingNote({ id }))
 		}
 	}
@@ -301,6 +301,7 @@ const NoteRenameInput = ({ id }: { id: string }) => {
 									isUnique: value => !noteNamesOnSamePath.includes(value)
 								}
 							})}
+							dimension="sm"
 							isInvalid={!_.isEmpty(errors.name)}
 							autoFocus
 							onKeyDown={handleKeyDown}
