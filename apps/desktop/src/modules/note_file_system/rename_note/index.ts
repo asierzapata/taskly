@@ -5,13 +5,17 @@ import { ModuleDependencies } from '../module'
 
 type RenameNoteParameters = {
 	path: string
-	oldFilename: string
-	newFilename: string
+	oldName: string
+	newName: string
 }
-type RenameNoteResponse = void
+type RenameNoteResponse = {
+	path: string
+	oldName: string
+	newName: string
+}
 
 export const RenameNote = async ({
-	parameters: { path, oldFilename, newFilename },
+	parameters: { path, oldName, newName },
 	dependencies
 }: {
 	parameters: RenameNoteParameters
@@ -19,17 +23,21 @@ export const RenameNote = async ({
 }): Promise<RenameNoteResponse> => {
 	const oldPath = dependencies.notesPath.getCleanNotePath(
 		dependencies.notesPath.getPathInNotesFolder(path),
-		oldFilename
+		oldName
 	)
 
 	const newPath = dependencies.notesPath.getCleanNotePath(
 		dependencies.notesPath.getPathInNotesFolder(path),
-		newFilename
+		newName
 	)
 
 	await dependencies.fs.rename(oldPath, newPath)
 
-	return
+	return {
+		path,
+		oldName,
+		newName
+	}
 }
 
 export const RenameNoteGenerator = createCommand<

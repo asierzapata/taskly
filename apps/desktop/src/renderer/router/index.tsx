@@ -8,19 +8,16 @@ import {
 } from 'react-router-dom'
 
 import { AuthenticationWrapper } from './authentication_wrapper'
+import { SafeSelection } from '@renderer/screens/safe_selection'
+import { SafeCreation } from '@renderer/screens/safe_creation'
 
 const appRouter = createHashRouter(
 	createRoutesFromElements(
 		<>
-			<Route
-				element={
-					<div className="titlebar">
-						<div className="titlebar-text">Taskly</div>
-					</div>
-				}
-			/>
 			<Route element={<AuthenticationWrapper />}>
-				<Route path="/" element={<MainScreen />} />
+				<Route path="/" element={<SafeSelection />} />
+				<Route path="/create_safe" element={<SafeCreation />} />
+				<Route path="/safe/:id" element={<MainScreen />} />
 			</Route>
 		</>
 	)

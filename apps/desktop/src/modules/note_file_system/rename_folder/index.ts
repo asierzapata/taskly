@@ -4,24 +4,39 @@ import { createCommand } from '@modules/factory'
 import { ModuleDependencies } from '../module'
 
 type RenameFolderParameters = {
-	oldPath: string
-	newPath: string
+	path: string
+	oldName: string
+	newName: string
 }
-type RenameFolderResponse = void
+type RenameFolderResponse = {
+	path: string
+	oldName: string
+	newName: string
+}
 
 export const RenameFolder = async ({
-	parameters: { oldPath, newPath },
+	parameters: { path, oldName, newName },
 	dependencies
 }: {
 	parameters: RenameFolderParameters
 	dependencies: ModuleDependencies
 }): Promise<RenameFolderResponse> => {
-	const absoluteOldPath = dependencies.notesPath.getPathInNotesFolder(oldPath)
-	const absoluteNewPath = dependencies.notesPath.getPathInNotesFolder(newPath)
+	const absoluteOldPath = dependencies.notesPath.getAbsoluteFolderPath(
+		path,
+		oldName
+	)
+	const absoluteNewPath = dependencies.notesPath.getAbsoluteFolderPath(
+		path,
+		newName
+	)
 
 	await dependencies.fs.rename(absoluteOldPath, absoluteNewPath)
 
-	return
+	return {
+		path,
+		oldName,
+		newName
+	}
 }
 
 export const RenameFolderGenerator = createCommand<

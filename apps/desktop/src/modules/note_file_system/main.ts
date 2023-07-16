@@ -30,6 +30,8 @@ import { GetFullTreeGenerator } from './get_full_tree'
 import { RenameNoteGenerator } from './rename_note'
 import { RenameFolderGenerator } from './rename_folder'
 import { DeleteFolderGenerator } from './delete_folder'
+import { UpdateNoteFileSystemPathGenerator } from './update_note_file_system_path'
+import { store } from './utils/store'
 
 const dependencies = {
 	fs: {
@@ -47,7 +49,8 @@ const dependencies = {
 		getCleanNotePath,
 		getAbsoluteNotePath,
 		getAbsoluteFolderPath
-	}
+	},
+	store
 }
 
 const methods = (window: BrowserWindow) => ({
@@ -61,7 +64,8 @@ const methods = (window: BrowserWindow) => ({
 	...RenameFolderGenerator.main({ ipcMain, window, dependencies }),
 	...CreateFolderGenerator.main({ ipcMain, window, dependencies }),
 	...GetFullTreeGenerator.main({ ipcMain, window, dependencies }),
-	...EnsureSystemFoldersGenerator.main({ ipcMain, window, dependencies })
+	...EnsureSystemFoldersGenerator.main({ ipcMain, window, dependencies }),
+	...UpdateNoteFileSystemPathGenerator.main({ ipcMain, window, dependencies })
 })
 
 export { NAME, methods }

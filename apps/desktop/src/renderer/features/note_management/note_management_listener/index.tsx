@@ -8,8 +8,10 @@ import { useAppDispatch } from '@renderer/store/hooks'
 import {
 	folderCreated,
 	folderDeleted,
+	folderRenamed,
 	noteCreated,
-	noteDeleted
+	noteDeleted,
+	noteRenamed
 } from '../note_management_slice'
 
 /* ====================================================== */
@@ -34,6 +36,14 @@ const NoteManagementListener = () => {
 		window.api.noteFileSystem.OnDeleteNote(data => {
 			console.log('>>>>>>', 'note deleted')
 			dispatch(noteDeleted(data))
+		})
+		window.api.noteFileSystem.OnRenameNote(data => {
+			console.log('>>>>>>', 'note renamed')
+			dispatch(noteRenamed(data))
+		})
+		window.api.noteFileSystem.OnRenameFolder(data => {
+			console.log('>>>>>>', 'folder renamed')
+			dispatch(folderRenamed(data))
 		})
 	}, [])
 

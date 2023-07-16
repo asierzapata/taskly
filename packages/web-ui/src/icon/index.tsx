@@ -30,7 +30,10 @@ import {
 	type Icon as LucideIcon,
 	ChevronUp,
 	Folder,
-	FolderOpen
+	FolderOpen,
+	Pencil,
+	ArrowLeft,
+	FolderLock
 } from 'lucide-react'
 
 export type Icon = LucideIcon
@@ -66,6 +69,7 @@ export const Icons = {
 	warning: AlertTriangle,
 	user: User,
 	arrowRight: ArrowRight,
+	arrowLeft: ArrowLeft,
 	help: HelpCircle,
 	pizza: Pizza,
 	twitter: Twitter,
@@ -78,6 +82,8 @@ export const Icons = {
 	calendarClock: CalendarClock,
 	folder: Folder,
 	folderOpen: FolderOpen,
+	pencil: Pencil,
+	safe: FolderLock,
 	gitHub: (props: LucideProps) => (
 		<svg viewBox="0 0 438.549 438.549" {...props}>
 			<path

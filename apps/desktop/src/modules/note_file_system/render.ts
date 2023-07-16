@@ -16,6 +16,7 @@ import { GetFullTreeGenerator } from './get_full_tree'
 import { RenameNoteGenerator } from './rename_note'
 import { RenameFolderGenerator } from './rename_folder'
 import { DeleteFolderGenerator } from './delete_folder'
+import { UpdateNoteFileSystemPathGenerator } from './update_note_file_system_path'
 
 const methods = () => ({
 	...ListNoteFolderGenerator.render(ipcRenderer),
@@ -28,7 +29,8 @@ const methods = () => ({
 	...RenameNoteGenerator.render(ipcRenderer),
 	...RenameFolderGenerator.render(ipcRenderer),
 	...EnsureSystemFoldersGenerator.render(ipcRenderer),
-	...GetFullTreeGenerator.render(ipcRenderer)
+	...GetFullTreeGenerator.render(ipcRenderer),
+	...UpdateNoteFileSystemPathGenerator.render(ipcRenderer)
 })
 
 export { NAME, methods }

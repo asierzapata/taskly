@@ -76,9 +76,7 @@ export const rebuildTree = createAppAsyncThunk<
 // Slice
 // -----
 
-// TODO: Delete folders delete all forlders from state, luckly not from disk
 // TODO: Event handlers are called twice, duplicating into the state the actions
-// TODO: Create folder does not reflect on ui
 
 export const noteManagement = createSlice({
 	name: 'noteManagement',
@@ -176,15 +174,30 @@ export const noteManagement = createSlice({
 		},
 		noteRenamed: (
 			state,
-			action: PayloadAction<{ path: string; name: string }>
+			action: PayloadAction<{ path: string; oldName: string; newName: string }>
 		) => {
-			const { path, name } = action.payload
+			const { path, oldName, newName } = action.payload
 			const note = _.find(
 				state.notes,
-				note => note.path === path && note.name === name
+				note => note.path === path && note.name === oldName
 			)
 			if (note) {
 				note.isRenaming = false
+				note.name = newName
+			}
+		},
+		folderRenamed: (
+			state,
+			action: PayloadAction<{ path: string; oldName: string; newName: string }>
+		) => {
+			const { path, oldName, newName } = action.payload
+			const folder = _.find(
+				state.folders,
+				folder => folder.path === path && folder.name === oldName
+			)
+			if (folder) {
+				folder.isRenaming = false
+				folder.name = newName
 			}
 		},
 		startRenamingNote: (state, action: PayloadAction<{ id: string }>) => {
@@ -194,11 +207,25 @@ export const noteManagement = createSlice({
 				note.isRenaming = true
 			}
 		},
+		stopRenamingNote: (state, action: PayloadAction<{ id: string }>) => {
+			const { id } = action.payload
+			const note = state.notes[id]
+			if (note) {
+				note.isRenaming = false
+			}
+		},
 		startRenamingFolder: (state, action: PayloadAction<{ id: string }>) => {
 			const { id } = action.payload
 			const folder = state.folders[id]
 			if (folder) {
 				folder.isRenaming = true
+			}
+		},
+		stopRenamingFolder: (state, action: PayloadAction<{ id: string }>) => {
+			const { id } = action.payload
+			const folder = state.folders[id]
+			if (folder) {
+				folder.isRenaming = false
 			}
 		}
 	},
@@ -241,8 +268,12 @@ export const {
 	noteCreated,
 	folderDeleted,
 	noteDeleted,
+	noteRenamed,
+	folderRenamed,
 	startRenamingFolder,
-	startRenamingNote
+	stopRenamingFolder,
+	startRenamingNote,
+	stopRenamingNote
 } = noteManagement.actions
 
 // Selectors

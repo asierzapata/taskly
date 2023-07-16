@@ -1,5 +1,5 @@
-import { noteManagementReducer } from '@renderer/features/note_management/note_management_slice'
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
+
 import {
 	FLUSH,
 	PAUSE,
@@ -13,8 +13,12 @@ import {
 // import createElectronStorage from 'redux-persist-electron-storage'
 import storage from 'redux-persist/lib/storage'
 
+import { noteManagementReducer } from '@renderer/features/note_management/note_management_slice'
+import { safeManagementReducer } from '@renderer/features/safe_management/safe_management_slice'
+
 const rootReducer = combineReducers({
-	noteManagement: noteManagementReducer
+	noteManagement: noteManagementReducer,
+	safeManagement: safeManagementReducer
 })
 
 const persistConfig = {

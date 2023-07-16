@@ -1,21 +1,11 @@
 /* ====================================================== */
-/*                       Components                      */
+/*                       Components                       */
 /* ====================================================== */
 
-import {
-	Button,
-	Collapsible,
-	CollapsibleContent,
-	CollapsibleTrigger,
-	Icons,
-	classnames
-} from '@taskly/web-ui'
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { NoteEditor } from '@renderer/note_editor'
 import SplitPane from 'react-split-pane'
 
-import './titlebar.css'
 import './split-pane.css'
 
 /* ====================================================== */
@@ -24,7 +14,7 @@ import './split-pane.css'
 
 export const MainScreen = () => {
 	return (
-		<>
+		<Screen>
 			<div className="min-h-screen-without-frame max-h-screen-without-frame relative flex w-full">
 				{/* this lib is incompatible with react18. To fix     // children: React.ReactNode; needs to be added to SplitPaneProps.
 				// @ts-ignore TS2322 */}
@@ -38,29 +28,13 @@ export const MainScreen = () => {
 					</SplitPane>
 				</SplitPane>
 			</div>
-		</>
+		</Screen>
 	)
 }
 
 function SideBar() {
 	return (
 		<div className="relative flex h-full flex-col items-center justify-between rounded-lg shadow-md">
-			<div className="w-full p-3">
-				<Button
-					variant="ghost"
-					className={classnames(
-						'flex w-full items-center justify-start gap-3 px-0'
-					)}
-					// onClick={onToggle}
-				>
-					<Icons.chevronLeft size={20} />
-					<span className="flex items-center gap-3 ">
-						<span className="bg-gradient-to-tl from-amber-400 to-orange-600 bg-clip-text text-transparent">
-							Taskly
-						</span>
-					</span>
-				</Button>
-			</div>
 			<div className="w-full flex-1 overflow-y-auto p-3">
 				<NotesTree />
 			</div>
@@ -103,8 +77,8 @@ import add from 'date-fns/add'
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import './calendar.css'
-import { File, Folder } from '@modules/note_file_system/types'
 import { NotesTree } from '@renderer/features/note_management/notes_tree'
+import { Screen } from '@renderer/ui/screen'
 
 const locales = {
 	'en-US': enUS

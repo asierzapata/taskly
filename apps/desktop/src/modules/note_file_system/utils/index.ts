@@ -1,8 +1,14 @@
 import { app } from 'electron'
 import * as path from 'path'
 
+import { store } from './store'
+
 export const getNotesPath = () => {
-	return path.join(app.getPath('userData'), 'notes')
+	const currentSafePath = store.get('currentSafePath') as string | undefined
+	console.log('>>>>>>', currentSafePath)
+	return currentSafePath
+		? currentSafePath
+		: path.join(app.getPath('userData'), 'notes')
 }
 
 export const getPathInNotesFolder = (notePath: string) => {
