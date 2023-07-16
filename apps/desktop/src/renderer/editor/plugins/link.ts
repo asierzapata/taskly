@@ -103,7 +103,10 @@ function getLinkAnchor(view: EditorView) {
 						? view.state.sliceDoc(linkTitle.from, linkTitle.to)
 						: null
 					const dec = Decoration.widget({
-						widget: new GoToLinkWidget(linkContent, linkTitleContent),
+						widget: new GoToLinkWidget(
+							linkContent,
+							linkTitleContent ?? undefined
+						),
 						side: 1
 					})
 					widgets.push(dec.range(to, to))

@@ -41,7 +41,7 @@ export const frontmatter: MarkdownExtension = {
 			name: 'Fronmatter',
 			before: 'HorizontalRule',
 			parse: (cx, line) => {
-				let end: number
+				let end: number = 0
 				const children = new Array<Element>()
 				if (cx.lineStart === 0 && frontMatterFence.test(line.text)) {
 					// 4 is the length of the frontmatter fence (---\n).

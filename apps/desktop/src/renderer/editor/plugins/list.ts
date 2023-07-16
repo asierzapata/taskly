@@ -112,8 +112,9 @@ class TaskListsPlugin {
 				if (type.name !== 'TaskMarker') return
 				if (isCursorInRange(view.state, [from + nfrom, from + nto])) return
 				const checkbox = view.state.sliceDoc(from + nfrom, from + nto)
+				const checkboxContent = checkbox[1] ?? ' '
 				// Checkbox is checked if it has a 'x' in between the []
-				if ('xX'.includes(checkbox[1])) checked = true
+				if ('xX'.includes(checkboxContent)) checked = true
 				const dec = Decoration.replace({
 					widget: new CheckboxWidget(checked, from + nfrom + 1)
 				})

@@ -10,6 +10,8 @@ import { rendererConfig } from './webpack.renderer.config'
 
 const config: ForgeConfig = {
 	packagerConfig: {
+		name: 'Taskly',
+		icon: './src/assets/icons/icon',
 		protocols: [
 			{
 				name: 'Taskly',

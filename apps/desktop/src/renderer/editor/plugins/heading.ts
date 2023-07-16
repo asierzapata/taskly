@@ -93,7 +93,8 @@ class HeadingDecorationsPlugin {
 				const slug = view.state
 					.field(headingSlugField)
 					.find(s => s.pos === from)?.slug
-				const level = parseInt(/[1-6]$/.exec(name)[0])
+				const nameMatch = /[1-6]$/.exec(name) ?? []
+				const level = nameMatch[0] ? parseInt(nameMatch[0], 10) : 1
 				const dec = Decoration.line({
 					class: [
 						classes.heading,

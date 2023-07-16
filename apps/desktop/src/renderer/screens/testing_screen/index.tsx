@@ -36,7 +36,7 @@ function SideBar() {
 	return (
 		<div className="relative flex h-full flex-col items-center justify-between rounded-lg shadow-md">
 			<div className="w-full flex-1 overflow-y-auto p-3">
-				<NotesTree />
+				{/* <NotesTree /> */}
 			</div>
 		</div>
 	)

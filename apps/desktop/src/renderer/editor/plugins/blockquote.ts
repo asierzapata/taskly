@@ -65,7 +65,7 @@ class BlockQuotePlugin {
 					const marks = Array.from(
 						view.state.sliceDoc(from, to).matchAll(quoteMarkRE)
 					)
-						.map(x => from + x.index)
+						.map(x => (x.index ? from + x.index : from))
 						.map(i =>
 							Decoration.replace({
 								widget: new BlockQuoteBorderWidget()
