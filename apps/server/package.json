@@ -3,6 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
+		"start": "node build/index.js",
 		"build": "rimraf ./build && tsc",
 		"dev": "NODE_ENV=development nodemon",
 		"dev:desktop": "NODE_ENV=development nodemon",

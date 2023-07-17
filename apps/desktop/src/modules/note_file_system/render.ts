@@ -2,7 +2,8 @@
  * This file contains all the definitions that will be exposed
  * to the render process.
  */
-import { ipcRenderer } from 'electron'
+// import { ipcRenderer } from 'electron'
+import type { IpcRenderer } from 'electron'
 
 import { NAME } from './module'
 import { ListNoteFolderGenerator } from './list_note_folder'
@@ -19,7 +20,7 @@ import { DeleteFolderGenerator } from './delete_folder'
 import { UpdateNoteFileSystemPathGenerator } from './update_note_file_system_path'
 import { WriteNoteGenerator } from './write_note'
 
-const methods = () => ({
+const methods = ({ ipcRenderer }: { ipcRenderer: IpcRenderer }) => ({
 	...ListNoteFolderGenerator.render(ipcRenderer),
 	...ReadNoteGenerator.render(ipcRenderer),
 	...WriteNoteGenerator.render(ipcRenderer),

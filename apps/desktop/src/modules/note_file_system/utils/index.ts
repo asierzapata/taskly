@@ -3,6 +3,8 @@ import * as path from 'path'
 
 import { store } from './store'
 
+console.log('>>>>>>', 'renderer utils')
+
 export const getNotesPath = () => {
 	const currentSafePath = store.get('currentSafePath') as string | undefined
 	return currentSafePath

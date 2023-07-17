@@ -31,6 +31,7 @@ import {
 
 import { authentication } from '@renderer/api'
 import { User } from '@renderer/api/parsers/user'
+import { Screen } from '@renderer/ui/screen'
 
 /* ====================================================== */
 /*                    Implementation                      */
@@ -94,26 +95,28 @@ function Authentication() {
 	}, [])
 
 	return (
-		<div className="flex min-h-screen flex-col items-center justify-center">
-			<Card>
-				<CardHeader className="space-y-1">
-					<CardTitle className="text-2xl">Sign in</CardTitle>
-					<CardDescription>
-						To continue, sign in with your Google account
-					</CardDescription>
-				</CardHeader>
-				<CardContent className="grid gap-4">
-					<Button
-						variant="outline"
-						onClick={handleSignInWithGoogle}
-						isLoading={loading}
-					>
-						<Icons.google className="mr-2 h-4 w-4" />
-						Sign in with Google
-					</Button>
-				</CardContent>
-			</Card>
-		</div>
+		<Screen>
+			<div className="min-h-screen-without-frame flex flex-col items-center justify-center">
+				<Card>
+					<CardHeader className="space-y-1">
+						<CardTitle className="text-2xl">Sign in</CardTitle>
+						<CardDescription>
+							To continue, sign in with your Google account
+						</CardDescription>
+					</CardHeader>
+					<CardContent className="grid gap-4">
+						<Button
+							variant="outline"
+							onClick={handleSignInWithGoogle}
+							isLoading={loading}
+						>
+							<Icons.google className="mr-2 h-4 w-4" />
+							Sign in with Google
+						</Button>
+					</CardContent>
+				</Card>
+			</div>
+		</Screen>
 	)
 }
 

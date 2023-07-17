@@ -1,5 +1,6 @@
-import { createCommand } from '@modules/factory'
 import _ from 'lodash'
+
+import { createCommand } from '@modules/factory'
 import { ModuleDependencies } from '../module'
 
 type EnsureSystemFoldersParameters = void

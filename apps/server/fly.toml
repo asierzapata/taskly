@@ -1,0 +1,31 @@
+# fly.toml app configuration file generated for taskly on 2023-07-17T17:15:33+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "taskly"
+primary_region = "mad"
+
+[env]
+	NODE_ENV="production"
+  PORT = "8080"
+	LOGGING_ENABLED="true"
+	LOGGING_LEVEL="error"
+	JWT_ALGORITHM="HS256"
+	JWT_EXPIRATION="86400000"
+	JWT_SECRET="gkVi13Ub8nZqwTiyXwRIXHb8nZnJ6VeZ"
+	JWT_COOKIE_NAME="taskly-auth"
+	MONGODB_URI="mongodb+srv://taskly:UONqESTPBMNhLl4b@maincluster.jnxrhrr.mongodb.net?retryWrites=true&w=majority"
+	MONGODB_DATA_DB_NAME="data"
+	MONGODB_USER_DB_NAME="user"
+	GOOGLE_CLIENT_ID="849674951165-bgplmtbb38oma3jlavkdj12db59bdvgb.apps.googleusercontent.com"
+	GOOGLE_CLIENT_SECRET="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"
+	GOOGLE_REDIRECT_URL="https://localhost:3001/auth/google_callback"
+
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0

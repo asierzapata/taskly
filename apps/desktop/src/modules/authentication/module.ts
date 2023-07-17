@@ -1,4 +1,8 @@
+import type { shell } from 'electron'
+
 // Module Name
 export const NAME = 'authentication' as const
 
-export type ModuleDependencies = void
+export type ModuleDependencies = {
+	shell: typeof shell
+}

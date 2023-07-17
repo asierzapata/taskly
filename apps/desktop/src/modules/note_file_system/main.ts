@@ -12,9 +12,7 @@ import {
 } from 'fs/promises'
 
 import { NAME } from './module'
-import { ListNoteFolderGenerator } from './list_note_folder'
-import { ReadNoteGenerator } from './read_note'
-import { SaveNoteGenerator } from './save_note'
+
 import {
 	getCleanNotePath,
 	getNotesPath,
@@ -22,6 +20,11 @@ import {
 	getAbsoluteNotePath,
 	getAbsoluteFolderPath
 } from './utils'
+import { store } from './utils/store'
+
+import { ListNoteFolderGenerator } from './list_note_folder'
+import { ReadNoteGenerator } from './read_note'
+import { SaveNoteGenerator } from './save_note'
 import { CreateFolderGenerator } from './create_folder'
 import { CreateNoteGenerator } from './create_note'
 import { EnsureSystemFoldersGenerator } from './ensure_system_folders'
@@ -31,7 +34,6 @@ import { RenameNoteGenerator } from './rename_note'
 import { RenameFolderGenerator } from './rename_folder'
 import { DeleteFolderGenerator } from './delete_folder'
 import { UpdateNoteFileSystemPathGenerator } from './update_note_file_system_path'
-import { store } from './utils/store'
 import { WriteNoteGenerator } from './write_note'
 
 const dependencies = {

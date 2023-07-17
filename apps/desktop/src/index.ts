@@ -89,7 +89,8 @@ export function createMainWindow() {
 		width: width / 2,
 		height: height / 2,
 		webPreferences: {
-			preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
+			preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+			nodeIntegration: true
 		},
 		transparent: true,
 		titleBarStyle: 'hidden',

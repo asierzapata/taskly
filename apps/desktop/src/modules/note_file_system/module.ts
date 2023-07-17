@@ -1,5 +1,5 @@
 import type fs from 'fs/promises'
-import type { store } from './utils/store'
+import type { StoreType } from './utils/store'
 
 // Module Name
 export const NAME = 'noteFileSystem' as const
@@ -21,5 +21,5 @@ export type ModuleDependencies = {
 		getAbsoluteNotePath: (notePath: string, noteName: string) => string
 		getAbsoluteFolderPath: (folderPath: string, folderName: string) => string
 	}
-	store: typeof store
+	store: StoreType
 }
