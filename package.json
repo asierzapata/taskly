@@ -2,7 +2,7 @@
 	"name": "taskly",
 	"private": true,
 	"engines": {
-		"node": "v18.16.0"
+		"node": "v18.16"
 	},
 	"scripts": {
 		"build": "turbo build",
