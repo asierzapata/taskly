@@ -1,9 +1,6 @@
 {
 	"name": "@taskly/web",
 	"version": "0.0.0",
-	"engines": {
-		"node": "v18.16.0"
-	},
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
