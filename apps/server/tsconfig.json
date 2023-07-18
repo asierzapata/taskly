@@ -31,7 +31,12 @@
 		"paths": {
 			"@server/*": ["./src/*"]
 		},
-		"typeRoots": ["./node_modules/@types", "./src/types"]
+		"typeRoots": [
+			"./node_modules/@types",
+			"./src/types/express",
+			"./src/types/y-mongo-provider",
+			"./src/types/y-websocket"
+		]
 	},
 	"include": ["src"],
 	"exclude": ["node_modules"]

@@ -1,44 +1,60 @@
 # syntax = docker/dockerfile:1
 
-# Adjust NODE_VERSION as desired
-ARG NODE_VERSION=18.16.0
-FROM node:${NODE_VERSION}-slim as base
+ARG NODE_VERSION=18
+FROM node:${NODE_VERSION}-alpine as base
 
 LABEL fly_launch_runtime="NodeJS"
-
-# NodeJS app lives here
-WORKDIR /app
 
 # Set production environment
 ENV NODE_ENV=production
 
-
 # Throw-away build stage to reduce size of final image
-FROM base as build
+FROM base AS builder
 
-# Install packages needed to build node modules
-RUN apt-get update -qq && \
-    apt-get install -y python-is-python3 pkg-config build-essential 
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+RUN apk add --no-cache libc6-compat
+RUN apk update
+# Set working directory
+WORKDIR /app
+RUN yarn global add turbo
+COPY . .
+RUN turbo prune --scope=@taskly/server --docker
 
-# Install node modules
-COPY --link package.json .
-RUN npm install --production=false
+# Add lockfile and package.json's of isolated subworkspace
+FROM base AS installer
 
-# Copy application code
-COPY --link . .
+RUN apk add --no-cache libc6-compat
+RUN apk update
+WORKDIR /app
 
-# Build application
-RUN npm run build
+# First install dependencies (as they change less often)
+COPY .gitignore .gitignore
+COPY tsconfig.json tsconfig.json
+COPY --from=builder /app/out/json/ .
+COPY --from=builder /app/out/yarn.lock ./yarn.lock
+# We need to install in production=false to get the TS types of libraries in the build
+RUN yarn install --production=false
 
-# Remove development dependencies
-RUN npm prune --production
+# Build the project and its dependencies
+COPY --from=builder /app/out/full/ .
+COPY turbo.json turbo.json
 
+# Uncomment and use build args to enable remote caching
+# ARG TURBO_TEAM=asierzapata
+# ENV TURBO_TEAM=$TURBO_TEAM
 
-# Final stage for app image
-FROM base
+# ARG TURBO_TOKEN=KX5exgxALYYGu7XHNumXdas3
+# ENV TURBO_TOKEN=$TURBO_TOKEN
 
-# Copy built application
-COPY --from=build /app /app
+# RUN yarn turbo run build --filter=@taskly/server...
 
-# Start the server by default, this can be overwritten at runtime
-CMD [ "npm", "run", "start" ]
+# FROM base AS runner
+# WORKDIR /app
+
+# # Don't run production as root
+# RUN addgroup --system --gid 1001 expressjs
+# RUN adduser --system --uid 1001 expressjs
+# USER expressjs
+# COPY --from=installer /app .
+
+# CMD node apps/server/dist/index.js

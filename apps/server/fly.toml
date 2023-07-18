@@ -20,7 +20,7 @@ primary_region = "mad"
 	MONGODB_USER_DB_NAME="user"
 	GOOGLE_CLIENT_ID="849674951165-bgplmtbb38oma3jlavkdj12db59bdvgb.apps.googleusercontent.com"
 	GOOGLE_CLIENT_SECRET="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"
-	GOOGLE_REDIRECT_URL="https://localhost:3001/auth/google_callback"
+	GOOGLE_REDIRECT_URL="https://taskly-web.vercel.app/auth/google_callback"
 
 
 [http_service]
