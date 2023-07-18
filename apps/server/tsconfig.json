@@ -19,7 +19,7 @@
 		"noUnusedParameters": false,
 		"preserveWatchOutput": true,
 		"skipLibCheck": true,
-		"noEmit": true,
+		"noEmit": false,
 		"incremental": true,
 		"module": "NodeNext",
 		"resolveJsonModule": true,
@@ -38,6 +38,6 @@
 			"./src/types/y-websocket"
 		]
 	},
-	"include": ["src"],
+	"include": ["src/**/*"],
 	"exclude": ["node_modules"]
 }

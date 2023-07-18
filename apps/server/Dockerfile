@@ -40,21 +40,21 @@ COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
 
 # Uncomment and use build args to enable remote caching
-# ARG TURBO_TEAM=asierzapata
-# ENV TURBO_TEAM=$TURBO_TEAM
+ARG TURBO_TEAM=asierzapata
+ENV TURBO_TEAM=$TURBO_TEAM
 
-# ARG TURBO_TOKEN=KX5exgxALYYGu7XHNumXdas3
-# ENV TURBO_TOKEN=$TURBO_TOKEN
+ARG TURBO_TOKEN=KX5exgxALYYGu7XHNumXdas3
+ENV TURBO_TOKEN=$TURBO_TOKEN
 
-# RUN yarn turbo run build --filter=@taskly/server...
+RUN yarn turbo run build --filter=@taskly/server...
 
-# FROM base AS runner
-# WORKDIR /app
+FROM base AS runner
+WORKDIR /app
 
-# # Don't run production as root
-# RUN addgroup --system --gid 1001 expressjs
-# RUN adduser --system --uid 1001 expressjs
-# USER expressjs
-# COPY --from=installer /app .
+# Don't run production as root
+RUN addgroup --system --gid 1001 expressjs
+RUN adduser --system --uid 1001 expressjs
+USER expressjs
+COPY --from=installer /app .
 
-# CMD node apps/server/dist/index.js
+CMD node apps/server/dist/index.js
