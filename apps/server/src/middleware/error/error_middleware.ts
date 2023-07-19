@@ -2,8 +2,8 @@
 /*                   Implementation                       */
 /* ====================================================== */
 
-import { NextFunction, Request, Response } from 'express'
-import { Logger } from '../../services/logger/logger'
+import { type NextFunction, type Request, type Response } from 'express'
+import { type Logger } from '../../services/logger/logger'
 
 type ErrorMiddleware = (
 	err: Error,

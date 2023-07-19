@@ -1,7 +1,10 @@
 import _ from 'lodash'
 import { env } from '@server/env'
 
-import { AuthenticationService, Session } from '@server/services/authentication'
+import {
+	type AuthenticationService,
+	Session
+} from '@server/services/authentication'
 import { SessionDevice } from '@server/services/authentication/session/session_device'
 
 import { ApplicationError } from '@server/utils/application_error'
@@ -130,9 +133,13 @@ async function refreshToken({
 function getTokenFromRequest(req: Request) {
 	let token = ''
 
+	const authenticationCookie = _.get(
+		req,
+		`cookies.${env.authentication.cookieName}`
+	) as string
+
 	// Get token from cookie
-	if (!_.isEmpty(req.cookies[env.authentication.cookieName]))
-		token = req.cookies[env.authentication.cookieName]
+	if (!_.isEmpty(authenticationCookie)) token = authenticationCookie
 
 	// Get token from Header "Authorization: 'Bearer abc.123.xyz'"
 	if (!_.isEmpty(req.headers.authorization))

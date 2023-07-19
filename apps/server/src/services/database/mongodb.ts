@@ -1,7 +1,7 @@
-import { Logger } from '../logger/logger'
+import { type Logger } from '../logger/logger'
 
 import assert from 'assert'
-import { MongoClient, Db } from 'mongodb'
+import { MongoClient, type Db } from 'mongodb'
 
 /* ====================================================== */
 /*                    Implementation                      */

@@ -1,4 +1,4 @@
-import { Area } from '../../domain/area'
+import { type Area } from '../../domain/area'
 
 export type GetAreasByUserIdParameters = {
 	userId: string

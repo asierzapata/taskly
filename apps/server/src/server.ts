@@ -1,8 +1,8 @@
 import express, {
-	ErrorRequestHandler,
-	NextFunction,
-	Request,
-	Response
+	type ErrorRequestHandler,
+	type NextFunction,
+	type Request,
+	type Response
 } from 'express'
 import expressPinoLogger from 'express-pino-logger'
 import cookieParser from 'cookie-parser'
@@ -14,7 +14,7 @@ import { env } from './env'
 import { HTTPServer } from './services/http_server/http_server'
 import { uuid } from './services/uuid'
 
-import { AuthenticationService } from './services/authentication'
+import { type AuthenticationService } from './services/authentication'
 
 /* ====================================================== */
 /*                      Middleware                        */
@@ -29,11 +29,10 @@ import { authenticate } from './middleware/authentication'
 
 import health from './health'
 import * as api from './api'
-import { NotesWebSocket } from './services/notes_web_socket'
-import { Modules, ModulesFactory } from './modules'
+import { type ModulesFactory } from './modules'
 import { MongoDB } from './services/database/mongodb'
 import { ApplicationError } from './utils/application_error'
-import { GoogleAuthenticationService } from './services/google_auth'
+import { type GoogleAuthenticationService } from './services/google_auth'
 
 /* ====================================================== */
 /*                     Implementation                     */
@@ -42,18 +41,12 @@ import { GoogleAuthenticationService } from './services/google_auth'
 class Server {
 	app
 	server
-	notesWebSocket
 	mongoDbData
 	mongoDbUser
 
 	constructor() {
 		this.app = express()
 		this.server = new HTTPServer({ app: this.app, port: env.PORT })
-		this.notesWebSocket = new NotesWebSocket({
-			route: '/notes',
-			server: this.server,
-			env
-		})
 		const dbLogger = new Logger({
 			name: LOGGER_SOURCES.MONGO_DB,
 			enabled: env.logging.enabled,
@@ -154,7 +147,9 @@ class Server {
 
 			return next()
 		})
-		router.use(authenticate)
+		router.use((req, res, next) => {
+			void authenticate(req, res, next)
+		})
 
 		// API
 		// ---
@@ -166,7 +161,21 @@ class Server {
 		// --------------
 
 		const errorRequestHandler: ErrorRequestHandler = (err, req, res, next) => {
-			errorMiddleware(err, req, res, next, expressApplicationLogger)
+			if (err instanceof Error) {
+				errorMiddleware(err, req, res, next, expressApplicationLogger)
+			} else {
+				errorMiddleware(
+					ApplicationError.Programmer({
+						errorName: 'Error in error middleware',
+						message: 'Unknown error',
+						code: 'error-in-error-middleware'
+					}),
+					req,
+					res,
+					next,
+					expressApplicationLogger
+				)
+			}
 		}
 
 		// TODO: Improve error handling
@@ -177,7 +186,6 @@ class Server {
 		// In testing we don't actually need the http server
 		// to start in order to test the app
 		if (!env.isTesting) {
-			this.notesWebSocket.start()
 			await this.server.start({ logger: expressApplicationLogger })
 		}
 

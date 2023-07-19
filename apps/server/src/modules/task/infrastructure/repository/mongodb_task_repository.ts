@@ -1,11 +1,11 @@
 import {
-	TaskRepository,
-	GetTasksByUserIdParameters,
-	GetTasksByProjectIdParameters
+	type TaskRepository,
+	type GetTasksByUserIdParameters,
+	type GetTasksByProjectIdParameters
 } from '.'
-import { Task } from '../../domain/task'
+import { type Task } from '../../domain/task'
 
-import { Collection, Db, ObjectId } from 'mongodb'
+import { type Collection, type Db, ObjectId } from 'mongodb'
 
 type DBTask = Omit<Task, '_id' | 'userId' | 'projectId' | 'noteId'> & {
 	_id: ObjectId

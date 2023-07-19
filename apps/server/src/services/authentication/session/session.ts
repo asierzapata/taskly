@@ -3,13 +3,13 @@ import _ from 'lodash'
 import { uuid } from '@server/services/uuid'
 import { ApplicationError } from '@server/utils/application_error'
 
-import { SessionType, SessionTypeValue } from './session_type'
-import { SessionSource, SessionSourceValue } from './session_source'
+import { SessionType, type SessionTypeValue } from './session_type'
+import { SessionSource, type SessionSourceValue } from './session_source'
 import {
 	SessionAuthorizationStatus,
-	SessionAuthorizationStatusValue
+	type SessionAuthorizationStatusValue
 } from './session_authorization_status'
-import { SessionDevice, SessionDeviceValue } from './session_device'
+import { SessionDevice, type SessionDeviceValue } from './session_device'
 
 /* ====================================================== */
 /*                       Exceptions                       */

@@ -8,7 +8,7 @@
 
 import type { Session } from '@server/services/authentication'
 import type { ModuleDependencies } from '../index'
-import { UserId } from '../domain/task'
+import { type UserId } from '../domain/task'
 import { UnauthenticatedError } from '@server/services/authentication/errors/unauthenticated_error'
 import { UserCanNotAccessTaskError } from '../domain/errors/user_can_not_access_task'
 

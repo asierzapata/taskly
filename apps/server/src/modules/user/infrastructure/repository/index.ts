@@ -1,4 +1,4 @@
-import { User } from '../../domain/user'
+import { type User } from '../../domain/user'
 
 export interface UserRepository {
 	getUserById(id: string): Promise<User | undefined | null>

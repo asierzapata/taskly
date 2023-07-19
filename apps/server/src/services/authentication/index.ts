@@ -1,8 +1,8 @@
 import ms from 'ms'
 import { JWTService } from '@server/services/jwt'
-import { Algorithm, JwtPayload, Secret } from 'jsonwebtoken'
+import { type Algorithm, JwtPayload, type Secret } from 'jsonwebtoken'
 import { Session } from './session/session'
-import { SessionTypeValue } from './session/session_type'
+import { type SessionTypeValue } from './session/session_type'
 
 /* ====================================================== */
 /*                    Implementation                      */
