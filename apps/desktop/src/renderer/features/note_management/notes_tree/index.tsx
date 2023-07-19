@@ -52,8 +52,8 @@ const NotesTree = ({ onNoteSelected }: NotesTreeProps) => {
 	const dispatch = useAppDispatch()
 
 	React.useEffect(() => {
-		dispatch(rebuildTree()).unwrap()
-	}, [])
+		void dispatch(rebuildTree())
+	}, [dispatch])
 
 	if (isRebuildingTree) {
 		return (
@@ -81,10 +81,14 @@ const NotesTreeRoot = ({
 	return (
 		<div className="h-full w-full">
 			{treeNode?.folders.map(folder => (
-				<Folder id={folder.id} onNoteSelected={onNoteSelected} />
+				<Folder
+					key={folder.id}
+					id={folder.id}
+					onNoteSelected={onNoteSelected}
+				/>
 			))}
 			{treeNode?.notes.map(note => (
-				<Note id={note.id} onNoteSelected={onNoteSelected} />
+				<Note key={note.id} id={note.id} onNoteSelected={onNoteSelected} />
 			))}
 		</div>
 	)
@@ -110,7 +114,7 @@ const Folder = ({
 			  }
 	)
 	const isOpen = folder?.isOpen
-	const isRenaming = folder?.isRenaming
+	// const isRenaming = folder?.isRenaming
 	const dispatch = useAppDispatch()
 
 	const folderRef = React.useRef<HTMLButtonElement>(null)
@@ -123,7 +127,7 @@ const Folder = ({
 				label: 'New Note',
 				click: () => {
 					console.log('>>>>>>', 'folderFullPath', folderFullPath)
-					window.api.noteFileSystem.CreateNote({
+					void window.api.noteFileSystem.CreateNote({
 						path: folderFullPath,
 						name: 'New Note'
 					})
@@ -133,7 +137,7 @@ const Folder = ({
 				label: 'New Folder',
 				click: () => {
 					console.log('>>>>>>', 'folderFullPath', folderFullPath)
-					window.api.noteFileSystem.CreateFolder({
+					void window.api.noteFileSystem.CreateFolder({
 						path: folderFullPath,
 						name: 'New Folder'
 					})
@@ -153,7 +157,7 @@ const Folder = ({
 				label: 'Delete',
 				click: () => {
 					console.log('>>>>>>', 'folder', folder)
-					window.api.noteFileSystem.DeleteFolder({
+					void window.api.noteFileSystem.DeleteFolder({
 						path: folder.path,
 						name: folder.name
 					})
@@ -236,7 +240,7 @@ const Note = ({
 				accelerator: 'CommandOrControl+Backspace',
 				click: () => {
 					if (!note) return
-					window.api.noteFileSystem.DeleteNote({
+					void window.api.noteFileSystem.DeleteNote({
 						path: note.path,
 						name: note.name
 					})
@@ -267,7 +271,7 @@ const Note = ({
 		>
 			<Icons.page size={16} className="ml-1 min-h-[16px] min-w-[16px]" />
 			{!note.isRenaming ? (
-				<div className="ml-2 line-clamp-1 text-start">{noteName}</div>
+				<div className="ml-4 line-clamp-1 text-start">{noteName}</div>
 			) : (
 				<NoteRenameInput id={id} />
 			)}
@@ -305,7 +309,7 @@ const NoteRenameInput = ({ id }: { id: string }) => {
 	})
 	const onSubmit: SubmitHandler<NoteRenameInputForm> = data => {
 		if (!note) return
-		window.api.noteFileSystem.RenameNote({
+		void window.api.noteFileSystem.RenameNote({
 			path: note.path,
 			oldName: note.name,
 			newName: `${data.name}.md`
@@ -319,7 +323,7 @@ const NoteRenameInput = ({ id }: { id: string }) => {
 	}
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
+		<form onSubmit={void handleSubmit(onSubmit)}>
 			<TooltipProvider>
 				<Tooltip open={!_.isEmpty(errors.name)}>
 					<TooltipTrigger>
