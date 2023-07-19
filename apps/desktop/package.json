@@ -6,19 +6,17 @@
 	"private": true,
 	"scripts": {
 		"clean": "git clean -xdf .webpack .turbo node_modules",
-		"dev:desktop": "electron-forge start --inspect-electron",
-		"package": "electron-forge package",
-		"make": "electron-forge make",
-		"publish": "electron-forge publish",
+		"dev:desktop": "NODE_ENV=development electron-forge start --inspect-electron",
+		"package": "NODE_ENV=production electron-forge package",
+		"make": "NODE_ENV=production electron-forge make",
+		"publish": " NODE_ENV=production electron-forge publish",
 		"lint": "eslint --ext .ts,.tsx .",
 		"type-check": "tsc --noEmit",
 		"icon:generate": "electron-icon-builder --flatten --input=./src/assets/base_icon.png --output=./src/assets"
 	},
 	"keywords": [],
-	"author": {
-		"name": "asierzapata",
-		"email": "asier.zapata@gmail.com"
-	},
+	"author": "Asier Zapata",
+	"description": "Taskly Desktop App",
 	"license": "MIT",
 	"devDependencies": {
 		"@electron-forge/cli": "^6.1.1",

@@ -1,6 +1,6 @@
 import type { AreaRepository } from './infrastructure/repository'
 import { MongoDBAreaRepository } from './infrastructure/repository/mongodb_area_repository'
-import type { GlobalDependencies } from '@server/types/shared'
+import type { GlobalDependencies } from '@server/shared/types'
 
 export type ModuleDependencies = {
 	repository: AreaRepository

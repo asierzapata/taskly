@@ -9,7 +9,7 @@ import {
 } from './application/get_account_by_provider_and_provider_account_id'
 import { AccountRepository } from './infrastructure/repository'
 import { MongoDBAccountRepository } from './infrastructure/repository/mongodb_account_repository'
-import { GlobalDependencies } from '@server/types/shared'
+import { GlobalDependencies } from '@server/shared/types'
 
 export type ModuleDependencies = {
 	repository: AccountRepository

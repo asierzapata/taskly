@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { Spinner } from '@taskly/web-ui'
 
 /* Example:
-	http://localhost:3001/auth/google_callback?
+	https://taskly-web.vercel.app/auth/google_callback?
 		code=-----
 		&scope=email%20profile%20https://www.googleapis.com/auth/calendar.events%20https://www.googleapis.com/auth/calendar.readonly%20openid%20https://www.googleapis.com/auth/userinfo.profile%20https://www.googleapis.com/auth/userinfo.email
 		&authuser=0

@@ -1,6 +1,6 @@
 import type { TaskRepository } from './infrastructure/repository'
 import { MongoDBTaskRepository } from './infrastructure/repository/mongodb_task_repository'
-import type { GlobalDependencies } from '@server/types/shared'
+import type { GlobalDependencies } from '@server/shared/types'
 
 export type ModuleDependencies = {
 	repository: TaskRepository

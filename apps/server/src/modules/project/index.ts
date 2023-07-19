@@ -1,6 +1,6 @@
 import type { ProjectRepository } from './infrastructure/repository'
 import { MongoDBProjectRepository } from './infrastructure/repository/mongodb_project_repository'
-import type { GlobalDependencies } from '@server/types/shared'
+import type { GlobalDependencies } from '@server/shared/types'
 
 export type ModuleDependencies = {
 	repository: ProjectRepository

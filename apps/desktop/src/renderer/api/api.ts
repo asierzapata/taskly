@@ -2,7 +2,10 @@ import axios from 'axios'
 import _ from 'lodash'
 
 export const api = axios.create({
-	baseURL: 'http://localhost:8080/api/v1',
+	baseURL:
+		process.env.NODE_ENV === 'production'
+			? 'https://taskly.fly.dev/api/v1'
+			: 'http://localhost:8080/api/v1',
 	timeout: 1000,
 	headers: {
 		'Content-Type': 'application/json'
