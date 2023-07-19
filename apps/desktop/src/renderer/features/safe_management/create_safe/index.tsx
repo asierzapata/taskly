@@ -13,7 +13,7 @@ import { useAppDispatch } from '@renderer/store/hooks'
 /* ====================================================== */
 
 import { Button, Input, Label } from '@taskly/web-ui'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { type SubmitHandler, useForm } from 'react-hook-form'
 
 /* ====================================================== */
 /*                        Types                           */

@@ -1,5 +1,5 @@
 import assert from 'assert'
-import jwt, { Algorithm, JwtPayload, Secret } from 'jsonwebtoken'
+import jwt, { type Algorithm, JwtPayload, type Secret } from 'jsonwebtoken'
 import { v4 as uuidv4 } from 'uuid'
 
 /* ====================================================== */

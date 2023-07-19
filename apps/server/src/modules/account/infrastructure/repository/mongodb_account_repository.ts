@@ -1,10 +1,10 @@
 import {
-	AccountRepository,
-	GetAccountByProviderAndProviderAccountIdParameters
+	type AccountRepository,
+	type GetAccountByProviderAndProviderAccountIdParameters
 } from '.'
-import { Account } from '../../domain/account'
+import { type Account } from '../../domain/account'
 
-import { Collection, Db, ObjectId } from 'mongodb'
+import { type Collection, type Db, ObjectId } from 'mongodb'
 
 type DBAccount = Omit<Account, '_id' | 'userId'> & {
 	_id: ObjectId

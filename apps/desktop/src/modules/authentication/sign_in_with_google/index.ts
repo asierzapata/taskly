@@ -1,6 +1,6 @@
 import { createCommand } from '@modules/factory'
 import _ from 'lodash'
-import { ModuleDependencies } from '../module'
+import { type ModuleDependencies } from '../module'
 import { shell } from 'electron'
 
 type SignInWithGoogleParameters = void

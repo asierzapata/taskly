@@ -1,4 +1,4 @@
-import { Account, Provider, ProviderAccountId } from '../../domain/account'
+import { type Account, type Provider, type ProviderAccountId } from '../../domain/account'
 
 export type GetAccountByProviderAndProviderAccountIdParameters = {
 	provider: Provider

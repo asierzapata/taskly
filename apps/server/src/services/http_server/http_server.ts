@@ -1,8 +1,8 @@
 import type { Application } from 'express'
 
 // import https from 'https'
-import http, { Server } from 'http'
-import { Logger } from '../logger/logger'
+import http, { type Server } from 'http'
+import { type Logger } from '../logger/logger'
 import { ApplicationError } from '@server/utils/application_error'
 // import fs from 'fs'
 // import path from 'path'

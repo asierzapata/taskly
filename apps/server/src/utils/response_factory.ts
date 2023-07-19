@@ -1,4 +1,4 @@
-import { Response } from 'express'
+import { type Response } from 'express'
 
 /* ====================================================== */
 /*                      Public API                        */
@@ -10,16 +10,21 @@ export { successReponse }
 /*                   Implementation                       */
 /* ====================================================== */
 
-function successReponse({
+export type SuccessResponse<D, M> = {
+	data: D
+	meta: M
+}
+
+function successReponse<D, M>({
 	res,
 	statusCode,
-	data = {},
-	meta = {}
+	data,
+	meta
 }: {
 	res: Response
 	statusCode: number
-	data?: any
-	meta?: any
+	data?: D
+	meta?: M
 }) {
 	return res.status(statusCode).json({
 		data,

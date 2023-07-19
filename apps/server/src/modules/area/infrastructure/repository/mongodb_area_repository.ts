@@ -1,7 +1,7 @@
-import { AreaRepository, GetAreasByUserIdParameters } from '.'
-import { Area } from '../../domain/area'
+import { type AreaRepository, type GetAreasByUserIdParameters } from '.'
+import { type Area } from '../../domain/area'
 
-import { Collection, Db, ObjectId } from 'mongodb'
+import { type Collection, type Db, ObjectId } from 'mongodb'
 
 type DBArea = Omit<Area, '_id' | 'userId'> & {
 	_id: ObjectId

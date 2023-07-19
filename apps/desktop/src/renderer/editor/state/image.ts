@@ -1,12 +1,12 @@
 import { syntaxTree } from '@codemirror/language'
 import {
 	StateField,
-	EditorState,
+	type EditorState,
 	StateEffect,
-	TransactionSpec
+	type TransactionSpec
 } from '@codemirror/state'
 import {
-	DecorationSet,
+	type DecorationSet,
 	Decoration,
 	WidgetType,
 	EditorView

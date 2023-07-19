@@ -1,10 +1,10 @@
 import { syntaxTree } from '@codemirror/language'
 import {
 	Decoration,
-	DecorationSet,
+	type DecorationSet,
 	EditorView,
 	ViewPlugin,
-	ViewUpdate,
+	type ViewUpdate,
 	WidgetType
 } from '@codemirror/view'
 import { headingSlugField } from '../state/heading-slug'
@@ -14,7 +14,7 @@ import {
 	isCursorInRange
 } from '../util'
 import { link as classes } from '../classes'
-import { Range } from '@codemirror/state'
+import { type Range } from '@codemirror/state'
 
 const autoLinkMarkRE = /^<|>$/g
 

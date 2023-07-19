@@ -8,7 +8,7 @@ import { Screen } from '@renderer/ui/screen'
 import { Outlet, useNavigate, useParams } from 'react-router-dom'
 import { SplitPane } from '@renderer/ui/split_pane'
 import { NotesTree } from '@renderer/features/note_management/notes_tree'
-import { Note } from '@renderer/features/note_management/types'
+import { type Note } from '@renderer/features/note_management/types'
 
 /* ====================================================== */
 /*                    Implementation                      */

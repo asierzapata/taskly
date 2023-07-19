@@ -1,6 +1,6 @@
 import { parseMixed } from '@lezer/common'
 import { yaml } from '@codemirror/legacy-modes/mode/yaml'
-import { Element, MarkdownExtension } from '@lezer/markdown'
+import { type Element, type MarkdownExtension } from '@lezer/markdown'
 import { foldInside, foldNodeProp, StreamLanguage } from '@codemirror/language'
 import { styleTags, tags } from '@lezer/highlight'
 
@@ -41,7 +41,7 @@ export const frontmatter: MarkdownExtension = {
 			name: 'Fronmatter',
 			before: 'HorizontalRule',
 			parse: (cx, line) => {
-				let end: number = 0
+				let end = 0
 				const children = new Array<Element>()
 				if (cx.lineStart === 0 && frontMatterFence.test(line.text)) {
 					// 4 is the length of the frontmatter fence (---\n).

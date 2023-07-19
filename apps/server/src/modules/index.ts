@@ -1,4 +1,4 @@
-import { GlobalDependencies } from '@server/shared/types'
+import type { GlobalDependencies } from '@server/shared/types'
 import accountModule from './account'
 import userModule from './user'
 import areaModule from './area'

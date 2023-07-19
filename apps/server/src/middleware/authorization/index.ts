@@ -1,5 +1,5 @@
 import { ApplicationError } from '@server/utils/application_error'
-import { NextFunction, Request, Response } from 'express'
+import { type NextFunction, type Request, type Response } from 'express'
 
 /* ====================================================== */
 /*                   Implementation                       */

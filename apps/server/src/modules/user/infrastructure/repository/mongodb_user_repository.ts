@@ -1,7 +1,7 @@
-import { UserRepository } from '.'
-import { User } from '../../domain/user'
+import { type UserRepository } from '.'
+import { type User } from '../../domain/user'
 
-import { Collection, Db, ObjectId } from 'mongodb'
+import { type Collection, type Db, ObjectId } from 'mongodb'
 
 type DBUser = Omit<User, '_id'> & {
 	_id: ObjectId
@@ -24,7 +24,7 @@ class MongoDBUserRepository implements UserRepository {
 	}
 
 	async saveUser(user: User) {
-		this.collection.insertOne({
+		await this.collection.insertOne({
 			_id: new ObjectId(user._id),
 			firstName: user.firstName,
 			lastName: user.lastName,
@@ -50,7 +50,9 @@ class MongoDBUserRepository implements UserRepository {
 		}
 	}
 
-	ensureIndex() {}
+	ensureIndex() {
+		// TO ADD
+	}
 }
 
 export { MongoDBUserRepository }

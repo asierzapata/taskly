@@ -1,12 +1,12 @@
-import { Extension, Range } from '@codemirror/state'
+import { type Extension, type Range } from '@codemirror/state'
 import { EditorView } from 'codemirror'
 import { imagePreview } from '../state/image'
 import { image as classes } from '../classes'
 import {
 	Decoration,
-	DecorationSet,
+	type DecorationSet,
 	ViewPlugin,
-	ViewUpdate
+	type ViewUpdate
 } from '@codemirror/view'
 import {
 	iterateTreeInVisibleRanges,

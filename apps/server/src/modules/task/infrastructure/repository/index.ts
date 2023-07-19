@@ -1,4 +1,4 @@
-import { Task } from '../../domain/task'
+import { type Task } from '../../domain/task'
 
 export type GetTasksByUserIdParameters = {
 	userId: string

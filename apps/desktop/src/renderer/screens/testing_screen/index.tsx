@@ -55,15 +55,15 @@ function _Editor() {
 import {
 	Calendar as BigCalendar,
 	dateFnsLocalizer,
-	Event,
+	type Event,
 	Navigate,
-	DateLocalizer
+	type DateLocalizer
 } from 'react-big-calendar'
 // @ts-ignore
 import TimeGrid from 'react-big-calendar/lib/TimeGrid'
 
 import withDragAndDrop, {
-	withDragAndDropProps
+	type withDragAndDropProps
 } from 'react-big-calendar/lib/addons/dragAndDrop'
 import format from 'date-fns/format'
 import parse from 'date-fns/parse'

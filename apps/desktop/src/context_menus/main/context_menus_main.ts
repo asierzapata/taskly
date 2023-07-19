@@ -1,9 +1,15 @@
-import { BrowserWindow, IpcMainEvent, Menu, MenuItem, ipcMain } from 'electron'
+import {
+	BrowserWindow,
+	type IpcMainEvent,
+	Menu,
+	MenuItem,
+	ipcMain
+} from 'electron'
 import {
 	CONTEXT_MENU_CHANNEL,
 	CONTEXT_MENU_CLOSE_CHANNEL,
-	PopupOptions,
-	SerializableContextMenuItem
+	type PopupOptions,
+	type SerializableContextMenuItem
 } from '../common/context_menus_common'
 
 export function registerContextMenuListener(): void {

@@ -8,7 +8,13 @@
 
 import type { Session } from '@server/services/authentication'
 import type { ModuleDependencies } from '../index'
-import { Email, FirstName, Id, LastName, Picture } from '../domain/user'
+import {
+	type Email,
+	type FirstName,
+	type Id,
+	type LastName,
+	type Picture
+} from '../domain/user'
 
 type CreateUserParameters = {
 	userId: Id
@@ -23,13 +29,13 @@ type CreateUserParameters = {
 /* ====================================================== */
 
 async function createUser(
-	parameters: CreateUserParameters,
+	{ userId, ...parameters }: CreateUserParameters,
 	dependencies: ModuleDependencies
 ) {
 	const { repository } = dependencies
 
 	return repository.saveUser({
-		_id: repository.generateId(),
+		_id: userId,
 		createdAt: new Date().getTime(),
 		updatedAt: new Date().getTime(),
 		...parameters
@@ -40,10 +46,10 @@ async function createUser(
 /*                       Authorize                        */
 /* ====================================================== */
 
-async function authorizeCreateUser(
-	parameters: CreateUserParameters,
-	dependencies: ModuleDependencies,
-	session: Session
+function authorizeCreateUser(
+	_parameters: CreateUserParameters,
+	_dependencies: ModuleDependencies,
+	_session: Session
 ) {
 	return
 }

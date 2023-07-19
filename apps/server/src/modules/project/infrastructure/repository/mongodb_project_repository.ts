@@ -1,11 +1,11 @@
 import {
-	ProjectRepository,
-	GetProjectsByUserIdParameters,
-	GetProjectsByAreaIdParameters
+	type ProjectRepository,
+	type GetProjectsByUserIdParameters,
+	type GetProjectsByAreaIdParameters
 } from '.'
-import { Project } from '../../domain/project'
+import { type Project } from '../../domain/project'
 
-import { Collection, Db, ObjectId } from 'mongodb'
+import { type Collection, type Db, ObjectId } from 'mongodb'
 
 type DBProject = Omit<Project, '_id' | 'userId' | 'areaId' | 'noteId'> & {
 	_id: ObjectId

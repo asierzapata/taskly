@@ -1,7 +1,7 @@
 import { foldedRanges, syntaxTree } from '@codemirror/language';
 import type { SyntaxNodeRef } from '@lezer/common';
-import { Decoration, EditorView } from '@codemirror/view';
-import { EditorState } from '@codemirror/state';
+import { Decoration, type EditorView } from '@codemirror/view';
+import { type EditorState } from '@codemirror/state';
 
 /**
  * Check if two ranges overlap

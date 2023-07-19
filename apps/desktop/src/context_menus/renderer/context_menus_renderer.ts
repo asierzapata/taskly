@@ -1,10 +1,10 @@
 import {
 	CONTEXT_MENU_CHANNEL,
 	CONTEXT_MENU_CLOSE_CHANNEL,
-	ContextMenuEvent,
-	ContextMenuItem,
-	PopupOptions,
-	SerializableContextMenuItem
+	type ContextMenuEvent,
+	type ContextMenuItem,
+	type PopupOptions,
+	type SerializableContextMenuItem
 } from '../common/context_menus_common'
 import { ipcRenderer } from 'electron'
 

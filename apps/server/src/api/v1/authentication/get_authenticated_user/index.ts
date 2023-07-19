@@ -2,7 +2,7 @@ import { Session } from '@server/services/authentication'
 import { generateDBId } from '@server/utils/id'
 import { checkString } from '@server/utils/input_validators'
 import { successReponse } from '@server/utils/response_factory'
-import { NextFunction, Request, Response } from 'express'
+import { type NextFunction, type Request, type Response } from 'express'
 import _ from 'lodash'
 
 /* ====================================================== */

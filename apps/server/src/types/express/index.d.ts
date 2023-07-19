@@ -1,6 +1,6 @@
-import { Modules } from '@server/modules'
-import { AuthenticationService, Session } from '@server/services/authentication'
-import { GoogleAuthenticationService } from '@server/services/google_auth'
+import { type Modules } from '@server/modules'
+import { type AuthenticationService, type Session } from '@server/services/authentication'
+import { type GoogleAuthenticationService } from '@server/services/google_auth'
 
 // to make the file a module and avoid the TypeScript error
 export {}

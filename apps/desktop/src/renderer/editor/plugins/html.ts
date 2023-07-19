@@ -1,8 +1,8 @@
 import { syntaxTree } from '@codemirror/language';
-import { EditorState, StateField } from '@codemirror/state';
+import { type EditorState, StateField } from '@codemirror/state';
 import {
 	Decoration,
-	DecorationSet,
+	type DecorationSet,
 	EditorView,
 	WidgetType
 } from '@codemirror/view';

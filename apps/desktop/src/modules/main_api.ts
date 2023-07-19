@@ -1,4 +1,4 @@
-import { BrowserWindow } from 'electron'
+import { type BrowserWindow } from 'electron'
 
 import * as AuthenticationModule from '@modules/authentication/main'
 import * as NoteFileSystemModule from '@modules/note_file_system/main'
