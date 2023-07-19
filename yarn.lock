@@ -1478,7 +1478,7 @@
   dependencies:
     "@types/hammerjs" "^2.0.36"
 
-"@electron-forge/cli@^6.1.1":
+"@electron-forge/cli@^6.2.1":
   version "6.2.1"
   resolved "https://registry.yarnpkg.com/@electron-forge/cli/-/cli-6.2.1.tgz#e5f4c5d51743de8c8ab93a3656b58b85ac68bfb8"
   integrity sha512-AyCJ1m7LBgttgUTS3kDwiBLhPHJ+6mFwoMSqu847EJ4Fe1DJ1Hi6gnMsSga7Mv4KsF7iA23Ss1fo+3TGZnvrWw==
@@ -1557,7 +1557,7 @@
     fs-extra "^10.0.0"
     which "^2.0.2"
 
-"@electron-forge/maker-deb@^6.1.1":
+"@electron-forge/maker-deb@^6.2.1":
   version "6.2.1"
   resolved "https://registry.yarnpkg.com/@electron-forge/maker-deb/-/maker-deb-6.2.1.tgz#bbf9217e5b8219d0ac5d9f42bb305bacabf7bb4e"
   integrity sha512-y4WeBCGOeu1z5yBHPigzYcVPZAwbaJB60wXZ1VQpuKM5n09nONTq2TFhoJDHys3t9aHsBaX7G6Drv0XPUWQExQ==
@@ -1567,7 +1567,7 @@
   optionalDependencies:
     electron-installer-debian "^3.0.0"
 
-"@electron-forge/maker-rpm@^6.1.1":
+"@electron-forge/maker-rpm@^6.2.1":
   version "6.2.1"
   resolved "https://registry.yarnpkg.com/@electron-forge/maker-rpm/-/maker-rpm-6.2.1.tgz#ef87a55618f4876fe361aa7b00413328994c07c9"
   integrity sha512-FIoU9cvtNOIgrqSCdAMjDKvOnFGSf7RGEtLuZ7Q/BEkwUoXxqphqTzxiIxZocvhVfDtaSU18l9k7u/HrXSL9JQ==
@@ -1577,7 +1577,7 @@
   optionalDependencies:
     electron-installer-redhat "^3.2.0"
 
-"@electron-forge/maker-squirrel@^6.1.1":
+"@electron-forge/maker-squirrel@^6.2.1":
   version "6.2.1"
   resolved "https://registry.yarnpkg.com/@electron-forge/maker-squirrel/-/maker-squirrel-6.2.1.tgz#21213e57d7aa4868f1b69e46f4c5c03f514aba83"
   integrity sha512-331Pdt6eZh3nvjQaaDGlu2q1ZtBFrUSZWox2wHxG5B9l7/IoJY60dLgkkftsSrT+zUjZmKR67ZV3Fmh7qL/bPw==
@@ -1588,7 +1588,7 @@
   optionalDependencies:
     electron-winstaller "^5.0.0"
 
-"@electron-forge/maker-zip@^6.1.1":
+"@electron-forge/maker-zip@^6.2.1":
   version "6.2.1"
   resolved "https://registry.yarnpkg.com/@electron-forge/maker-zip/-/maker-zip-6.2.1.tgz#90d63bfa84ed5f7cba5ea8c9e231fc2118cf213e"
   integrity sha512-EgKArMT3Njn9/NZ7g2gGrhl8Y3F84Mm9b9Yt5WOziQaUAWvywFdijhUn4Oq631f3wU93xNq/CZbKvYWAK0NjnA==
@@ -7126,7 +7126,7 @@ electron-packager@^17.1.1:
     semver "^7.1.3"
     yargs-parser "^21.1.1"
 
-electron-squirrel-startup@1.0.0:
+electron-squirrel-startup@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/electron-squirrel-startup/-/electron-squirrel-startup-1.0.0.tgz#19b4e55933fa0ef8f556784b9c660f772546a0b8"
   integrity sha512-Oce8mvgGdFmwr+DsAcXBmFK8jFfN6yaFAP9IvyhTfupM3nFkBku/7VS/mdtJteWumImkC6P+BKGsxScoDDkv9Q==

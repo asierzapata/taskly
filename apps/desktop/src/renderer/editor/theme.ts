@@ -81,7 +81,10 @@ const createTheme = ({
 	const themeOptions: {
 		[selector: string]: StyleSpec
 	} = {
-		'.cm-gutters': {}
+		'.cm-gutters': {},
+		'&.cm-focused': {
+			outline: 'none'
+		}
 	}
 	const baseStyle: StyleSpec = {}
 	if (settings.background) {

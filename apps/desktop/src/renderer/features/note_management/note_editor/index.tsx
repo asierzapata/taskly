@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { useAppSelector } from '@renderer/store/hooks'
 import { Spinner } from '@taskly/web-ui'
 import { Editor } from '@renderer/editor'

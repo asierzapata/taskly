@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { useParams } from 'react-router-dom'
 import { NoteEditor } from '@renderer/features/note_management/note_editor'
+import { H1 } from '@taskly/web-ui'
+import { useAppSelector } from '@renderer/store/hooks'
 
 /* ====================================================== */
 /*                   Actions / Selectors                  */
@@ -21,11 +23,21 @@ import { NoteEditor } from '@renderer/features/note_management/note_editor'
 
 const Note = () => {
 	const { noteId } = useParams()
+	const note = useAppSelector(state =>
+		noteId
+			? state.noteManagement.notes[noteId]
+			: {
+					name: null
+			  }
+	)
 
 	if (!noteId) return <span>Something went wrong!</span>
 
 	return (
-		<div className="mx-auto w-full max-w-[900px] overflow-y-auto p-6">
+		<div className="mx-auto w-full max-w-[900px] overflow-y-auto p-6 pt-12">
+			<div className="mb-6">
+				<H1>{note?.name}</H1>
+			</div>
 			<NoteEditor key={noteId} id={noteId} />
 		</div>
 	)
