@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash'
 
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { type SubmitHandler, useForm } from 'react-hook-form'
 
 /* ====================================================== */
 /*                   Actions / Selectors                  */

@@ -30,7 +30,7 @@ import {
 /* ====================================================== */
 
 import { authentication } from '@renderer/api'
-import { User } from '@renderer/api/parsers/user'
+import { type User } from '@renderer/api/parsers/user'
 import { Screen } from '@renderer/ui/screen'
 
 /* ====================================================== */

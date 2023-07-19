@@ -1,8 +1,8 @@
 import _ from 'lodash'
 
 import { createCommand } from '@modules/factory'
-import { ModuleDependencies } from '../module'
-import { Folder, File } from '../types'
+import { type ModuleDependencies } from '../module'
+import { type Folder, type File } from '../types'
 
 type GetFullTreeParameters = void
 type TreeLevel = {

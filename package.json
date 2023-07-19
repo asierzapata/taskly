@@ -19,9 +19,9 @@
 	},
 	"dependencies": {
 		"@manypkg/cli": "^0.20.0",
-		"@taskly/eslint-config": "*",
 		"@types/prettier": "^2.7.3",
 		"eslint": "^8.42.0",
+		"eslint-config-custom": "*",
 		"prettier": "^2.8.8",
 		"prettier-plugin-tailwindcss": "^0.3.0",
 		"turbo": "^1.10.1",

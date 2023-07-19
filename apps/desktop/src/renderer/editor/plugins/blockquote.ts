@@ -1,12 +1,12 @@
 import {
 	Decoration,
-	DecorationSet,
+	type DecorationSet,
 	EditorView,
 	ViewPlugin,
-	ViewUpdate,
+	type ViewUpdate,
 	WidgetType
 } from '@codemirror/view'
-import { Range } from '@codemirror/state'
+import { type Range } from '@codemirror/state'
 import {
 	iterateTreeInVisibleRanges,
 	editorLines,

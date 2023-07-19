@@ -9,8 +9,6 @@ import React from 'react'
 /* ====================================================== */
 
 import { type NextPage } from 'next'
-import Image from 'next/image'
-import Balancer from 'react-wrap-balancer'
 import Head from 'next/head'
 
 /* ====================================================== */

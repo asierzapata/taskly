@@ -1,8 +1,8 @@
 import {
 	BrowserWindow,
 	IpcMainEvent,
-	IpcMainInvokeEvent,
-	OpenDialogOptions,
+	type IpcMainInvokeEvent,
+	type OpenDialogOptions,
 	dialog,
 	ipcMain
 } from 'electron'

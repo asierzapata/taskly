@@ -5,7 +5,7 @@ import {
 	screen,
 	type BrowserWindowConstructorOptions as WindowOptions
 } from 'electron'
-import { API, MainApi } from './modules/main_api'
+import { API, type MainApi } from './modules/main_api'
 import { handleDeepLink } from '@services/deep_links'
 import { registerContextMenuListener } from './context_menus/main/context_menus_main'
 import { registerDialogListeners } from './dialog/main/dialog_main'

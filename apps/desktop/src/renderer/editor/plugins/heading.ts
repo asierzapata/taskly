@@ -1,14 +1,14 @@
 import {
 	Decoration,
-	DecorationSet,
+	type DecorationSet,
 	EditorView,
 	ViewPlugin,
-	ViewUpdate
+	type ViewUpdate
 } from '@codemirror/view'
 import { checkRangeOverlap, iterateTreeInVisibleRanges } from '../util'
 import { headingSlugField } from '../state/heading-slug'
 import { heading as classes } from '../classes'
-import { Range } from '@codemirror/state'
+import { type Range } from '@codemirror/state'
 
 /**
  *  headings plugin.

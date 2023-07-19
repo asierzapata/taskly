@@ -1,9 +1,9 @@
 import {
 	Decoration,
-	DecorationSet,
-	EditorView,
+	type DecorationSet,
+	type EditorView,
 	ViewPlugin,
-	ViewUpdate
+	type ViewUpdate
 } from '@codemirror/view'
 import {
 	checkRangeOverlap,
@@ -11,7 +11,7 @@ import {
 	isCursorInRange,
 	iterateTreeInVisibleRanges
 } from '../util'
-import { Range } from '@codemirror/state'
+import { type Range } from '@codemirror/state'
 
 /**
  * These types contain markers as child elements that can be hidden.

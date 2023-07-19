@@ -1,6 +1,6 @@
 import {
 	HighlightStyle,
-	TagStyle,
+	type TagStyle,
 	syntaxHighlighting
 } from '@codemirror/language'
 import { tags as t } from '@lezer/highlight'
@@ -127,7 +127,7 @@ const createTheme = ({
 			borderLeftColor: settings.caret
 		}
 	}
-	let activeLineGutterStyle: StyleSpec = {}
+	const activeLineGutterStyle: StyleSpec = {}
 	if (settings.gutterActiveForeground) {
 		activeLineGutterStyle.color = settings.gutterActiveForeground
 	}

@@ -1,10 +1,10 @@
-import { Extension, Range } from '@codemirror/state'
+import { type Extension, type Range } from '@codemirror/state'
 import {
 	ViewPlugin,
-	DecorationSet,
+	type DecorationSet,
 	Decoration,
 	EditorView,
-	ViewUpdate
+	type ViewUpdate
 } from '@codemirror/view'
 import {
 	isCursorInRange,
@@ -62,7 +62,7 @@ function decorateCodeBlocks(view: EditorView) {
 					switch (type.name) {
 						case 'CodeInfo':
 						case 'CodeMark':
-							// eslint-disable-next-line no-case-declarations
+							 
 							const decRange = invisibleDecoration.range(
 								from + nodeFrom,
 								from + nodeTo

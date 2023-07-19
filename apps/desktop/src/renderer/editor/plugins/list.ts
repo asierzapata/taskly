@@ -1,14 +1,14 @@
 import {
 	Decoration,
-	DecorationSet,
+	type DecorationSet,
 	EditorView,
 	ViewPlugin,
-	ViewUpdate,
+	type ViewUpdate,
 	WidgetType
 } from '@codemirror/view'
 import { isCursorInRange, iterateTreeInVisibleRanges } from '../util'
-import { ChangeSpec, Range } from '@codemirror/state'
-import { NodeType, SyntaxNodeRef } from '@lezer/common'
+import { type ChangeSpec, type Range } from '@codemirror/state'
+import { type NodeType, type SyntaxNodeRef } from '@lezer/common'
 import { list as classes } from '../classes'
 
 const bulletListMarkerRE = /^[-+*]/

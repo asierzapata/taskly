@@ -1,8 +1,6 @@
-import { Db } from 'mongodb'
-
-import { UserRepository } from './infrastructure/repository'
+import { type UserRepository } from './infrastructure/repository'
 import { MongoDBUserRepository } from './infrastructure/repository/mongodb_user_repository'
-import { GlobalDependencies } from '@server/types/shared'
+import { type GlobalDependencies } from '@server/types/shared'
 import { authorizeCreateUser, createUser } from './application/create_user'
 import { authorizeGetUserById, getUserById } from './application/get_user_by_id'
 import { createHandler } from '../shared/handler_factory'

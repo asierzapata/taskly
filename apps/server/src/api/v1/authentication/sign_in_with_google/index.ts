@@ -1,16 +1,37 @@
+import { type User } from '@server/modules/user/domain/user'
 import { Session } from '@server/services/authentication'
 import { generateDBId } from '@server/utils/id'
 import { checkString } from '@server/utils/input_validators'
-import { successReponse } from '@server/utils/response_factory'
-import { NextFunction, Request, Response } from 'express'
+import {
+	type SuccessResponse,
+	successReponse
+} from '@server/utils/response_factory'
+import { type NextFunction, type Request, type Response } from 'express'
 
 /* ====================================================== */
 /*                    Implementation                      */
 /* ====================================================== */
 
+type SignInWithGoogleControllerParameters = void
+type SignInWithGoogleControllerQuery = void
+type SignInWithGoogleControllerBody = { code: string }
+type SignInWithGoogleControllerResponse = SuccessResponse<
+	{
+		user: User | null | undefined
+	},
+	{
+		token: string | undefined
+	}
+>
+
 async function signInWithGoogleController(
-	req: Request,
-	res: Response,
+	req: Request<
+		SignInWithGoogleControllerParameters,
+		SignInWithGoogleControllerResponse,
+		SignInWithGoogleControllerBody,
+		SignInWithGoogleControllerQuery
+	>,
+	res: Response<SignInWithGoogleControllerResponse>,
 	next: NextFunction
 ) {
 	try {
@@ -28,6 +49,8 @@ async function signInWithGoogleController(
 				code
 			})
 
+		console.log('>>>>>> googleUser', googleUser)
+
 		const account =
 			await req.modules.account.getAccountByProviderAndProviderAccountId(
 				{
@@ -38,6 +61,8 @@ async function signInWithGoogleController(
 			)
 
 		let userId = account?.userId
+
+		console.log('>>>>>> userid 1', userId)
 
 		if (!userId) {
 			userId = generateDBId()
@@ -62,6 +87,8 @@ async function signInWithGoogleController(
 				req.session
 			)
 		}
+
+		console.log('>>>>>> userid 1', userId)
 
 		const user = await req.modules.user.getUserById({ userId }, req.session)
 

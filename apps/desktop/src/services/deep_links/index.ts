@@ -1,4 +1,4 @@
-import { MainApi } from '@modules/main_api'
+import { type MainApi } from '@modules/main_api'
 import _ from 'lodash'
 
 export const protocol = 'taskly' as const

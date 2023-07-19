@@ -1,10 +1,10 @@
-import { Session } from '@server/services/authentication'
+import { type Session } from '@server/services/authentication'
 
 type HandlerAuthorization<P, D> = (
 	parameters: P,
 	dependencies: D,
 	session: Session
-) => Promise<void>
+) => Promise<void> | void
 
 export const createHandler = <P, D, R>({
 	authorize,

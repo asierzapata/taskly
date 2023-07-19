@@ -1,9 +1,9 @@
 import { ipcRenderer } from 'electron'
 import {
 	OPEN_DIALOG_CHANNEL,
-	OpenDialogResponse
+	type OpenDialogResponse
 } from '../common/dialog_common'
-import { OpenDialogOptions } from 'electron'
+import { type OpenDialogOptions } from 'electron'
 
 export async function openDialog(
 	options?: OpenDialogOptions

@@ -1,7 +1,7 @@
 import _ from 'lodash'
 
 import { createCommand } from '@modules/factory'
-import { ModuleDependencies } from '../module'
+import { type ModuleDependencies } from '../module'
 
 type RenameNoteParameters = {
 	path: string
