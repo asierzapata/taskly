@@ -170,10 +170,12 @@
 		--input: 216 34% 17%; /* hsl(216, 34%, 17%) */
 
 		--primary: 45 100% 50%; /* hsl(45, 100%, 50%) */
-		--primary-foreground: 210 40% 98%; /* hsl(210, 40%, 98%) */
+		--primary-foreground: 221, 100%, 5%; /* hsl(221, 100%, 5%) */
+		--primary-light: 45 100% 65%; /* hsl(45, 100%, 65%) */
 
-		--secondary: 222 47% 11%; /* hsl(222, 47%, 11%) */
-		--secondary-foreground: 210 40% 98%; /* hsl(210, 40%, 98%) */
+		--secondary: 13, 89%, 63%; /* hsl(13, 89%, 63%) */
+		--secondary-foreground: 221, 100%, 5%; /* hsl(221, 100%, 5%) */
+		--secondary-light: 13, 89%, 78%; /* hsl(13, 89%, 78%) */
 
 		--accent: 216 34% 17%; /* hsl(216, 34%, 17%) */
 		--accent-foreground: 210 40% 98%; /* hsl(210, 40%, 98%) */

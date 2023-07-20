@@ -43,6 +43,7 @@ import { frontmatter } from './plugins/frontmatter'
 // -----
 
 import { EditorTheme } from './theme'
+import { keymaps } from './keymap'
 
 // Types
 // -----
@@ -100,7 +101,7 @@ const Editor = React.forwardRef(
 						scrollPastEnd(),
 						dropCursor(),
 						search(),
-						keymap.of([...vscodeKeymap, ...markdownKeymap]),
+						keymaps(),
 						EditorView.lineWrapping,
 						blockquote(),
 						codeblock(),

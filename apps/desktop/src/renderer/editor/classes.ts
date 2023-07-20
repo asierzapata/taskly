@@ -43,6 +43,9 @@ export const blockquote = {
 		bullet: 'cm-list-bullet',
 		/** List task checkbox */
 		taskCheckbox: 'cm-task-marker-checkbox',
+		taskCheckboxWrapper: 'cm-task-marker-checkbox-wrapper',
+		taskCheckboxChecked: 'cm-task-marker-checkbox-checked',
+		taskCheckboxCheckedWrapper: 'cm-task-marker-checkbox-checked-wrapper',
 		/** Task list item with checkbox checked */
 		taskChecked: 'cm-task-checked'
 	},

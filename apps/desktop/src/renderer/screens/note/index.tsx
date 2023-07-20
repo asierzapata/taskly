@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { NoteEditor } from '@renderer/features/note_management/note_editor'
 import { H1 } from '@taskly/web-ui'
 import { useAppSelector } from '@renderer/store/hooks'
+import _ from 'lodash'
 
 /* ====================================================== */
 /*                   Actions / Selectors                  */
@@ -22,7 +23,8 @@ import { useAppSelector } from '@renderer/store/hooks'
 /* ====================================================== */
 
 const Note = () => {
-	const { noteId } = useParams()
+	const navigate = useNavigate()
+	const { noteId, safeId } = useParams()
 	const note = useAppSelector(state =>
 		noteId
 			? state.noteManagement.notes[noteId]
@@ -30,6 +32,12 @@ const Note = () => {
 					name: null
 			  }
 	)
+
+	React.useEffect(() => {
+		if (_.isEmpty(note)) {
+			navigate(`/safe/${safeId}`)
+		}
+	}, [])
 
 	if (!noteId) return <span>Something went wrong!</span>
 
