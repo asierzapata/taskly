@@ -24,7 +24,6 @@ const SafeCreation = () => {
 	const dispatch = useAppDispatch()
 
 	const handleSafeCreated = async (id: string) => {
-		console.log('>>>>>>', 'handleSafeCreated', id)
 		await dispatch(selectSafe({ id })).unwrap()
 		navigate(`/safe/${id}`)
 	}

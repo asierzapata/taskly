@@ -71,7 +71,7 @@ async function getPathFoldersAndFiles(
 			response[folder] = _folder
 		})
 	})
-	console.log('>>>>>>', path, response)
+
 	return {
 		[path]: {
 			files: _.sortBy(files).map(file => ({

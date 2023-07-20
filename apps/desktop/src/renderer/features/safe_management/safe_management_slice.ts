@@ -84,7 +84,6 @@ export const safeManagement = createSlice({
 		builder
 			.addCase(createSafe.fulfilled, (state, action) => {
 				const { safe } = action.payload
-				console.log('>>>>>>', action.payload)
 				state.safes[safe.id] = safe
 			})
 			.addCase(selectSafe.fulfilled, (state, action) => {

@@ -49,8 +49,6 @@ async function signInWithGoogleController(
 				code
 			})
 
-		console.log('>>>>>> googleUser', googleUser)
-
 		const account =
 			await req.modules.account.getAccountByProviderAndProviderAccountId(
 				{
@@ -61,8 +59,6 @@ async function signInWithGoogleController(
 			)
 
 		let userId = account?.userId
-
-		console.log('>>>>>> userid 1', userId)
 
 		if (!userId) {
 			userId = generateDBId()
@@ -87,8 +83,6 @@ async function signInWithGoogleController(
 				req.session
 			)
 		}
-
-		console.log('>>>>>> userid 1', userId)
 
 		const user = await req.modules.user.getUserById({ userId }, req.session)
 

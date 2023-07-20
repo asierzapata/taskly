@@ -57,7 +57,6 @@ export function createCommand<K extends string, I, O, D>(
 			return {
 				[id]: async (parameters: I): Promise<O> => {
 					const response = await method({ parameters, dependencies })
-					console.log('>>>>>>', 'send', 'id', id)
 					window.webContents.send(id, response)
 					return response
 				}

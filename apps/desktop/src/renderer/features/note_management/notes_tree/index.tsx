@@ -126,7 +126,6 @@ const Folder = ({
 			{
 				label: 'New Note',
 				click: () => {
-					console.log('>>>>>>', 'folderFullPath', folderFullPath)
 					void window.api.noteFileSystem.CreateNote({
 						path: folderFullPath,
 						name: 'New Note'
@@ -136,7 +135,6 @@ const Folder = ({
 			{
 				label: 'New Folder',
 				click: () => {
-					console.log('>>>>>>', 'folderFullPath', folderFullPath)
 					void window.api.noteFileSystem.CreateFolder({
 						path: folderFullPath,
 						name: 'New Folder'
@@ -149,14 +147,12 @@ const Folder = ({
 			{
 				label: 'Rename',
 				click: () => {
-					console.log('>>>>>>', 'folder', folder)
 					dispatch(startRenamingFolder({ id: folder.id }))
 				}
 			},
 			{
 				label: 'Delete',
 				click: () => {
-					console.log('>>>>>>', 'folder', folder)
 					void window.api.noteFileSystem.DeleteFolder({
 						path: folder.path,
 						name: folder.name

@@ -242,11 +242,6 @@ export const noteManagement = createSlice({
 					state.tree = action.payload.noteTree
 					state.notes = action.payload.notes
 					state.folders = action.payload.folders
-					console.log('>>>>>>', {
-						noteTree: action.payload.noteTree,
-						notes: action.payload.notes,
-						folders: action.payload.folders
-					})
 				}
 			})
 			.addCase(rebuildTree.rejected, (state, action) => {

@@ -24,11 +24,6 @@ export const ReadNote = async ({
 	// and that it is a file
 	const stats = await dependencies.fs.stat(absolutePath)
 
-	console.log('>>>>>>', {
-		absolutePath,
-		stats
-	})
-
 	if (!stats.isFile()) {
 		throw new Error('Path is not a file')
 	}

@@ -21,8 +21,6 @@ export const CreateFolder = async ({
 }): Promise<CreateFolderResponse> => {
 	const absolutePath = dependencies.notesPath.getAbsoluteFolderPath(path, name)
 
-	console.log('>>>>>>', absolutePath)
-
 	await dependencies.fs.mkdir(absolutePath)
 
 	return { path, name }

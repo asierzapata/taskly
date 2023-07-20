@@ -19,7 +19,6 @@ const SafeLayout = () => {
 	const { safeId } = useParams()
 
 	const handleNoteSelected = React.useCallback((note: Note) => {
-		console.log('note selected', note)
 		navigate(`/safe/${safeId}/note/${note.id}`)
 	}, [])
 

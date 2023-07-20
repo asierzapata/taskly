@@ -43,7 +43,6 @@ const CreateSafe = ({ onSafeCreated }: CreateSafeProps) => {
 		watch
 	} = useForm<CreateSafeForm>()
 	const onSubmit: SubmitHandler<CreateSafeForm> = async data => {
-		console.log('>>>>>>', 'onSubmit', data)
 		const id = ulid()
 		await dispatch(
 			createSafe({

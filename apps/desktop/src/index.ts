@@ -40,7 +40,6 @@ if (!gotTheLock) {
 	app.quit()
 } else {
 	app.on('second-instance', (event, commandLine, workingDirectory) => {
-		console.log('>>>>>>', commandLine)
 		// Someone tried to run a second instance, we should focus our window.
 		if (mainWindow) {
 			if (mainWindow.isMinimized()) mainWindow.restore()
@@ -58,7 +57,6 @@ if (!gotTheLock) {
 	})
 
 	app.on('open-url', (event, url) => {
-		console.log('>>>>>> open-url', url)
 		handleDeepLink(url, mainAPI)
 	})
 }

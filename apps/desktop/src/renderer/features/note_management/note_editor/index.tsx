@@ -31,7 +31,6 @@ const NoteEditor = ({ id }: NoteEditorProps) => {
 
 	const handleNoteChange = React.useCallback(
 		(value: string) => {
-			console.log('>>>>>> handleNoteChange', value)
 			if (!note) return
 			window.api.noteFileSystem.WriteNote({
 				path: note.path,

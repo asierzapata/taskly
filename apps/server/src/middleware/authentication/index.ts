@@ -43,7 +43,6 @@ async function authenticate(req: Request, res: Response, next: NextFunction) {
 		}).toValue()
 
 		if (!sessionData) {
-			console.log('>>>>>> unauthenticated session')
 			req.session = Session.unauthenticated({
 				id: clientSessionId,
 				device,
@@ -51,8 +50,6 @@ async function authenticate(req: Request, res: Response, next: NextFunction) {
 			})
 			return next()
 		}
-
-		console.log('>>>>>>', sessionData)
 
 		const session = new Session({
 			id: clientSessionId,

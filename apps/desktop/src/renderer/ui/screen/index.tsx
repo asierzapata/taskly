@@ -28,8 +28,6 @@ import './screen.css'
 const Screen = ({ children }: ScreenProps) => {
 	const currentSafe = useCurrentSafe()
 
-	console.log('>>>>>>', 'Screen', currentSafe)
-
 	return (
 		<>
 			<div className="titlebar">
