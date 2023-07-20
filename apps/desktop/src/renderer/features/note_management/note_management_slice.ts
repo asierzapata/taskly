@@ -44,6 +44,7 @@ export const rebuildTree = createAppAsyncThunk<
 				id: ulid(),
 				type: 'note' as const,
 				name: file.name,
+				displayName: file.name.split('.').slice(0, -1).join('.'),
 				path: file.path,
 				isRenaming: false
 			})) ?? []
@@ -131,6 +132,7 @@ export const noteManagement = createSlice({
 				type: 'note' as const,
 				path,
 				name,
+				displayName: name.split('.').slice(0, -1).join('.'),
 				isRenaming: true
 			}
 			if (!state.tree[path]) {
@@ -184,6 +186,7 @@ export const noteManagement = createSlice({
 			if (note) {
 				note.isRenaming = false
 				note.name = newName
+				note.displayName = newName.split('.').slice(0, -1).join('.')
 			}
 		},
 		folderRenamed: (

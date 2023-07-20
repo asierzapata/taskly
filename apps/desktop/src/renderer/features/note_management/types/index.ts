@@ -3,6 +3,7 @@ export type Note = {
 	type: 'note'
 	path: Path
 	name: string // It contains the extension
+	displayName: string // It doesn't contain the extension
 	isRenaming: boolean
 }
 

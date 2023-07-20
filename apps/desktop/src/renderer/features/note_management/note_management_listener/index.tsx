@@ -42,6 +42,7 @@ const NoteManagementListener = () => {
 		)
 		const removeRenameNoteListener = window.api.noteFileSystem.OnRenameNote(
 			data => {
+				console.log('>>>>>> removeRenameNoteListener', data)
 				dispatch(noteRenamed(data))
 			}
 		)

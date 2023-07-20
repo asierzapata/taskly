@@ -225,12 +225,12 @@ const Note = ({
 
 	const onContextMenu = () => {
 		window.contextMenu.createContextMenu([
-			{
-				label: 'Rename',
-				click: () => {
-					dispatch(startRenamingNote({ id }))
-				}
-			},
+			// {
+			// 	label: 'Rename',
+			// 	click: () => {
+			// 		dispatch(startRenamingNote({ id }))
+			// 	}
+			// },
 			{
 				label: 'Delete',
 				accelerator: 'CommandOrControl+Backspace',
@@ -266,11 +266,11 @@ const Note = ({
 			onClick={() => onNoteSelected(note)}
 		>
 			<Icons.page size={16} className="ml-5 min-h-[16px] min-w-[16px]" />
-			{!note.isRenaming ? (
-				<div className="ml-4 line-clamp-1 text-start">{noteName}</div>
-			) : (
-				<NoteRenameInput id={id} />
-			)}
+			{/* {!note.isRenaming ? ( */}
+			<div className="ml-4 line-clamp-1 text-start">{noteName}</div>
+			{/* ) : ( */}
+			{/* <NoteRenameInput id={id} /> */}
+			{/* )} */}
 		</button>
 	)
 }

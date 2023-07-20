@@ -1,15 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { useNavigate, useParams } from 'react-router-dom'
-import { NoteEditor } from '@renderer/features/note_management/note_editor'
-import { H1 } from '@taskly/web-ui'
-import { useAppSelector } from '@renderer/store/hooks'
 import _ from 'lodash'
-import { EditableNoteName } from '@renderer/features/note_management/editable_note_name'
 
 /* ====================================================== */
 /*                   Actions / Selectors                  */
 /* ====================================================== */
+
+import { useAppSelector } from '@renderer/store/hooks'
 
 /* ====================================================== */
 /*                       Components                       */
@@ -23,32 +19,41 @@ import { EditableNoteName } from '@renderer/features/note_management/editable_no
 /*                    Implementation                      */
 /* ====================================================== */
 
-const Note = () => {
-	const navigate = useNavigate()
-	const { noteId, safeId } = useParams()
-	const note = useAppSelector(state =>
-		noteId
-			? state.noteManagement.notes[noteId]
-			: {
-					displayName: null
-			  }
-	)
+const EditableNoteName = ({ noteId }: { noteId: string }) => {
+	const note = useAppSelector(state => state.noteManagement.notes[noteId])
 
+	const [noteName, setNoteName] = React.useState('')
+
+	const displayName = note?.displayName ?? ''
 	React.useEffect(() => {
-		if (_.isEmpty(note)) {
-			navigate(`/safe/${safeId}`)
-		}
+		if (!_.isEmpty(displayName) && _.isEmpty(noteName))
+			setNoteName(note?.displayName ?? '')
 	}, [])
 
-	if (!noteId) return <span>Something went wrong!</span>
+	const handleNoteNameChanged = (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
+		if (!note) return
+		console.log(event.target.value)
+		const newNoteName = event.target.value
+		setNoteName(newNoteName)
+		void window.api.noteFileSystem.RenameNote({
+			path: note.path,
+			oldName: note.name,
+			newName: `${newNoteName}.md`
+		})
+	}
+
+	if (!noteId || !note) return <span>Something went wrong!</span>
 
 	return (
-		<div className="mx-auto w-full max-w-[900px] overflow-y-auto p-6 pt-12">
-			<div className="mb-6">
-				<EditableNoteName key={noteId} noteId={noteId} />
-			</div>
-			<NoteEditor key={noteId} id={noteId} />
-		</div>
+		<input
+			className="bg-transparent p-2 text-4xl font-extrabold tracking-tight outline-none ring-0 lg:text-5xl"
+			type="text"
+			onChange={handleNoteNameChanged}
+			value={noteName}
+			autoFocus
+		/>
 	)
 }
 
@@ -56,4 +61,4 @@ const Note = () => {
 /*                      Public API                        */
 /* ====================================================== */
 
-export { Note }
+export { EditableNoteName }
