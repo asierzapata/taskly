@@ -24,10 +24,10 @@ const SafeLayout = () => {
 
 	return (
 		<Screen>
-			<div className="min-h-screen-without-frame max-h-screen-without-frame relative flex w-full">
+			<div className="min-h-screen-without-frame max-h-screen-without-frame relative flex w-full transition-all">
 				{/* this lib is incompatible with react18. To fix     // children: React.ReactNode; needs to be added to SplitPaneProps.
 				// @ts-ignore TS2322 */}
-				<SplitPane split="vertical" defaultSize={250} maxSize={300}>
+				<SplitPane split="vertical" defaultSize={250} maxSize={400}>
 					<div className="relative flex h-full flex-col items-center justify-between rounded-lg shadow-md">
 						<div className="w-full flex-1 overflow-y-auto p-3">
 							<NotesTree onNoteSelected={handleNoteSelected} />

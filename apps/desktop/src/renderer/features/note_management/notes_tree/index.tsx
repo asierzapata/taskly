@@ -190,7 +190,9 @@ const Folder = ({
 				) : (
 					<Icons.folder size={16} className="ml-1 min-h-[16px] min-w-[16px]" />
 				)}
-				<span className="ml-2 line-clamp-1 text-start">{folder.name}</span>
+				<span className="ml-2 truncate text-ellipsis text-start">
+					{folder.name}
+				</span>
 			</button>
 			{isOpen ? (
 				<div className={'ml-4'}>
@@ -267,7 +269,7 @@ const Note = ({
 		>
 			<Icons.page size={16} className="ml-5 min-h-[16px] min-w-[16px]" />
 			{/* {!note.isRenaming ? ( */}
-			<div className="ml-4 line-clamp-1 text-start">{noteName}</div>
+			<div className="ml-4 truncate text-ellipsis text-start">{noteName}</div>
 			{/* ) : ( */}
 			{/* <NoteRenameInput id={id} /> */}
 			{/* )} */}
