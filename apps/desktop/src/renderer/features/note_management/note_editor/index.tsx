@@ -1,7 +1,7 @@
 import React from 'react'
 import { useAppSelector } from '@renderer/store/hooks'
 import { Spinner } from '@taskly/web-ui'
-import { Editor } from '@renderer/editor'
+import { Editor, type EditorRef } from '@renderer/editor'
 
 /* ====================================================== */
 /*                   Actions / Selectors                  */
@@ -17,14 +17,17 @@ import { Editor } from '@renderer/editor'
 
 type NoteEditorProps = {
 	id: string
+	highlightStart?: number
+	highlightEnd?: number
 }
 
 /* ====================================================== */
 /*                    Implementation                      */
 /* ====================================================== */
 
-const NoteEditor = ({ id }: NoteEditorProps) => {
+const NoteEditor = ({ id, highlightStart, highlightEnd }: NoteEditorProps) => {
 	const note = useAppSelector(state => state.noteManagement.notes[id])
+	const editorRef = React.useRef<EditorRef>(null)
 	const [initialContent, setInitialContent] = React.useState('')
 	const [loading, setLoading] = React.useState(true)
 	const [error, setError] = React.useState<string | null>(null)
@@ -32,7 +35,7 @@ const NoteEditor = ({ id }: NoteEditorProps) => {
 	const handleNoteChange = React.useCallback(
 		(value: string) => {
 			if (!note) return
-			window.api.noteFileSystem.WriteNote({
+			void window.api.noteFileSystem.WriteNote({
 				path: note.path,
 				name: note.name,
 				content: value
@@ -41,9 +44,15 @@ const NoteEditor = ({ id }: NoteEditorProps) => {
 		[note]
 	)
 
+	const handleEditorLoaded = React.useCallback(() => {
+		if (highlightStart && highlightEnd) {
+			editorRef.current?.highlight(highlightStart, highlightEnd)
+		}
+	}, [highlightStart, highlightEnd])
+
 	React.useEffect(() => {
 		if (!note) return
-		;(async () => {
+		void (async () => {
 			try {
 				const { content } = await window.api.noteFileSystem.ReadNote({
 					path: note.path,
@@ -74,7 +83,14 @@ const NoteEditor = ({ id }: NoteEditorProps) => {
 			</div>
 		)
 
-	return <Editor initialDocument={initialContent} onChange={handleNoteChange} />
+	return (
+		<Editor
+			ref={editorRef}
+			initialDocument={initialContent}
+			onChange={handleNoteChange}
+			onLoaded={handleEditorLoaded}
+		/>
+	)
 }
 
 /* ====================================================== */

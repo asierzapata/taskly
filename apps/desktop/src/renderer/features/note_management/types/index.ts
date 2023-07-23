@@ -1,5 +1,6 @@
 export type Note = {
 	id: string
+	searchId: string
 	type: 'note'
 	path: Path
 	name: string // It contains the extension

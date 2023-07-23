@@ -110,35 +110,35 @@
 
 @layer base {
 	:root {
-		--background: 0 0% 100%; /* hsl(0, 0%, 100%) */
+		--background: rgba(255, 255, 255, 0.6);
 		--transparent-background: rgba(0, 0, 0, 0.6);
-		--foreground: 222 47% 11%; /* hsl(222, 47%, 11%) */
+		--foreground: rgba(15, 23, 41, 1);
 
-		--muted: 210 40% 96%; /* hsl(210, 40%, 96%) */
-		--muted-foreground: 215 16% 46%; /* hsl(215, 16%, 46%) */
+		--muted: rgba(241, 246, 249, 0.6);
+		--muted-foreground: rgba(99, 114, 136, 1);
 
-		--popover: 0 0% 100%; /* hsl(0, 0%, 100%) */
-		--popover-foreground: 222 47% 11%; /* hsl(222, 47%, 11%) */
+		--popover: rgba(255, 255, 255, 0.6);
+		--popover-foreground: rgba(15, 23, 41, 1);
 
-		--card: 0 0% 100%;
-		--card-foreground: 222 47% 11%; /* hsl(222, 47%, 11%) */
+		--card: rgba(255, 255, 255, 0.6);
+		--card-foreground: rgba(15, 23, 41, 1);
 
-		--border: 214 31% 91%; /* hsl(214, 31%, 91%) */
-		--input: 214 31% 91%; /* hsl(214, 31%, 91%) */
+		--border: rgba(225, 231, 239, 0.6);
+		--input: rgba(225, 231, 239, 0.6);
 
-		--primary: 13 89% 63%; /* hsl(13, 89%, 63%) */
-		--primary-foreground: 6 66% 25%; /* hsl(6, 66%, 25%) */
+		--primary: rgba(244, 105, 67, 0.6);
+		--primary-foreground: rgba(106, 30, 22, 0.6);
 
-		--secondary: 210 40% 96%; /* hsl(210, 40%, 96%) */
-		--secondary-foreground: 222 47% 11%; /* hsl(222, 47%, 11%) */
+		--secondary: rgba(241, 246, 249, 0.6);
+		--secondary-foreground: rgba(15, 23, 41, 1);
 
-		--accent: 210 40% 96%; /* hsl(210, 40%, 96%) */
-		--accent-foreground: 222 47% 11%; /* hsl(222, 47%, 11%) */
+		--accent: rgba(241, 246, 249, 0.6);
+		--accent-foreground: rgba(15, 23, 41, 1);
 
-		--destructive: 0 100% 50%; /* hsl(0, 100%, 50%) */
-		--destructive-foreground: 210 40% 98%; /* hsl(210, 40%, 98%) */
+		--destructive: rgba(255, 0, 0, 0.6);
+		--destructive-foreground: rgba(248, 250, 252, 1);
 
-		--ring: 215 20% 65%; /* hsl(215, 20%, 65%) */
+		--ring: rgba(148, 163, 184, 0.6);
 
 		--radius: 0.5rem;
 
@@ -153,37 +153,37 @@
 	}
 
 	.dark {
-		--background: 224 71% 4%; /* hsl(224, 71%, 4%) */
+		--background: rgba(0, 0, 0, 0.6);
 		--transparent-background: rgba(0, 0, 0, 0.6);
-		--foreground: 213 31% 91%; /* hsl(213, 31%, 91%) */
+		--foreground: rgba(225, 231, 239, 1);
 
-		--muted: 223 47% 11%; /* hsl(223, 47%, 11%) */
-		--muted-foreground: 215 16% 56%; /* hsl(215, 16%, 59%) */
+		--muted: rgba(15, 22, 41, 0.6);
+		--muted-foreground: rgba(134, 148, 167, 1);
 
-		--popover: 224 71% 4%; /* hsl(224, 71%, 4%) */
-		--popover-foreground: 215 20% 65%; /* hsl(215, 20%, 65%) */
+		--popover: rgba(0, 0, 0, 0.6);
+		--popover-foreground: rgba(148, 163, 184, 1);
 
-		--card: 224 71% 4%; /* hsl(224, 71%, 4%) */
-		--card-foreground: 213 31% 91%; /* hsl(213, 31%, 91%) */
+		--card: rgba(0, 0, 0, 0.6);
+		--card-foreground: rgba(225, 231, 239, 1);
 
-		--border: 216 34% 17%; /* hsl(216, 34%, 17%) */
-		--input: 216 34% 17%; /* hsl(216, 34%, 17%) */
+		--border: rgba(29, 40, 58, 0.6);
+		--input: rgba(29, 40, 58, 0.6);
 
-		--primary: 45 100% 50%; /* hsl(45, 100%, 50%) */
-		--primary-foreground: 221, 100%, 5%; /* hsl(221, 100%, 5%) */
-		--primary-light: 45 100% 65%; /* hsl(45, 100%, 65%) */
+		--primary: rgba(255, 191, 0, 0.6);
+		--primary-foreground: rgba(248, 250, 252, 1);
+		--primary-light: rgba(255, 210, 77, 0.6);
 
-		--secondary: 13, 89%, 63%; /* hsl(13, 89%, 63%) */
-		--secondary-foreground: 221, 100%, 5%; /* hsl(221, 100%, 5%) */
-		--secondary-light: 13, 89%, 78%; /* hsl(13, 89%, 78%) */
+		--secondary: rgba(245, 113, 77, 0.6);
+		--secondary-foreground: rgba(248, 250, 252, 1);
+		--secondary-light: rgba(249, 171, 149, 0.6);
 
-		--accent: 216 34% 17%; /* hsl(216, 34%, 17%) */
-		--accent-foreground: 210 40% 98%; /* hsl(210, 40%, 98%) */
+		--accent: rgba(29, 40, 58, 0.6);
+		--accent-foreground: rgba(248, 250, 252, 1);
 
-		--destructive: 0 63% 31%; /* hsl(0, 63%, 31%) */
-		--destructive-foreground: 210 40% 98%; /* hsl(210, 40%, 98%) */
+		--destructive: rgba(255, 0, 0, 0.6);
+		--destructive-foreground: rgba(248, 250, 252, 1);
 
-		--ring: 216 34% 17%; /* hsl(216, 34%, 17%) */
+		--ring: rgba(29, 40, 58, 1);
 
 		--radius: 0.5rem; /* 8px */
 

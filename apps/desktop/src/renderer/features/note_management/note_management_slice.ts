@@ -5,6 +5,13 @@ import _ from 'lodash'
 
 import type { Folder, Note, NoteTree } from './types'
 import { createAppAsyncThunk } from '@renderer/store/hooks'
+import {
+	addNote,
+	initializeSearchEngine,
+	removeNote,
+	searchNotes,
+	updateNote
+} from './note_search_engine'
 
 type NoteManagementState = {
 	tree: NoteTree
@@ -12,6 +19,10 @@ type NoteManagementState = {
 	folders: Record<string, Folder>
 	selectedPath: string
 	isRebuilding: boolean
+	noteSearch: {
+		searchQuery: string
+		searchResults: Awaited<ReturnType<typeof searchNotes>>
+	}
 }
 
 const initialState: NoteManagementState = {
@@ -19,7 +30,14 @@ const initialState: NoteManagementState = {
 	notes: {},
 	folders: {},
 	selectedPath: '/',
-	isRebuilding: false
+	isRebuilding: false,
+	noteSearch: {
+		searchQuery: '',
+		searchResults: {
+			count: 0,
+			notes: []
+		}
+	}
 }
 
 // Thunks
@@ -33,51 +51,153 @@ export const rebuildTree = createAppAsyncThunk<
 	},
 	void,
 	{ state: RootState }
->('noteManagement/rebuildTree', async (_, { getState, extra }) => {
-	const tree = await extra.windowApi.noteFileSystem.GetFullTree()
-
-	const notes: Record<string, Note> = {}
-	const folders: Record<string, Folder> = {}
-	const noteTree = Object.keys(tree).reduce((acc, key) => {
-		const nodeNotes =
-			tree[key]?.files?.map(file => ({
-				id: ulid(),
-				type: 'note' as const,
-				name: file.name,
-				displayName: file.name.split('.').slice(0, -1).join('.'),
-				path: file.path,
-				isRenaming: false
-			})) ?? []
-		nodeNotes.forEach(note => {
-			notes[note.id] = note
+>(
+	'noteManagement/rebuildTree',
+	async (_, { extra }) => {
+		const { noteTree, notes, folders } = await _getNoteTree({
+			noteFileSystem: extra.windowApi.noteFileSystem
 		})
-
-		const nodeFolders =
-			tree[key]?.folders?.map(folder => ({
-				id: ulid(),
-				type: 'folder' as const,
-				name: folder.name,
-				path: folder.path,
-				isRenaming: false,
-				isOpen: false
-			})) ?? []
-		nodeFolders.forEach(folder => {
-			folders[folder.id] = folder
+		console.log('>>>>>> REBUILD TREE', notes)
+		const notesWithSeachIds = await initializeSearchEngine({
+			notes: Object.values(notes),
+			noteFileSystem: extra.windowApi.noteFileSystem
 		})
-
-		acc[key] = {
-			notes: nodeNotes.map(note => ({ id: note.id })),
-			folders: nodeFolders.map(folder => ({ id: folder.id }))
+		const normalizedNotes = {} as Record<string, Note>
+		notesWithSeachIds.forEach(note => {
+			normalizedNotes[note.id] = note
+		})
+		return { noteTree, notes: normalizedNotes, folders }
+	},
+	{
+		condition: (_, { getState }) => {
+			const { noteManagement } = getState()
+			const isRebuilding = noteManagement.isRebuilding
+			if (isRebuilding) {
+				return false
+			}
 		}
-		return acc
-	}, {} as NoteTree)
-	return { noteTree, notes, folders }
+	}
+)
+
+export const noteCreated = createAppAsyncThunk<
+	{
+		note: Note
+	},
+	{ path: string; name: string },
+	{ state: RootState }
+>('noteManagement/noteCreated', async ({ path, name }, { extra }) => {
+	const note = {
+		id: ulid(),
+		searchId: '',
+		type: 'note' as const,
+		path,
+		name,
+		displayName: name.split('.').slice(0, -1).join('.'),
+		isRenaming: true
+	}
+	await addNote({
+		note,
+		noteFileSystem: extra.windowApi.noteFileSystem
+	})
+	return { note }
+})
+
+export const noteDeleted = createAppAsyncThunk<
+	{
+		path: string
+		name: string
+	},
+	{ path: string; name: string },
+	{ state: RootState }
+>('noteManagement/noteDeleted', async ({ path, name }, { getState, extra }) => {
+	const note = _.find(
+		getState().noteManagement.notes,
+		note => note.path === path && note.name === name
+	)
+	if (!note) {
+		throw new Error('Note not found')
+	}
+	await removeNote({
+		note
+	})
+	return { path, name }
+})
+
+export const noteRenamed = createAppAsyncThunk<
+	{
+		path: string
+		oldName: string
+		newName: string
+	},
+	{ path: string; oldName: string; newName: string },
+	{ state: RootState }
+>(
+	'noteManagement/noteRenamed',
+	async ({ path, oldName, newName }, { getState, extra }) => {
+		const note = _.find(
+			getState().noteManagement.notes,
+			note => note.path === path && note.name === oldName
+		)
+		if (!note) {
+			throw new Error('Note not found')
+		}
+		const newNote = {
+			...note,
+			name: newName,
+			displayName: newName.split('.').slice(0, -1).join('.')
+		}
+		await updateNote({
+			note: newNote,
+			noteFileSystem: extra.windowApi.noteFileSystem
+		})
+
+		return { path, oldName, newName }
+	}
+)
+
+export const noteContentUpdated = createAppAsyncThunk<
+	{
+		path: string
+		name: string
+		content: string
+	},
+	{ path: string; name: string; content: string },
+	{ state: RootState }
+>(
+	'noteManagement/noteContentUpdated',
+	async ({ path, name, content }, { getState, extra }) => {
+		const note = _.find(
+			getState().noteManagement.notes,
+			note => note.path === path && note.name === name
+		)
+		if (!note) {
+			throw new Error('Note not found')
+		}
+		await updateNote({
+			note,
+			noteFileSystem: extra.windowApi.noteFileSystem
+		})
+
+		return { path, name, content }
+	}
+)
+
+export const searchNotesInSafe = createAppAsyncThunk<
+	{
+		searchQuery: string
+		searchResults: Awaited<ReturnType<typeof searchNotes>>
+	},
+	{ searchQuery: string },
+	{ state: RootState }
+>('noteManagement/searchNotes', async ({ searchQuery }) => {
+	const searchResults = await searchNotes({
+		query: searchQuery
+	})
+	return { searchQuery, searchResults }
 })
 
 // Slice
 // -----
-
-// TODO: Event handlers are called twice, duplicating into the state the actions
 
 export const noteManagement = createSlice({
 	name: 'noteManagement',
@@ -122,30 +242,6 @@ export const noteManagement = createSlice({
 			})
 			state.folders[newFolder.id] = newFolder
 		},
-		noteCreated: (
-			state,
-			action: PayloadAction<{ path: string; name: string }>
-		) => {
-			const { path, name } = action.payload
-			const newNote = {
-				id: ulid(),
-				type: 'note' as const,
-				path,
-				name,
-				displayName: name.split('.').slice(0, -1).join('.'),
-				isRenaming: true
-			}
-			if (!state.tree[path]) {
-				state.tree[path] = {
-					notes: [],
-					folders: []
-				}
-			}
-			state.tree[path]?.notes?.push({
-				id: newNote.id
-			})
-			state.notes[newNote.id] = newNote
-		},
 		folderDeleted: (
 			state,
 			action: PayloadAction<{ path: string; name: string }>
@@ -158,35 +254,6 @@ export const noteManagement = createSlice({
 			if (folder) {
 				delete state.folders[folder.id]
 				state.tree[path]?.folders?.filter(folder => folder.id !== folder.id)
-			}
-		},
-		noteDeleted: (
-			state,
-			action: PayloadAction<{ path: string; name: string }>
-		) => {
-			const { path, name } = action.payload
-			const note = _.find(
-				state.notes,
-				note => note.path === path && note.name === name
-			)
-			if (note) {
-				delete state.notes[note.id]
-				state.tree[path]?.notes?.filter(note => note.id !== note.id)
-			}
-		},
-		noteRenamed: (
-			state,
-			action: PayloadAction<{ path: string; oldName: string; newName: string }>
-		) => {
-			const { path, oldName, newName } = action.payload
-			const note = _.find(
-				state.notes,
-				note => note.path === path && note.name === oldName
-			)
-			if (note) {
-				note.isRenaming = false
-				note.name = newName
-				note.displayName = newName.split('.').slice(0, -1).join('.')
 			}
 		},
 		folderRenamed: (
@@ -234,7 +301,7 @@ export const noteManagement = createSlice({
 	},
 	extraReducers: builder => {
 		builder
-			.addCase(rebuildTree.pending, (state, action) => {
+			.addCase(rebuildTree.pending, state => {
 				if (!state.isRebuilding) {
 					state.isRebuilding = true
 				}
@@ -247,8 +314,49 @@ export const noteManagement = createSlice({
 					state.folders = action.payload.folders
 				}
 			})
-			.addCase(rebuildTree.rejected, (state, action) => {
+			.addCase(rebuildTree.rejected, state => {
 				state.isRebuilding = false
+			})
+			.addCase(noteCreated.fulfilled, (state, action) => {
+				const note = action.payload.note
+				if (!state.tree[note.path]) {
+					state.tree[note.path] = {
+						notes: [],
+						folders: []
+					}
+				}
+				state.tree[note.path]?.notes?.push({
+					id: note.id
+				})
+				state.notes[note.id] = note
+			})
+			.addCase(noteDeleted.fulfilled, (state, action) => {
+				const { path, name } = action.payload
+				const note = _.find(
+					state.notes,
+					note => note.path === path && note.name === name
+				)
+				if (note) {
+					delete state.notes[note.id]
+					state.tree[path]?.notes?.filter(note => note.id !== note.id)
+				}
+			})
+			.addCase(noteRenamed.fulfilled, (state, action) => {
+				const { path, oldName, newName } = action.payload
+				const note = _.find(
+					state.notes,
+					note => note.path === path && note.name === oldName
+				)
+				if (note) {
+					note.isRenaming = false
+					note.name = newName
+					note.displayName = newName.split('.').slice(0, -1).join('.')
+				}
+			})
+			.addCase(searchNotesInSafe.fulfilled, (state, action) => {
+				const { searchQuery, searchResults } = action.payload
+				state.noteSearch.searchQuery = searchQuery
+				state.noteSearch.searchResults = searchResults
 			})
 	}
 })
@@ -263,10 +371,7 @@ export const {
 	selectFolder,
 	selectNote,
 	folderCreated,
-	noteCreated,
 	folderDeleted,
-	noteDeleted,
-	noteRenamed,
 	folderRenamed,
 	startRenamingFolder,
 	stopRenamingFolder,
@@ -293,3 +398,63 @@ export const selectNotesOnPath =
 			}) ?? []
 		)
 	}
+
+// Helpers
+// -------
+
+async function _getNoteTree({
+	noteFileSystem
+}: {
+	noteFileSystem: {
+		GetFullTree: () => Promise<
+			Record<
+				string,
+				{
+					files: { name: string; path: string }[]
+					folders: { name: string; path: string }[]
+				}
+			>
+		>
+	}
+}) {
+	const tree = await noteFileSystem.GetFullTree()
+
+	const notes: Record<string, Note> = {}
+	const folders: Record<string, Folder> = {}
+	const noteTree = Object.keys(tree).reduce((acc, key) => {
+		const nodeNotes =
+			tree[key]?.files?.map(file => ({
+				id: ulid(),
+				searchId: '',
+				type: 'note' as const,
+				name: file.name,
+				displayName: file.name.split('.').slice(0, -1).join('.'),
+				path: file.path,
+				isRenaming: false
+			})) ?? []
+		nodeNotes.forEach(note => {
+			notes[note.id] = note
+		})
+
+		const nodeFolders =
+			tree[key]?.folders?.map(folder => ({
+				id: ulid(),
+				type: 'folder' as const,
+				name: folder.name,
+				path: folder.path,
+				isRenaming: false,
+				isOpen: false
+			})) ?? []
+		nodeFolders.forEach(folder => {
+			folders[folder.id] = folder
+		})
+
+		acc[key] = {
+			notes: nodeNotes.map(note => ({ id: note.id })),
+			folders: nodeFolders.map(folder => ({ id: folder.id }))
+		}
+		return acc
+	}, {} as NoteTree)
+
+	return { noteTree, notes, folders }
+}

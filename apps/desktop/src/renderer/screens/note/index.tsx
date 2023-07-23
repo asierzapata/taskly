@@ -6,6 +6,7 @@ import { H1 } from '@taskly/web-ui'
 import { useAppSelector } from '@renderer/store/hooks'
 import _ from 'lodash'
 import { EditableNoteName } from '@renderer/features/note_management/editable_note_name'
+import { useQuery } from '@renderer/lib/router'
 
 /* ====================================================== */
 /*                   Actions / Selectors                  */
@@ -26,6 +27,19 @@ import { EditableNoteName } from '@renderer/features/note_management/editable_no
 const Note = () => {
 	const navigate = useNavigate()
 	const { noteId, safeId } = useParams()
+	const query = useQuery()
+	const highlightStart = query.get('highlightStart')
+		? parseInt(query.get('highlightStart') ?? '', 10)
+		: undefined
+	const highlightEnd = query.get('highlightEnd')
+		? parseInt(query.get('highlightEnd') ?? '', 10)
+		: undefined
+
+	console.log('>>>>>>', {
+		highlightStart,
+		highlightEnd
+	})
+
 	const note = useAppSelector(state =>
 		noteId
 			? state.noteManagement.notes[noteId]
@@ -47,7 +61,12 @@ const Note = () => {
 			<div className="mb-6">
 				<EditableNoteName key={noteId} noteId={noteId} />
 			</div>
-			<NoteEditor key={noteId} id={noteId} />
+			<NoteEditor
+				key={noteId}
+				id={noteId}
+				highlightStart={highlightStart}
+				highlightEnd={highlightEnd}
+			/>
 		</div>
 	)
 }

@@ -24,6 +24,7 @@ import { Folder, Note } from '../types'
 
 import { useContextMenu } from '@renderer/lib/context_menu'
 import {
+	Button,
 	Icons,
 	Input,
 	Spinner,
@@ -39,13 +40,14 @@ import {
 
 type NotesTreeProps = {
 	onNoteSelected: (note: Note) => void
+	onSearch: () => void
 }
 
 /* ====================================================== */
 /*                    Implementation                      */
 /* ====================================================== */
 
-const NotesTree = ({ onNoteSelected }: NotesTreeProps) => {
+const NotesTree = ({ onNoteSelected, onSearch }: NotesTreeProps) => {
 	const isRebuildingTree = useAppSelector(
 		state => state.noteManagement.isRebuilding
 	)
@@ -66,7 +68,22 @@ const NotesTree = ({ onNoteSelected }: NotesTreeProps) => {
 
 	return (
 		<div className="w-full">
-			<NotesTreeRoot onNoteSelected={onNoteSelected} />
+			<Button
+				className="flex w-full items-center justify-between"
+				variant="outline"
+				onClick={onSearch}
+			>
+				<div className="flex items-center">
+					<Icons.search className="mr-2 h-4 w-4" /> Search
+				</div>
+				{/* <div className="bg-muted text-muted-foreground flex items-center justify-center gap-0.5 rounded px-1">
+					<Icons.command className="mr-2 h-3 w-3" />
+					<Icons.shift className="mr-2 h-3 w-3" />F
+				</div> */}
+			</Button>
+			<div className="mt-4 overflow-y-auto">
+				<NotesTreeRoot onNoteSelected={onNoteSelected} />
+			</div>
 		</div>
 	)
 }
@@ -190,9 +207,7 @@ const Folder = ({
 				) : (
 					<Icons.folder size={16} className="ml-1 min-h-[16px] min-w-[16px]" />
 				)}
-				<span className="ml-2 truncate text-ellipsis text-start">
-					{folder.name}
-				</span>
+				<span className="ml-2 truncate text-start">{folder.name}</span>
 			</button>
 			{isOpen ? (
 				<div className={'ml-4'}>
@@ -269,7 +284,7 @@ const Note = ({
 		>
 			<Icons.page size={16} className="ml-5 min-h-[16px] min-w-[16px]" />
 			{/* {!note.isRenaming ? ( */}
-			<div className="ml-4 truncate text-ellipsis text-start">{noteName}</div>
+			<div className="ml-4 truncate text-start">{noteName}</div>
 			{/* ) : ( */}
 			{/* <NoteRenameInput id={id} /> */}
 			{/* )} */}

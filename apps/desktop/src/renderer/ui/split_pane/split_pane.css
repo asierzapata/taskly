@@ -1,5 +1,5 @@
 .Resizer {
-	background: hsl(var(--foreground));
+	background: var(--foreground);
 	opacity: 0.2;
 	z-index: 1;
 	-moz-box-sizing: border-box;
@@ -28,8 +28,8 @@
 }
 
 .Resizer.horizontal:hover {
-	border-top: 5px solid hsl(var(--muted-foreground));
-	border-bottom: 5px solid hsl(var(--muted-foreground));
+	border-top: 5px solid var(--muted-foreground);
+	border-bottom: 5px solid var(--muted-foreground);
 }
 
 .Resizer.vertical {
@@ -38,7 +38,7 @@
 }
 
 .Resizer.vertical:hover {
-	background: hsl(var(--muted-foreground));
+	background: var(--muted-foreground);
 }
 
 .Resizer.disabled {

@@ -9,6 +9,7 @@ import {
 	folderCreated,
 	folderDeleted,
 	folderRenamed,
+	noteContentUpdated,
 	noteCreated,
 	noteDeleted,
 	noteRenamed
@@ -42,13 +43,17 @@ const NoteManagementListener = () => {
 		)
 		const removeRenameNoteListener = window.api.noteFileSystem.OnRenameNote(
 			data => {
-				console.log('>>>>>> removeRenameNoteListener', data)
 				dispatch(noteRenamed(data))
 			}
 		)
 		const removeRenameFolderListener = window.api.noteFileSystem.OnRenameFolder(
 			data => {
 				dispatch(folderRenamed(data))
+			}
+		)
+		const removeWriteNoteListener = window.api.noteFileSystem.OnWriteNote(
+			data => {
+				dispatch(noteContentUpdated(data))
 			}
 		)
 		return () => {
@@ -58,6 +63,7 @@ const NoteManagementListener = () => {
 			removeDeleteNoteListener()
 			removeRenameNoteListener()
 			removeRenameFolderListener()
+			removeWriteNoteListener()
 		}
 	}, [])
 

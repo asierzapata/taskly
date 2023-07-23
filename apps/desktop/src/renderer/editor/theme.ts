@@ -172,6 +172,7 @@ export const EditorTheme = createTheme({
 		foreground: '#e1e7ef',
 		caret: 'rgba(245, 112, 76, 1)',
 		selectionMatch: 'rgba(255, 190, 1, 0.8)',
+		selection: 'rgba(255, 190, 1, 0.4)',
 		gutterBackground: 'transparent',
 		gutterForeground: '#808da3',
 		gutterBorder: '#808da3',

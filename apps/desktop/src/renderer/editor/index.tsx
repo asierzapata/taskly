@@ -3,11 +3,10 @@ import {
 	EditorView,
 	highlightSpecialChars,
 	drawSelection,
-	keymap,
 	scrollPastEnd,
 	dropCursor
 } from '@codemirror/view'
-import { EditorState } from '@codemirror/state'
+import { EditorSelection, EditorState } from '@codemirror/state'
 
 // Extensions
 // ----------
@@ -20,12 +19,7 @@ import {
 import { languages } from '@codemirror/language-data'
 import { highlightSelectionMatches, search } from '@codemirror/search'
 import { autocompletion, closeBrackets } from '@codemirror/autocomplete'
-import { vscodeKeymap } from '@replit/codemirror-vscode-keymap'
-import {
-	markdown,
-	markdownKeymap,
-	markdownLanguage
-} from '@codemirror/lang-markdown'
+import { markdown, markdownLanguage } from '@codemirror/lang-markdown'
 import { history } from '@codemirror/commands'
 import { blockquote } from './plugins/blockquote'
 import { codeblock } from './plugins/code-block'
@@ -52,18 +46,20 @@ type EditorProps = {
 	editorViewRef?: React.MutableRefObject<EditorView>
 	initialDocument?: string
 	onChange?: (value: string) => void
+	onLoaded?: () => void
+}
+
+export type EditorRef = {
+	getValue: () => string | undefined
+	highlight: (start: number, end: number) => void
 }
 
 // Component
 // ---------
 
-const Editor = React.forwardRef(
+const Editor = React.forwardRef<EditorRef, EditorProps>(
 	(
-		{
-			editorViewRef: editorViewRefProp,
-			initialDocument,
-			onChange
-		}: EditorProps,
+		{ editorViewRef: editorViewRefProp, initialDocument, onChange, onLoaded },
 		ref
 	) => {
 		const editorViewRefInternal = useRef<EditorView>()
@@ -72,7 +68,13 @@ const Editor = React.forwardRef(
 		const editorViewRef = editorViewRefProp || editorViewRefInternal
 
 		useImperativeHandle(ref, () => ({
-			getValue: () => editorViewRef.current?.state.doc.toString()
+			getValue: () => editorViewRef.current?.state.doc.toString(),
+			highlight: (start: number, end: number) => {
+				editorViewRef.current?.dispatch({
+					selection: EditorSelection.range(start, end),
+					scrollIntoView: true
+				})
+			}
 		}))
 
 		useEffect(() => {
@@ -128,6 +130,9 @@ const Editor = React.forwardRef(
 						}),
 						parent: containerRef.current
 					})
+					if (typeof onLoaded === 'function') {
+						onLoaded()
+					}
 				}
 			}
 
@@ -137,7 +142,7 @@ const Editor = React.forwardRef(
 					editorViewRef.current = undefined
 				}
 			}
-		}, [containerRef, editorViewRef])
+		}, [containerRef, editorViewRef, initialDocument, onChange, onLoaded])
 
 		return <div ref={containerRef} />
 	}
