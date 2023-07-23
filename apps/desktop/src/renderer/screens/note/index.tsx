@@ -44,6 +44,7 @@ const Note = () => {
 		noteId
 			? state.noteManagement.notes[noteId]
 			: {
+					path: null,
 					displayName: null
 			  }
 	)
@@ -58,6 +59,16 @@ const Note = () => {
 
 	return (
 		<div className="mx-auto w-full max-w-[900px] overflow-y-auto p-6 pt-12">
+			<div className="mb-6">
+				{note?.path ? (
+					<>
+						<span className="text-muted-foreground text-sm">
+							{_.tail(note.path.replace(/\\/g, '/'))}/
+						</span>
+						<span className="text-sm font-bold">{note.displayName}</span>
+					</>
+				) : null}
+			</div>
 			<div className="mb-6">
 				<EditableNoteName key={noteId} noteId={noteId} />
 			</div>

@@ -138,14 +138,14 @@ const baseTheme = EditorView.baseTheme({
 		borderRadius: '0.2rem',
 		borderStyle: 'solid',
 		borderWidth: '1px',
-		borderColor: 'hsl(var(--primary))',
+		borderColor: 'var(--primary)',
 		'-webkit-appearance': 'none',
 		'-moz-appearance': 'none',
 		appearance: 'none',
 		transition: '0.2s all linear'
 	},
 	['.' + classes.taskCheckboxChecked]: {
-		backgroundColor: 'hsl(var(--primary-light))'
+		backgroundColor: 'var(--primary)'
 	},
 	['.' + classes.taskCheckboxCheckedWrapper]: {
 		display: 'flex',
@@ -159,7 +159,7 @@ const baseTheme = EditorView.baseTheme({
 		lineHeight: 'none',
 		pointerEvents: 'none',
 		backgroundColor: 'transparent',
-		color: 'hsl(var(--primary-foreground))',
+		color: 'var(--primary-foreground)',
 		transition: '0.2s all linear'
 	},
 	['.' + classes.taskChecked]: {

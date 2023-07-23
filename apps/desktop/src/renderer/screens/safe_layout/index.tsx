@@ -42,8 +42,7 @@ const SideBar = () => {
 	const navigate = useNavigate()
 	const { safeId } = useParams()
 
-	const [uiState, setUIState] = React.useState<SideBarUiStates>('search')
-	// const [uiState, setUIState] = React.useState<SideBarUiStates>('tree')
+	const [uiState, setUIState] = React.useState<SideBarUiStates>('tree')
 
 	const handleNoteSelected = React.useCallback(
 		(note: Note) => {

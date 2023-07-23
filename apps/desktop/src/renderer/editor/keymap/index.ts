@@ -9,12 +9,12 @@ import { foldKeymap } from '@codemirror/language'
 import { searchKeymap } from '@codemirror/search'
 import {
 	EditorSelection,
-	EditorState,
-	Extension,
+	type EditorState,
+	type Extension,
 	Text,
 	Transaction
 } from '@codemirror/state'
-import { KeyBinding, keymap } from '@codemirror/view'
+import { type KeyBinding, keymap } from '@codemirror/view'
 // import { vscodeKeymap } from '@replit/codemirror-vscode-keymap'
 
 const addMarkdownFormatCharacters =
@@ -100,11 +100,11 @@ const keyMaps: KeyBinding[] = [
 
 export const keymaps = (): Extension => {
 	return keymap.of([
-		...markdownKeymap,
 		...keyMaps,
 		...defaultKeymap,
 		...foldKeymap,
 		...historyKeymap,
-		...searchKeymap
+		...searchKeymap,
+		...markdownKeymap
 	])
 }

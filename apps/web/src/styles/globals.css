@@ -94,6 +94,9 @@
 	* {
 		@apply border-border;
 	}
+	*::-webkit-scrollbar {
+		background-color: var(--transparent-background);
+	}
 	body {
 		@apply text-foreground;
 		background-color: rgba(0, 0, 0, 0.6);
