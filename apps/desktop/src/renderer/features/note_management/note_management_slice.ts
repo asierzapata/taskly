@@ -212,10 +212,13 @@ export const noteManagement = createSlice({
 		},
 		selectFolder: (state, action: PayloadAction<{ path: string }>) => {
 			const { path } = action.payload
+			console.log('>>>>>>', path)
 			state.selectedPath = path
 		},
 		selectNote: (state, action: PayloadAction<{ path: string }>) => {
 			const { path } = action.payload
+			console.log('>>>>>>', path)
+
 			state.selectedPath = path
 		},
 		folderCreated: (

@@ -35,11 +35,6 @@ const Note = () => {
 		? parseInt(query.get('highlightEnd') ?? '', 10)
 		: undefined
 
-	console.log('>>>>>>', {
-		highlightStart,
-		highlightEnd
-	})
-
 	const note = useAppSelector(state =>
 		noteId
 			? state.noteManagement.notes[noteId]

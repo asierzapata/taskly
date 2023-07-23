@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from '@renderer/store/hooks'
 import {
 	rebuildTree,
 	selectFolder,
+	selectNote,
 	startRenamingFolder,
 	startRenamingNote,
 	stopRenamingNote,
@@ -31,7 +32,8 @@ import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
-	TooltipTrigger
+	TooltipTrigger,
+	classnames
 } from '@taskly/web-ui'
 
 /* ====================================================== */
@@ -122,6 +124,11 @@ const Folder = ({
 	const folderFullPath = folder?.path.endsWith('/')
 		? `${folder.path}${folder.name}`
 		: `${folder?.path}/${folder?.name}`
+
+	const isFolderSelected = useAppSelector(
+		state => state.noteManagement.selectedPath === folderFullPath
+	)
+
 	const treeNode = useAppSelector(state =>
 		folder
 			? state.noteManagement.tree[folderFullPath]
@@ -131,14 +138,13 @@ const Folder = ({
 			  }
 	)
 	const isOpen = folder?.isOpen
-	// const isRenaming = folder?.isRenaming
 	const dispatch = useAppDispatch()
 
 	const folderRef = React.useRef<HTMLButtonElement>(null)
 
 	const onContextMenu = () => {
 		if (!folder) return
-		dispatch(selectFolder({ path: folder.path }))
+		dispatch(selectFolder({ path: folderFullPath }))
 		window.contextMenu.createContextMenu([
 			{
 				label: 'New Note',
@@ -183,6 +189,7 @@ const Folder = ({
 
 	const onToggleFolder = () => {
 		dispatch(toggleFolder({ id }))
+		dispatch(selectFolder({ path: folderFullPath }))
 	}
 
 	if (!folder) return null
@@ -192,7 +199,12 @@ const Folder = ({
 			<button
 				ref={folderRef}
 				onClick={onToggleFolder}
-				className="flex w-full flex-row items-center justify-start rounded-md bg-transparent p-1 text-sm font-light transition-colors hover:bg-slate-100 focus:outline-none focus:ring-1 focus:ring-slate-400 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-slate-100 data-[state=open]:bg-transparent dark:text-slate-100 dark:hover:bg-slate-800  dark:hover:text-slate-100 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900 dark:data-[state=open]:bg-slate-800 dark:data-[state=open]:bg-transparent"
+				className={classnames(
+					'flex w-full flex-row items-center justify-start rounded-md bg-transparent p-1 text-sm font-light transition-colors hover:bg-slate-100 focus:outline-none focus:ring-1 focus:ring-slate-400 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-slate-100 data-[state=open]:bg-transparent dark:text-slate-100 dark:hover:bg-slate-800  dark:hover:text-slate-100 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900 dark:data-[state=open]:bg-slate-800 dark:data-[state=open]:bg-transparent',
+					isFolderSelected
+						? 'bg-slate-100 dark:bg-slate-800  dark:text-slate-100'
+						: ''
+				)}
 			>
 				{isOpen ? (
 					<Icons.chevronDown size={16} className="min-h-[16px] min-w-[16px]" />
@@ -240,6 +252,14 @@ const Note = ({
 	const noteRef = React.useRef<HTMLButtonElement>(null)
 	const dispatch = useAppDispatch()
 
+	const noteFullPath = note?.path.endsWith('/')
+		? `${note.path}${note.name}`
+		: `${note?.path}/${note?.name}`
+
+	const isNoteSelected = useAppSelector(
+		state => state.noteManagement.selectedPath === noteFullPath
+	)
+
 	const onContextMenu = () => {
 		window.contextMenu.createContextMenu([
 			// {
@@ -271,6 +291,12 @@ const Note = ({
 		}
 	}
 
+	const handleNoteSelected = React.useCallback(() => {
+		if (!note) return
+		onNoteSelected(note)
+		dispatch(selectNote({ path: noteFullPath }))
+	}, [dispatch, note, noteFullPath, onNoteSelected])
+
 	if (!note) return null
 
 	const noteName = note.name.split('.')[0]
@@ -278,9 +304,14 @@ const Note = ({
 	return (
 		<button
 			ref={noteRef}
-			className="flex w-full flex-row items-center justify-start rounded-md bg-transparent p-1 text-sm font-light transition-colors hover:bg-slate-100 focus:outline-none focus:ring-1 focus:ring-slate-400 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-slate-100 data-[state=open]:bg-transparent dark:text-slate-100 dark:hover:bg-slate-800  dark:hover:text-slate-100 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900 dark:data-[state=open]:bg-slate-800 dark:data-[state=open]:bg-transparent"
+			className={classnames(
+				'flex w-full flex-row items-center justify-start rounded-md bg-transparent p-1 text-sm font-light transition-colors hover:bg-slate-100 focus:outline-none focus:ring-1 focus:ring-slate-400 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-slate-100 data-[state=open]:bg-transparent dark:text-slate-100 dark:hover:bg-slate-800  dark:hover:text-slate-100 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900 dark:data-[state=open]:bg-slate-800 dark:data-[state=open]:bg-transparent',
+				isNoteSelected
+					? 'bg-slate-100 dark:bg-slate-800  dark:text-slate-100'
+					: ''
+			)}
 			onKeyDown={handleKeyDown}
-			onClick={() => onNoteSelected(note)}
+			onClick={handleNoteSelected}
 		>
 			<Icons.page size={16} className="ml-5 min-h-[16px] min-w-[16px]" />
 			{/* {!note.isRenaming ? ( */}
