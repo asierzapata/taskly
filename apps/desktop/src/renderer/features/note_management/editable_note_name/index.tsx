@@ -6,6 +6,13 @@ import _ from 'lodash'
 /* ====================================================== */
 
 import { useAppSelector } from '@renderer/store/hooks'
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger
+} from '@taskly/web-ui'
+import { selectNotesOnPath } from '../note_management_slice'
 
 /* ====================================================== */
 /*                       Components                       */
@@ -21,22 +28,47 @@ import { useAppSelector } from '@renderer/store/hooks'
 
 const EditableNoteName = ({ noteId }: { noteId: string }) => {
 	const note = useAppSelector(state => state.noteManagement.notes[noteId])
+	const noteNamesOnTheSamePath = useAppSelector(
+		selectNotesOnPath(note?.path ?? '', noteId)
+	)
 
-	const [noteName, setNoteName] = React.useState('')
+	const noteNameRef = React.useRef<HTMLDivElement>(null)
+	const [noteName] = React.useState(note?.displayName ?? '')
 
-	const displayName = note?.displayName ?? ''
-	React.useEffect(() => {
-		if (!_.isEmpty(displayName) && _.isEmpty(noteName))
-			setNoteName(note?.displayName ?? '')
-	}, [])
+	const [error, setError] = React.useState<
+		'required' | 'pattern' | 'isUnique' | null
+	>(null)
 
-	const handleNoteNameChanged = (
-		event: React.ChangeEvent<HTMLInputElement>
-	) => {
+	const handleValidateNoteName = (event: React.FormEvent<HTMLDivElement>) => {
 		if (!note) return
-		console.log(event.target.value)
-		const newNoteName = event.target.value
-		setNoteName(newNoteName)
+		const div = event.target as HTMLDivElement
+		const newNoteName = div.innerText
+
+		if (_.isEmpty(newNoteName)) {
+			setError('required')
+			return
+		}
+
+		if (!/^[\w\-_\s]+$/.test(newNoteName)) {
+			setError('pattern')
+			return
+		}
+
+		if (
+			noteNamesOnTheSamePath.some(
+				noteName => noteName?.toLowerCase() === newNoteName.toLowerCase()
+			)
+		) {
+			setError('isUnique')
+			return
+		}
+
+		setError(null)
+	}
+
+	const handleUpdateNoteName = () => {
+		if (!note || !noteNameRef.current) return
+		const newNoteName = noteNameRef.current.innerText
 		void window.api.noteFileSystem.RenameNote({
 			path: note.path,
 			oldName: note.name,
@@ -44,16 +76,41 @@ const EditableNoteName = ({ noteId }: { noteId: string }) => {
 		})
 	}
 
-	if (!noteId || !note) return <span>Something went wrong!</span>
+	if (!noteId || !note) {
+		return <span className="font-bold text-red-500">Something went wrong!</span>
+	}
 
 	return (
-		<input
-			className="bg-transparent p-2 text-4xl font-extrabold tracking-tight outline-none ring-0 lg:text-5xl"
-			type="text"
-			onChange={handleNoteNameChanged}
-			value={noteName}
-			autoFocus
-		/>
+		<TooltipProvider>
+			<Tooltip open={!_.isEmpty(error)}>
+				<TooltipTrigger className="max-w-[-webkit-fill-available] text-left">
+					<div
+						ref={noteNameRef}
+						className="w-full bg-transparent p-2 text-4xl font-extrabold tracking-tight outline-none ring-0 lg:text-5xl"
+						contentEditable
+						onInput={handleValidateNoteName}
+						onBlur={handleUpdateNoteName}
+						autoFocus
+						autoCapitalize="on"
+						spellCheck
+					>
+						{noteName}
+					</div>
+				</TooltipTrigger>
+				{error === 'required' && (
+					<TooltipContent variant="danger">Name is required</TooltipContent>
+				)}
+				{error === 'pattern' && (
+					<TooltipContent variant="danger">
+						Name can only contain letters, numbers, dashes, underscores and
+						spaces
+					</TooltipContent>
+				)}
+				{error === 'isUnique' && (
+					<TooltipContent variant="danger">Name must be unique</TooltipContent>
+				)}
+			</Tooltip>
+		</TooltipProvider>
 	)
 }
 

@@ -38,7 +38,7 @@ const Note = () => {
 		if (_.isEmpty(note)) {
 			navigate(`/safe/${safeId}`)
 		}
-	}, [])
+	}, [navigate, note, safeId])
 
 	if (!noteId) return <span>Something went wrong!</span>
 

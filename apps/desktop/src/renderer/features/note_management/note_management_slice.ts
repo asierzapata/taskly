@@ -276,3 +276,20 @@ export const {
 
 // Selectors
 // ---------
+
+export const selectNotesOnPath =
+	(path: string, idToExclude?: string) => (state: RootState) => {
+		const treeNode = state.noteManagement.tree[path]
+		if (!treeNode) return []
+		let notesWithoutCurrentNote = [...treeNode.notes]
+		if (idToExclude) {
+			notesWithoutCurrentNote = notesWithoutCurrentNote?.filter(
+				n => n.id !== idToExclude
+			)
+		}
+		return (
+			notesWithoutCurrentNote?.map(n => {
+				return state.noteManagement.notes[n.id]?.displayName
+			}) ?? []
+		)
+	}

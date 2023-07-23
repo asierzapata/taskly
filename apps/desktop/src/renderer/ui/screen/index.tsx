@@ -1,11 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 /* ====================================================== */
 /*                   Actions / Selectors                  */
 /* ====================================================== */
 
-import { useCurrentSafe } from '@renderer/features/safe_management/use_current_safe'
+// import { useCurrentSafe } from '@renderer/features/safe_management/use_current_safe'
 
 /* ====================================================== */
 /*                         Types                          */
@@ -26,16 +25,16 @@ import './screen.css'
 /* ====================================================== */
 
 const Screen = ({ children }: ScreenProps) => {
-	const currentSafe = useCurrentSafe()
+	// const currentSafe = useCurrentSafe()
 
 	return (
 		<>
 			<div className="titlebar">
-				{currentSafe?.name ? (
+				{/* {currentSafe?.name ? (
 					<div className="titlebar-text">Taskly - {currentSafe.name}</div>
 				) : (
 					<div className="titlebar-text">Taskly</div>
-				)}
+				)} */}
 			</div>
 			{children}
 		</>

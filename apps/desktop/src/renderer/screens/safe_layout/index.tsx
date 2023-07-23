@@ -18,9 +18,12 @@ const SafeLayout = () => {
 	const navigate = useNavigate()
 	const { safeId } = useParams()
 
-	const handleNoteSelected = React.useCallback((note: Note) => {
-		navigate(`/safe/${safeId}/note/${note.id}`)
-	}, [])
+	const handleNoteSelected = React.useCallback(
+		(note: Note) => {
+			navigate(`/safe/${safeId}/note/${note.id}`)
+		},
+		[navigate, safeId]
+	)
 
 	return (
 		<Screen>
