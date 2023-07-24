@@ -11,7 +11,8 @@ import { type ChangeSpec, type Range } from '@codemirror/state'
 import { type NodeType, type SyntaxNodeRef } from '@lezer/common'
 import { list as classes } from '../classes'
 
-const bulletListMarkerRE = /^[-+*]/
+const bulletListRegularExpresion = /^[-+*]/
+const taskListRegularExpresion = /^^[-+*]\s\[[xX\s]?\]/
 
 /**
  *  Lists plugin.
@@ -20,7 +21,61 @@ const bulletListMarkerRE = /^[-+*]/
  * - Customize list mark
  * - Add an interactive checkbox for task lists
  */
-export const lists = () => [taskListPlugin, baseTheme]
+export const lists = () => [listBulletPlugin, taskListPlugin, baseTheme]
+
+/**
+ * Plugin to add custom list bullet mark.
+ */
+class ListBulletPlugin {
+	decorations: DecorationSet = Decoration.none
+	constructor(view: EditorView) {
+		this.decorations = this.decorateLists(view)
+	}
+	update(update: ViewUpdate) {
+		if (update.docChanged || update.viewportChanged || update.selectionSet)
+			this.decorations = this.decorateLists(update.view)
+	}
+	private decorateLists(view: EditorView) {
+		const widgets: Range<Decoration>[] = []
+		iterateTreeInVisibleRanges(view, {
+			enter: ({ type, from, to }) => {
+				if (isCursorInRange(view.state, [from, to])) return
+				if (type.name === 'ListMark') {
+					const listMark = view.state.sliceDoc(from, to)
+					const listMarkWithPossibleTaskList = view.state.sliceDoc(from, to + 4)
+					if (
+						bulletListRegularExpresion.test(listMark) &&
+						!taskListRegularExpresion.test(listMarkWithPossibleTaskList)
+					) {
+						const dec = Decoration.replace({
+							widget: new ListBulletWidget(listMark)
+						})
+						widgets.push(dec.range(from, to))
+					}
+				}
+			}
+		})
+		return Decoration.set(widgets, true)
+	}
+}
+const listBulletPlugin = ViewPlugin.fromClass(ListBulletPlugin, {
+	decorations: v => v.decorations
+})
+
+/**
+ * Widget to render list bullet mark.
+ */
+class ListBulletWidget extends WidgetType {
+	constructor(readonly bullet: string) {
+		super()
+	}
+	toDOM(): HTMLElement {
+		const listBullet = document.createElement('span')
+		listBullet.textContent = this.bullet
+		listBullet.className = 'cm-list-bullet'
+		return listBullet
+	}
+}
 
 /**
  * Plugin to add checkboxes in task lists.
@@ -124,10 +179,6 @@ const taskListPlugin = ViewPlugin.fromClass(TaskListsPlugin, {
  * Base theme for the lists plugin.
  */
 const baseTheme = EditorView.baseTheme({
-	// ['.' + classes.bullet]: {
-	// 	position: 'relative',
-	// 	visibility: 'hidden'
-	// },
 	['.' + classes.taskCheckboxWrapper]: {
 		position: 'relative',
 		transition: '0.2s all linear'
@@ -164,12 +215,17 @@ const baseTheme = EditorView.baseTheme({
 	},
 	['.' + classes.taskChecked]: {
 		textDecoration: 'line-through !important'
+	},
+	['.' + classes.bullet]: {
+		position: 'relative',
+		visibility: 'hidden'
+	},
+	['.' + classes.bullet + ':after']: {
+		visibility: 'visible',
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		color: 'var(--primary)',
+		content: "'\\2022'" /* U+2022 BULLET */
 	}
-	// ['.' + classes.bullet + ':after']: {
-	// 	visibility: 'visible',
-	// 	position: 'absolute',
-	// 	top: 0,
-	// 	left: 0,
-	// 	content: "'\\2022'" /* U+2022 BULLET */
-	// }
 })

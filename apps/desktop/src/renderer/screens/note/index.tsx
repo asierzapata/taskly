@@ -53,7 +53,7 @@ const Note = () => {
 	if (!noteId) return <span>Something went wrong!</span>
 
 	return (
-		<div className="mx-auto w-full max-w-[900px] overflow-y-auto p-6 pt-12">
+		<div className="mx-auto w-full max-w-[900px] overflow-y-auto p-6 pt-3">
 			<div className="mb-6">
 				{note?.path ? (
 					<>

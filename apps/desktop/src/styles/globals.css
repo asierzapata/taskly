@@ -127,7 +127,9 @@
 		--input: rgba(225, 231, 239, 0.6);
 
 		--primary: rgba(244, 105, 67, 0.6);
+		--primary-solid: rgba(244, 105, 67, 1);
 		--primary-foreground: rgba(106, 30, 22, 0.6);
+		--primary-light: rgba(249, 171, 149, 0.6);
 
 		--secondary: rgba(241, 246, 249, 0.6);
 		--secondary-foreground: rgba(15, 23, 41, 1);
@@ -169,18 +171,18 @@
 		--border: rgba(29, 40, 58, 0.6);
 		--input: rgba(29, 40, 58, 0.6);
 
-		--primary: rgba(255, 191, 0, 0.6);
-		--primary-foreground: rgba(248, 250, 252, 1);
-		--primary-light: rgba(255, 210, 77, 0.6);
+		--primary: rgba(255, 191, 0, 1);
+		--primary-foreground: rgba(29, 40, 58, 1);
+		--primary-light: rgba(255, 210, 77, 1);
 
-		--secondary: rgba(245, 113, 77, 0.6);
-		--secondary-foreground: rgba(248, 250, 252, 1);
-		--secondary-light: rgba(249, 171, 149, 0.6);
+		--secondary: rgba(245, 113, 77, 1);
+		--secondary-foreground: rgba(29, 40, 58, 1);
+		--secondary-light: rgba(249, 171, 149, 1);
 
 		--accent: rgba(29, 40, 58, 0.6);
 		--accent-foreground: rgba(248, 250, 252, 1);
 
-		--destructive: rgba(255, 0, 0, 0.6);
+		--destructive: rgba(255, 0, 0, 1);
 		--destructive-foreground: rgba(248, 250, 252, 1);
 
 		--ring: rgba(29, 40, 58, 1);
