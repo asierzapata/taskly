@@ -15,10 +15,15 @@ import {
 	Transaction
 } from '@codemirror/state'
 import { type KeyBinding, keymap } from '@codemirror/view'
-// import { vscodeKeymap } from '@replit/codemirror-vscode-keymap'
 
 const addMarkdownFormatCharacters =
-	(characters: string) =>
+	({
+		startCharacter,
+		endCharacter
+	}: {
+		startCharacter: string
+		endCharacter: string
+	}) =>
 	({
 		state,
 		dispatch
@@ -26,24 +31,28 @@ const addMarkdownFormatCharacters =
 		state: EditorState
 		dispatch: (tr: Transaction) => void
 	}) => {
-		const characterToChange = characters
 		const changes = state.changeByRange(range => {
+			const numberOfCharactersBefore = startCharacter.length
+			const numberOfCharactersAfter = endCharacter.length
+
 			const isCharacterBefore =
-				state.sliceDoc(range.from - 2, range.from) === characterToChange
+				state.sliceDoc(range.from - numberOfCharactersBefore, range.from) ===
+				startCharacter
 			const isCharacterAfter =
-				state.sliceDoc(range.to, range.to + 2) === characterToChange
+				state.sliceDoc(range.to, range.to + numberOfCharactersAfter) ===
+				endCharacter
 			const changes = []
 
 			changes.push(
 				isCharacterBefore
 					? {
-							from: range.from - 2,
+							from: range.from - numberOfCharactersBefore,
 							to: range.from,
 							insert: Text.of([''])
 					  }
 					: {
 							from: range.from,
-							insert: Text.of([characterToChange])
+							insert: Text.of([startCharacter])
 					  }
 			)
 
@@ -51,22 +60,21 @@ const addMarkdownFormatCharacters =
 				isCharacterAfter
 					? {
 							from: range.to,
-							to: range.to + 2,
+							to: range.to + numberOfCharactersAfter,
 							insert: Text.of([''])
 					  }
 					: {
 							from: range.to,
-							insert: Text.of([characterToChange])
+							insert: Text.of([endCharacter])
 					  }
 			)
 
-			const numberOfCharacters = characterToChange.length
 			const extendBefore = isCharacterBefore
-				? -numberOfCharacters
-				: numberOfCharacters
+				? -numberOfCharactersBefore
+				: numberOfCharactersBefore
 			const extendAfter = isCharacterAfter
-				? -numberOfCharacters
-				: numberOfCharacters
+				? -numberOfCharactersAfter
+				: numberOfCharactersAfter
 
 			return {
 				changes,
@@ -90,11 +98,24 @@ const addMarkdownFormatCharacters =
 const keyMaps: KeyBinding[] = [
 	{
 		key: 'Mod-b',
-		run: addMarkdownFormatCharacters('**')
+		run: addMarkdownFormatCharacters({
+			startCharacter: '**',
+			endCharacter: '**'
+		})
 	},
 	{
 		key: 'Mod-i',
-		run: addMarkdownFormatCharacters('_')
+		run: addMarkdownFormatCharacters({
+			startCharacter: '_',
+			endCharacter: '_'
+		})
+	},
+	{
+		key: 'Mod-k',
+		run: addMarkdownFormatCharacters({
+			startCharacter: '[](',
+			endCharacter: ')'
+		})
 	}
 ]
 
