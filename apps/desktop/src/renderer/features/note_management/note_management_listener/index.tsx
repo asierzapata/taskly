@@ -12,8 +12,10 @@ import {
 	noteContentUpdated,
 	noteCreated,
 	noteDeleted,
-	noteRenamed
+	noteRenamed,
+	selectNote
 } from '../note_management_slice'
+import { Outlet, useNavigate, useParams } from 'react-router-dom'
 
 /* ====================================================== */
 /*                    Implementation                      */
@@ -21,6 +23,9 @@ import {
 
 const NoteManagementListener = () => {
 	const dispatch = useAppDispatch()
+	const navigate = useNavigate()
+	const { safeId } = useParams()
+
 	React.useEffect(() => {
 		const removeFolderCreatedListener =
 			window.api.noteFileSystem.OnCreateFolder(data => {
@@ -33,17 +38,26 @@ const NoteManagementListener = () => {
 		)
 		const removeCreateNoteListener = window.api.noteFileSystem.OnCreateNote(
 			data => {
-				dispatch(noteCreated(data))
+				console.log('>>>>>>', 'removeCreateNoteListener', data)
+				void dispatch(noteCreated(data)).then(({ payload }) => {
+					if (!safeId || typeof payload === 'string' || !payload?.note) return
+					const { note } = payload
+					const noteFullPath = note?.path.endsWith('/')
+						? `${note.path}${note.name}`
+						: `${note?.path}/${note?.name}`
+					dispatch(selectNote({ path: noteFullPath }))
+					navigate(`/safe/${safeId}/note/${note.id}`)
+				})
 			}
 		)
 		const removeDeleteNoteListener = window.api.noteFileSystem.OnDeleteNote(
 			data => {
-				dispatch(noteDeleted(data))
+				void dispatch(noteDeleted(data))
 			}
 		)
 		const removeRenameNoteListener = window.api.noteFileSystem.OnRenameNote(
 			data => {
-				dispatch(noteRenamed(data))
+				void dispatch(noteRenamed(data))
 			}
 		)
 		const removeRenameFolderListener = window.api.noteFileSystem.OnRenameFolder(
@@ -53,7 +67,7 @@ const NoteManagementListener = () => {
 		)
 		const removeWriteNoteListener = window.api.noteFileSystem.OnWriteNote(
 			data => {
-				dispatch(noteContentUpdated(data))
+				void dispatch(noteContentUpdated(data))
 			}
 		)
 		return () => {
@@ -65,9 +79,9 @@ const NoteManagementListener = () => {
 			removeRenameFolderListener()
 			removeWriteNoteListener()
 		}
-	}, [])
+	}, [dispatch, navigate, safeId])
 
-	return null
+	return <Outlet />
 }
 
 /* ====================================================== */

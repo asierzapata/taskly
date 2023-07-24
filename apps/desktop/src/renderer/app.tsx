@@ -28,7 +28,6 @@ export const renderReactApp = (el: string) => {
 		<React.StrictMode>
 			<Provider store={store}>
 				<PersistGate loading={null} persistor={persistor}>
-					<NoteManagementListener />
 					<AppRouter />
 				</PersistGate>
 			</Provider>

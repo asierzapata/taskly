@@ -151,7 +151,7 @@ const Folder = ({
 				click: () => {
 					void window.api.noteFileSystem.CreateNote({
 						path: folderFullPath,
-						name: 'New Note'
+						name: 'New Note.md'
 					})
 				}
 			},
