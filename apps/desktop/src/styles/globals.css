@@ -203,11 +203,11 @@
 		@apply border-border;
 	}
 	*::-webkit-scrollbar {
-		background-color: var(--transparent-background);
+		background-color: transparent;
 	}
 	body {
 		@apply text-foreground;
-		background-color: rgba(0, 0, 0, 0.4);
+		background-color: rgba(0, 0, 0, 0.6);
 		font-feature-settings: 'rlig' 1, 'calt' 1;
 		-webkit-font-smoothing: antialiased;
 		text-rendering: optimizeLegibility;

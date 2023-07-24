@@ -21,6 +21,7 @@ module.exports = {
 				input: 'var(--input)',
 				ring: 'var(--ring)',
 				background: 'var(--background)',
+				'transparent-background': 'var(--transparent-background)',
 				foreground: 'var(--foreground)',
 				primary: {
 					DEFAULT: 'var(--primary)',
