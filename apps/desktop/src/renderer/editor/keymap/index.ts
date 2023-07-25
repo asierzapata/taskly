@@ -116,6 +116,56 @@ const keyMaps: KeyBinding[] = [
 			startCharacter: '[](',
 			endCharacter: ')'
 		})
+	},
+	{
+		key: 'Mod-Alt-0',
+		run: addMarkdownFormatCharacters({
+			startCharacter: '# ',
+			endCharacter: ''
+		})
+	},
+	{
+		key: 'Mod-Alt-1',
+		run: addMarkdownFormatCharacters({
+			startCharacter: '## ',
+			endCharacter: ''
+		})
+	},
+	{
+		key: 'Mod-Alt-2',
+		run: addMarkdownFormatCharacters({
+			startCharacter: '### ',
+			endCharacter: ''
+		})
+	},
+	{
+		key: 'Mod-Alt-3',
+		run: addMarkdownFormatCharacters({
+			startCharacter: '#### ',
+			endCharacter: ''
+		})
+	},
+	{
+		key: 'Mod-Alt-4',
+		run: addMarkdownFormatCharacters({
+			startCharacter: '##### ',
+			endCharacter: ''
+		})
+	},
+	{
+		key: 'Mod-Alt-5',
+		run: addMarkdownFormatCharacters({
+			startCharacter: '###### ',
+			endCharacter: ''
+		})
+	},
+	{
+		key: 'Tab',
+		run: indentMore
+	},
+	{
+		key: 'Shift-Tab',
+		run: indentLess
 	}
 ]
 
