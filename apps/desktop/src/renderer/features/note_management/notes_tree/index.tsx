@@ -53,6 +53,11 @@ const NotesTree = ({ onNoteSelected, onSearch }: NotesTreeProps) => {
 	const isRebuildingTree = useAppSelector(
 		state => state.noteManagement.isRebuilding
 	)
+	const selectedPath = useAppSelector(state =>
+		state.noteManagement.selectedPath.endsWith('.md')
+			? state.noteManagement.selectedPath.split('/').slice(0, -1).join('/')
+			: state.noteManagement.selectedPath
+	)
 	const dispatch = useAppDispatch()
 
 	React.useEffect(() => {
@@ -83,7 +88,35 @@ const NotesTree = ({ onNoteSelected, onSearch }: NotesTreeProps) => {
 					<Icons.shift className="mr-2 h-3 w-3" />F
 				</div> */}
 			</Button>
-			<div className="mt-4 overflow-y-auto">
+			<div className="mt-4 flex w-full items-center justify-center gap-2">
+				<Button
+					variant="ghost"
+					size="smallIcon"
+					className="group flex items-center justify-center"
+					onClick={() => {
+						void window.api.noteFileSystem.CreateNote({
+							path: selectedPath,
+							name: 'New Note.md'
+						})
+					}}
+				>
+					<Icons.pencil className="group-hover:stroke-primary h-4 w-4" />
+				</Button>
+				<Button
+					variant="ghost"
+					size="smallIcon"
+					className="group flex items-center justify-center"
+					onClick={() => {
+						void window.api.noteFileSystem.CreateFolder({
+							path: selectedPath,
+							name: 'New Folder'
+						})
+					}}
+				>
+					<Icons.addFolder className="group-hover:stroke-primary h-4 w-4" />
+				</Button>
+			</div>
+			<div className="mt-2 overflow-y-auto">
 				<NotesTreeRoot onNoteSelected={onNoteSelected} />
 			</div>
 		</div>
@@ -201,9 +234,7 @@ const Folder = ({
 				onClick={onToggleFolder}
 				className={classnames(
 					'flex w-full flex-row items-center justify-start rounded-md bg-transparent p-1 text-sm font-light transition-colors hover:bg-slate-100 focus:outline-none focus:ring-1 focus:ring-slate-400 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-slate-100 data-[state=open]:bg-transparent dark:text-slate-100 dark:hover:bg-slate-800  dark:hover:text-slate-100 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900 dark:data-[state=open]:bg-slate-800 dark:data-[state=open]:bg-transparent',
-					isFolderSelected
-						? 'bg-slate-100 dark:bg-slate-800  dark:text-slate-100'
-						: ''
+					isFolderSelected ? 'bg-accent text-accent-foreground' : ''
 				)}
 			>
 				{isOpen ? (
@@ -306,9 +337,7 @@ const Note = ({
 			ref={noteRef}
 			className={classnames(
 				'flex w-full flex-row items-center justify-start rounded-md bg-transparent p-1 text-sm font-light transition-colors hover:bg-slate-100 focus:outline-none focus:ring-1 focus:ring-slate-400 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-slate-100 data-[state=open]:bg-transparent dark:text-slate-100 dark:hover:bg-slate-800  dark:hover:text-slate-100 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900 dark:data-[state=open]:bg-slate-800 dark:data-[state=open]:bg-transparent',
-				isNoteSelected
-					? 'bg-slate-100 dark:bg-slate-800  dark:text-slate-100'
-					: ''
+				isNoteSelected ? 'bg-muted text-muted-foreground' : ''
 			)}
 			onKeyDown={handleKeyDown}
 			onClick={handleNoteSelected}

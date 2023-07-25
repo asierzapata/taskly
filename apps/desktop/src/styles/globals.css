@@ -155,8 +155,8 @@
 	}
 
 	.dark {
-		--background: rgba(0, 0, 0, 0.6);
-		--transparent-background: rgba(0, 0, 0, 0.6);
+		--background: rgba(0, 0, 0, 0.4);
+		--transparent-background: rgba(0, 0, 0, 0.4);
 		--foreground: rgba(225, 231, 239, 1);
 
 		--muted: rgba(15, 22, 41, 0.6);
@@ -208,8 +208,7 @@
 		background-color: transparent;
 	}
 	body {
-		@apply text-foreground;
-		background-color: rgba(0, 0, 0, 0.6);
+		@apply text-foreground bg-transparent-background;
 		font-feature-settings: 'rlig' 1, 'calt' 1;
 		-webkit-font-smoothing: antialiased;
 		text-rendering: optimizeLegibility;

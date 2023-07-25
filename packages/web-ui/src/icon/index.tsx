@@ -36,7 +36,8 @@ import {
 	FolderLock,
 	Search,
 	Command,
-	ArrowBigUp
+	ArrowBigUp,
+	FolderPlus
 } from 'lucide-react'
 
 export type Icon = LucideIcon
@@ -90,6 +91,7 @@ export const Icons = {
 	search: Search,
 	command: Command,
 	shift: ArrowBigUp,
+	addFolder: FolderPlus,
 	gitHub: (props: LucideProps) => (
 		<svg viewBox="0 0 438.549 438.549" {...props}>
 			<path
