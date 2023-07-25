@@ -49,7 +49,8 @@ export class GoToLinkWidget extends WidgetType {
 		} else anchor.href = this.link
 		anchor.target = '_blank'
 		anchor.classList.add(classes.widget)
-		anchor.textContent = '🔗'
+		anchor.textContent = `${this.title ? this.title : this.link} 🔗`
+		console.log('>>>>>>', this.title)
 		if (this.title) anchor.title = this.title
 		return anchor
 	}
@@ -79,12 +80,14 @@ function getLinkAnchor(view: EditorView) {
 							...marks.map(({ from, to }) =>
 								invisibleDecoration.range(from, to)
 							),
-							invisibleDecoration.range(from, to)
+							invisibleDecoration.range(from, to),
+							invisibleDecoration.range(parent.from, parent.to - 1)
 						)
-						if (linkTitle)
+						if (linkTitle) {
 							widgets.push(
 								invisibleDecoration.range(linkTitle.from, linkTitle.to)
 							)
+						}
 					}
 
 					let linkContent = view.state.sliceDoc(from, to)
@@ -93,23 +96,23 @@ function getLinkAnchor(view: EditorView) {
 						linkContent = linkContent.replace(autoLinkMarkRE, '')
 						cursorOverlaps = isCursorInRange(view.state, [node.from, node.to])
 						if (!cursorOverlaps) {
-							widgets.push(
-								invisibleDecoration.range(from, from + 1),
-								invisibleDecoration.range(to - 1, to)
-							)
+							widgets.push(invisibleDecoration.range(from, to))
 						}
 					}
-					const linkTitleContent = linkTitle
-						? view.state.sliceDoc(linkTitle.from, linkTitle.to)
-						: null
-					const dec = Decoration.widget({
-						widget: new GoToLinkWidget(
-							linkContent,
-							linkTitleContent ?? undefined
-						),
-						side: 1
-					})
-					widgets.push(dec.range(to, to))
+
+					if (!cursorOverlaps) {
+						const linkTitleContent = linkTitle
+							? view.state.sliceDoc(linkTitle.from, linkTitle.to)
+							: view.state.sliceDoc(parent.from + 1, from - 2)
+						const dec = Decoration.widget({
+							widget: new GoToLinkWidget(
+								linkContent,
+								linkTitleContent ?? undefined
+							),
+							side: 1
+						})
+						widgets.push(dec.range(to, to))
+					}
 				}
 			}
 		})

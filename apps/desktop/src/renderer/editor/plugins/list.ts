@@ -195,8 +195,14 @@ const baseTheme = EditorView.baseTheme({
 		appearance: 'none',
 		transition: '0.2s all linear'
 	},
+	['.' + classes.taskCheckbox + ':hover']: {
+		borderColor: 'var(--secondary)'
+	},
 	['.' + classes.taskCheckboxChecked]: {
 		backgroundColor: 'var(--primary)'
+	},
+	['.' + classes.taskCheckboxChecked + ':hover']: {
+		backgroundColor: 'var(--secondary)'
 	},
 	['.' + classes.taskCheckboxCheckedWrapper]: {
 		display: 'flex',
