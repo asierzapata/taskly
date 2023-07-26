@@ -53,6 +53,9 @@ const NotesTree = ({ onNoteSelected, onSearch }: NotesTreeProps) => {
 	const isRebuildingTree = useAppSelector(
 		state => state.noteManagement.isRebuilding
 	)
+	const isTreeEmpty = useAppSelector(state =>
+		_.isEmpty(state.noteManagement.tree)
+	)
 	const selectedPath = useAppSelector(state =>
 		state.noteManagement.selectedPath.endsWith('.md')
 			? state.noteManagement.selectedPath.split('/').slice(0, -1).join('/')
@@ -61,7 +64,9 @@ const NotesTree = ({ onNoteSelected, onSearch }: NotesTreeProps) => {
 	const dispatch = useAppDispatch()
 
 	React.useEffect(() => {
-		void dispatch(rebuildTree())
+		if (isTreeEmpty) {
+			void dispatch(rebuildTree())
+		}
 	}, [dispatch])
 
 	if (isRebuildingTree) {
@@ -75,20 +80,15 @@ const NotesTree = ({ onNoteSelected, onSearch }: NotesTreeProps) => {
 
 	return (
 		<div className="w-full">
-			<Button
-				className="flex w-full items-center justify-between"
-				variant="outline"
-				onClick={onSearch}
-			>
-				<div className="flex items-center">
-					<Icons.search className="mr-2 h-4 w-4" /> Search
-				</div>
-				{/* <div className="bg-muted text-muted-foreground flex items-center justify-center gap-0.5 rounded px-1">
-					<Icons.command className="mr-2 h-3 w-3" />
-					<Icons.shift className="mr-2 h-3 w-3" />F
-				</div> */}
-			</Button>
-			<div className="mt-4 flex w-full items-center justify-center gap-2">
+			<div className="flex w-full items-center justify-center gap-2">
+				<Button
+					className="group flex items-center justify-center"
+					variant="ghost"
+					size="smallIcon"
+					onClick={onSearch}
+				>
+					<Icons.search className="group-hover:stroke-primary h-4 w-4" />
+				</Button>
 				<Button
 					variant="ghost"
 					size="smallIcon"
@@ -115,8 +115,19 @@ const NotesTree = ({ onNoteSelected, onSearch }: NotesTreeProps) => {
 				>
 					<Icons.addFolder className="group-hover:stroke-primary h-4 w-4" />
 				</Button>
+				<Button
+					variant="ghost"
+					size="smallIcon"
+					className="group flex items-center justify-center"
+					onClick={() => {
+						void dispatch(rebuildTree())
+					}}
+					aria-label="Rebuild Tree"
+				>
+					<Icons.refresh className="group-hover:stroke-primary h-4 w-4" />
+				</Button>
 			</div>
-			<div className="mt-2 overflow-y-auto">
+			<div className="mt-4 overflow-y-auto">
 				<NotesTreeRoot onNoteSelected={onNoteSelected} />
 			</div>
 		</div>
