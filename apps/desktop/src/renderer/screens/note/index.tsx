@@ -1,20 +1,22 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { useNavigate, useParams } from 'react-router-dom'
-import { NoteEditor } from '@renderer/features/note_management/note_editor'
-import { H1 } from '@taskly/web-ui'
-import { useAppSelector } from '@renderer/store/hooks'
 import _ from 'lodash'
-import { EditableNoteName } from '@renderer/features/note_management/editable_note_name'
-import { useQuery } from '@renderer/lib/router'
 
 /* ====================================================== */
 /*                   Actions / Selectors                  */
 /* ====================================================== */
 
+import { useQuery } from '@renderer/lib/router'
+import { useAppDispatch, useAppSelector } from '@renderer/store/hooks'
+import { useNavigate, useParams } from 'react-router-dom'
+
 /* ====================================================== */
 /*                       Components                       */
 /* ====================================================== */
+
+import { NoteNavigation } from '@renderer/features/note_management/note_navigation'
+import { EditableNoteName } from '@renderer/features/note_management/editable_note_name'
+import { NoteEditor } from '@renderer/features/note_management/note_editor'
+import { navigatedToNote } from '@renderer/features/note_management/note_management_slice'
 
 /* ====================================================== */
 /*                         Styles                         */
@@ -35,13 +37,10 @@ const Note = () => {
 		? parseInt(query.get('highlightEnd') ?? '', 10)
 		: undefined
 
+	const dispatch = useAppDispatch()
+
 	const note = useAppSelector(state =>
-		noteId
-			? state.noteManagement.notes[noteId]
-			: {
-					path: null,
-					displayName: null
-			  }
+		noteId ? state.noteManagement.notes[noteId] : {}
 	)
 
 	React.useEffect(() => {
@@ -50,19 +49,28 @@ const Note = () => {
 		}
 	}, [navigate, note, safeId])
 
+	React.useEffect(() => {
+		if (!noteId) return
+		dispatch(
+			navigatedToNote({
+				noteId
+			})
+		)
+	}, [noteId])
+
+	const handleNavigateToNote = ({ noteId }: { noteId: string }) => {
+		navigate(`/safe/${safeId}/note/${noteId}`)
+	}
+
 	if (!noteId) return <span>Something went wrong!</span>
 
 	return (
 		<div className="mx-auto w-full max-w-[900px] overflow-y-auto p-6 pt-3">
 			<div className="mb-6">
-				{note?.path ? (
-					<>
-						<span className="text-muted-foreground text-sm">
-							{_.tail(note.path.replace(/\\/g, '/'))}/
-						</span>
-						<span className="text-sm font-bold">{note.displayName}</span>
-					</>
-				) : null}
+				<NoteNavigation
+					noteId={noteId}
+					onNavigateToNote={handleNavigateToNote}
+				/>
 			</div>
 			<div className="mb-6">
 				<EditableNoteName key={noteId} noteId={noteId} />

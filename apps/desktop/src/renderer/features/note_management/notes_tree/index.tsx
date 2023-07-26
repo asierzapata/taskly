@@ -188,7 +188,7 @@ const Folder = ({
 
 	const onContextMenu = () => {
 		if (!folder) return
-		dispatch(selectFolder({ path: folderFullPath }))
+		dispatch(selectFolder({ folderId: folder.id }))
 		window.contextMenu.createContextMenu([
 			{
 				label: 'New Note',
@@ -233,7 +233,7 @@ const Folder = ({
 
 	const onToggleFolder = () => {
 		dispatch(toggleFolder({ id }))
-		dispatch(selectFolder({ path: folderFullPath }))
+		dispatch(selectFolder({ folderId: id }))
 	}
 
 	if (!folder) return null
@@ -336,7 +336,7 @@ const Note = ({
 	const handleNoteSelected = React.useCallback(() => {
 		if (!note) return
 		onNoteSelected(note)
-		dispatch(selectNote({ path: noteFullPath }))
+		dispatch(selectNote({ noteId: id }))
 	}, [dispatch, note, noteFullPath, onNoteSelected])
 
 	if (!note) return null

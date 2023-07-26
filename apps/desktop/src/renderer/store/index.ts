@@ -16,11 +16,6 @@ import storage from 'redux-persist/lib/storage'
 import { noteManagementReducer } from '@renderer/features/note_management/note_management_slice'
 import { safeManagementReducer } from '@renderer/features/safe_management/safe_management_slice'
 
-const rootReducer = combineReducers({
-	noteManagement: noteManagementReducer,
-	safeManagement: safeManagementReducer
-})
-
 const persistConfig = {
 	key: 'root',
 	storage
@@ -30,6 +25,17 @@ const persistConfig = {
 	// 	}
 	// })
 }
+
+const notePersistConfig = {
+	key: 'noteManagement',
+	storage,
+	blacklist: ['noteNavigation', 'noteSearch', 'isRebuilding']
+}
+
+const rootReducer = combineReducers({
+	noteManagement: persistReducer(notePersistConfig, noteManagementReducer),
+	safeManagement: safeManagementReducer
+})
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 

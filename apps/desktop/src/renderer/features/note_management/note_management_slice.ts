@@ -17,6 +17,10 @@ type NoteManagementState = {
 	tree: NoteTree
 	notes: Record<string, Note>
 	folders: Record<string, Folder>
+	noteNavigation: {
+		stack: string[]
+		currentStackIndex: number
+	}
 	selectedPath: string
 	isRebuilding: boolean
 	noteSearch: {
@@ -29,6 +33,10 @@ const initialState: NoteManagementState = {
 	tree: {},
 	notes: {},
 	folders: {},
+	noteNavigation: {
+		stack: [],
+		currentStackIndex: 0
+	},
 	selectedPath: '/',
 	isRebuilding: false,
 	noteSearch: {
@@ -57,7 +65,6 @@ export const rebuildTree = createAppAsyncThunk<
 		const { noteTree, notes, folders } = await _getNoteTree({
 			noteFileSystem: extra.windowApi.noteFileSystem
 		})
-		console.log('>>>>>> REBUILD TREE', notes)
 		const notesWithSeachIds = await initializeSearchEngine({
 			notes: Object.values(notes),
 			noteFileSystem: extra.windowApi.noteFileSystem
@@ -210,16 +217,99 @@ export const noteManagement = createSlice({
 				folder.isOpen = !folder.isOpen
 			}
 		},
-		selectFolder: (state, action: PayloadAction<{ path: string }>) => {
-			const { path } = action.payload
-			console.log('>>>>>>', path)
-			state.selectedPath = path
+		selectFolder: (state, action: PayloadAction<{ folderId: string }>) => {
+			const { folderId } = action.payload
+			const folder = state.folders[folderId]
+			if (!folder) {
+				return
+			}
+			const folderFullPath = folder?.path.endsWith('/')
+				? `${folder.path}${folder.name}`
+				: `${folder?.path}/${folder?.name}`
+			state.selectedPath = folderFullPath
 		},
-		selectNote: (state, action: PayloadAction<{ path: string }>) => {
-			const { path } = action.payload
-			console.log('>>>>>>', path)
+		selectNote: (state, action: PayloadAction<{ noteId: string }>) => {
+			const { noteId } = action.payload
+			const note = state.notes[noteId]
+			if (!note) {
+				return
+			}
+			const noteFullPath = note?.path.endsWith('/')
+				? `${note.path}${note.name}`
+				: `${note?.path}/${note?.name}`
+			state.selectedPath = noteFullPath
+		},
+		navigatedToNote: (state, action: PayloadAction<{ noteId: string }>) => {
+			const { noteId } = action.payload
+			const note = state.notes[noteId]
 
-			state.selectedPath = path
+			if (!note) {
+				return
+			}
+
+			if (
+				noteId ===
+				state.noteNavigation.stack[state.noteNavigation.currentStackIndex]
+			) {
+				return
+			}
+			// We have to slice the stack to the current index and then push the new noteId
+			// to the stack.
+			if (
+				state.noteNavigation.currentStackIndex <
+				state.noteNavigation.stack.length - 1
+			) {
+				state.noteNavigation.stack = state.noteNavigation.stack.slice(
+					0,
+					state.noteNavigation.currentStackIndex + 1
+				)
+			}
+			state.noteNavigation.stack.push(noteId)
+			state.noteNavigation.currentStackIndex =
+				state.noteNavigation.stack.length - 1
+
+			const noteFullPath = note.path.endsWith('/')
+				? `${note.path}${note.name}`
+				: `${note.path}/${note.name}`
+			state.selectedPath = noteFullPath
+		},
+		navigatedBack: state => {
+			state.noteNavigation.currentStackIndex -= 1
+
+			const noteId =
+				state.noteNavigation.stack[state.noteNavigation.currentStackIndex]
+			if (!noteId) {
+				return
+			}
+
+			const note = state.notes[noteId]
+			if (!note) {
+				return
+			}
+
+			const noteFullPath = note.path.endsWith('/')
+				? `${note.path}${note.name}`
+				: `${note.path}/${note.name}`
+			state.selectedPath = noteFullPath
+		},
+		navigatedForward: state => {
+			state.noteNavigation.currentStackIndex += 1
+
+			const noteId =
+				state.noteNavigation.stack[state.noteNavigation.currentStackIndex]
+			if (!noteId) {
+				return
+			}
+
+			const note = state.notes[noteId]
+			if (!note) {
+				return
+			}
+
+			const noteFullPath = note.path.endsWith('/')
+				? `${note.path}${note.name}`
+				: `${note.path}/${note.name}`
+			state.selectedPath = noteFullPath
 		},
 		folderCreated: (
 			state,
@@ -373,6 +463,9 @@ export const {
 	toggleFolder,
 	selectFolder,
 	selectNote,
+	navigatedToNote,
+	navigatedBack,
+	navigatedForward,
 	folderCreated,
 	folderDeleted,
 	folderRenamed,
