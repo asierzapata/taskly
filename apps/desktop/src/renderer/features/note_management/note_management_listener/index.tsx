@@ -38,14 +38,10 @@ const NoteManagementListener = () => {
 		)
 		const removeCreateNoteListener = window.api.noteFileSystem.OnCreateNote(
 			data => {
-				console.log('>>>>>>', 'removeCreateNoteListener', data)
 				void dispatch(noteCreated(data)).then(({ payload }) => {
 					if (!safeId || typeof payload === 'string' || !payload?.note) return
 					const { note } = payload
-					const noteFullPath = note?.path.endsWith('/')
-						? `${note.path}${note.name}`
-						: `${note?.path}/${note?.name}`
-					dispatch(selectNote({ path: noteFullPath }))
+					dispatch(selectNote({ noteId: note.id }))
 					navigate(`/safe/${safeId}/note/${note.id}`)
 				})
 			}

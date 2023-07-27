@@ -93,7 +93,10 @@ export function createMainWindow() {
 		transparent: true,
 		titleBarStyle: 'hidden',
 		vibrancy: 'under-window',
-		visualEffectState: 'active'
+		visualEffectState: 'active',
+		backgroundMaterial: 'acrylic',
+		titleBarOverlay: true,
+		roundedCorners: true
 	})
 
 	initListenersAndWindowApi(mainWindow)
