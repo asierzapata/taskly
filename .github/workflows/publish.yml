@@ -77,7 +77,7 @@ jobs:
             const releaseNotes = commits.data.commits.map((commit) => {
               return `- ${commit.commit.message}`;
             });
-            const channel = ${{ inputs.channel }};
+            const channel = "${{ inputs.channel }}";
             await github.rest.repos.updateRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
