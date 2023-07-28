@@ -80,7 +80,7 @@ jobs:
             await github.rest.repos.updateRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              release_id: context.payload.repository.releases[0].id,
+              release_id: release.id,
               name: `${release.data.name}-${inputs.channel}`,
               body: releaseNotes.join('\n'),
             });
