@@ -15,7 +15,9 @@ export const schema = z.object({
 	MONGODB_USER_DB_NAME: z.string(),
 	GOOGLE_CLIENT_ID: z.string(),
 	GOOGLE_CLIENT_SECRET: z.string(),
-	GOOGLE_REDIRECT_URL: z.string()
+	GOOGLE_REDIRECT_URL: z.string(),
+	NUTS_GITHUB_API_KEY: z.string(),
+	NUTS_REFRESH_SECRET: z.string()
 })
 
 export const env = {
@@ -32,5 +34,7 @@ export const env = {
 	MONGODB_USER_DB_NAME: process.env.MONGODB_USER_DB_NAME,
 	GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
 	GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
-	GOOGLE_REDIRECT_URL: process.env.GOOGLE_REDIRECT_URL
+	GOOGLE_REDIRECT_URL: process.env.GOOGLE_REDIRECT_URL,
+	NUTS_GITHUB_API_KEY: process.env.NUTS_GITHUB_API_KEY,
+	NUTS_REFRESH_SECRET: process.env.NUTS_REFRESH_SECRET
 }

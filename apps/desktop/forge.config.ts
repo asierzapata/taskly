@@ -30,6 +30,20 @@ const config: ForgeConfig = {
 			}
 		})
 	],
+	publishers: [
+		{
+			name: '@electron-forge/publisher-github',
+			config: {
+				repository: {
+					owner: 'asierzapata',
+					name: 'taskly'
+				},
+				authToken:
+					'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',
+				draft: false
+			}
+		}
+	],
 	plugins: [
 		new WebpackPlugin({
 			mainConfig,

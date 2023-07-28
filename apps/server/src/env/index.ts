@@ -43,6 +43,10 @@ export const env = {
 		clientId: _env.data.GOOGLE_CLIENT_ID,
 		clientSecret: _env.data.GOOGLE_CLIENT_SECRET,
 		redirectUrl: _env.data.GOOGLE_REDIRECT_URL
+	},
+	nuts: {
+		githubApiKey: _env.data.NUTS_GITHUB_API_KEY,
+		refreshSecret: _env.data.NUTS_REFRESH_SECRET
 	}
 }
 

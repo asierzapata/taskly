@@ -110,53 +110,52 @@
 
 @layer base {
 	:root {
-		--background: rgba(255, 255, 255, 0.6);
-		--transparent-background: rgba(0, 0, 0, 0.6);
-		--foreground: rgba(15, 23, 41, 1);
+		--background: rgba(255, 255, 255, 0.4);
+		--transparent-background: rgba(255, 255, 255, 0.2);
+		--foreground: rgba(0, 0, 0, 1);
 
-		--muted: rgba(241, 246, 249, 0.6);
-		--muted-foreground: rgba(99, 114, 136, 1);
+		--muted: rgba(241, 246, 249, 0.8);
+		--muted-foreground: rgba(50, 59, 73, 1);
 
-		--popover: rgba(255, 255, 255, 0.6);
-		--popover-foreground: rgba(15, 23, 41, 1);
+		--popover: rgba(255, 255, 255, 0.8);
+		--popover-foreground: rgba(0, 0, 0, 1);
 
-		--card: rgba(255, 255, 255, 0.6);
-		--card-foreground: rgba(15, 23, 41, 1);
+		--card: rgba(255, 255, 255, 0.8);
+		--card-foreground: rgba(0, 0, 0, 1);
 
 		--border: rgba(225, 231, 239, 0.6);
 		--input: rgba(225, 231, 239, 0.6);
 
-		--primary: rgba(244, 105, 67, 0.6);
-		--primary-solid: rgba(244, 105, 67, 1);
-		--primary-foreground: rgba(106, 30, 22, 0.6);
-		--primary-light: rgba(249, 171, 149, 0.6);
+		--primary: rgba(0, 43, 166, 1);
+		--primary-foreground: rgba(248, 250, 252, 1);
+		--primary-light: rgba(51, 68, 170, 1);
 
-		--secondary: rgba(241, 246, 249, 0.6);
-		--secondary-foreground: rgba(15, 23, 41, 1);
+		--secondary: rgba(241, 246, 249, 0.8);
+		--secondary-foreground: rgba(0, 0, 0, 1);
 
-		--accent: rgba(241, 246, 249, 0.6);
-		--accent-foreground: rgba(15, 23, 41, 1);
+		--accent: rgba(241, 246, 249, 0.8);
+		--accent-foreground: rgba(0, 0, 0, 1);
 
-		--destructive: rgba(255, 0, 0, 0.6);
+		--destructive: rgba(255, 0, 0, 1);
 		--destructive-foreground: rgba(248, 250, 252, 1);
 
 		--ring: rgba(148, 163, 184, 0.6);
 
 		--radius: 0.5rem;
 
-		--accent-1: 13, 89%, 63%; /* hsl(13, 89%, 63%) */
-		--accent-2: 30, 89%, 63%; /* hsl(30, 89%, 63%) */
-		--accent-3: 55, 75%, 72%; /* hsl(55, 75%, 72%) */
-		--accent-4: 85, 65%, 63%; /* hsl(85, 65%, 63%) */
-		--accent-5: 156, 65%, 63%; /* hsl(156, 65%, 63%) */
-		--accent-6: 199, 65%, 63%; /* hsl(199, 65%, 63%) */
-		--accent-7: 230, 65%, 63%; /* hsl(230, 65%, 63%) */
-		--accent-8: 260, 65%, 63%; /* hsl(260, 65%, 63%) */
+		--accent-1: 65, 100%, 50%; /* hsl(65, 100%, 50%) */
+		--accent-2: 180, 100%, 50%; /* hsl(180, 100%, 50%) */
+		--accent-3: 90, 100%, 50%; /* hsl(135, 100%, 50%) */
+		--accent-4: 55, 100%, 50%; /* hsl(55, 100%, 50%) */
+		--accent-5: 165, 100%, 50%; /* hsl(165, 100%, 50%) */
+		--accent-6: 110, 100%, 50%; /* hsl(110, 100%, 50%) */
+		--accent-7: 77, 100%, 50%; /* hsl(77, 100%, 50%) */
+		--accent-8: 155, 100%, 50%; /* hsl(155, 100%, 50%) */
 	}
 
 	.dark {
 		--background: rgba(0, 0, 0, 0.4);
-		--transparent-background: rgba(0, 0, 0, 0.4);
+		--transparent-background: rgba(0, 0, 0, 0.2);
 		--foreground: rgba(225, 231, 239, 1);
 
 		--muted: rgba(15, 22, 41, 0.6);

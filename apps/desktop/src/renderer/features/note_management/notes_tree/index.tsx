@@ -87,7 +87,7 @@ const NotesTree = ({ onNoteSelected, onSearch }: NotesTreeProps) => {
 					size="smallIcon"
 					onClick={onSearch}
 				>
-					<Icons.search className="group-hover:stroke-primary h-4 w-4" />
+					<Icons.search className="group-hover:stroke-accent-foreground h-4 w-4" />
 				</Button>
 				<Button
 					variant="ghost"
@@ -100,7 +100,7 @@ const NotesTree = ({ onNoteSelected, onSearch }: NotesTreeProps) => {
 						})
 					}}
 				>
-					<Icons.pencil className="group-hover:stroke-primary h-4 w-4" />
+					<Icons.pencil className="group-hover:stroke-accent-foreground h-4 w-4" />
 				</Button>
 				<Button
 					variant="ghost"
@@ -113,7 +113,7 @@ const NotesTree = ({ onNoteSelected, onSearch }: NotesTreeProps) => {
 						})
 					}}
 				>
-					<Icons.addFolder className="group-hover:stroke-primary h-4 w-4" />
+					<Icons.addFolder className="group-hover:stroke-accent-foreground h-4 w-4" />
 				</Button>
 				<Button
 					variant="ghost"
@@ -124,7 +124,7 @@ const NotesTree = ({ onNoteSelected, onSearch }: NotesTreeProps) => {
 					}}
 					aria-label="Rebuild Tree"
 				>
-					<Icons.refresh className="group-hover:stroke-primary h-4 w-4" />
+					<Icons.refresh className="group-hover:stroke-accent-foreground h-4 w-4" />
 				</Button>
 			</div>
 			<div className="mt-4 overflow-y-auto">

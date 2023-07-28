@@ -1,6 +1,8 @@
 import path from 'path'
+import os from 'os'
 import {
 	app,
+	autoUpdater,
 	BrowserWindow,
 	screen,
 	type BrowserWindowConstructorOptions as WindowOptions
@@ -15,6 +17,35 @@ import { registerDialogListeners } from './dialog/main/dialog_main'
 // whether you're running in development or production).
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string
+
+const platform = os.platform() + '_' + os.arch()
+const version = app.getVersion()
+
+autoUpdater.setFeedURL({
+	url: 'https://taskly.fly.dev/desktop/update/' + platform + '/' + version
+})
+
+autoUpdater.checkForUpdates()
+
+autoUpdater.on('update-downloaded', () => {
+	autoUpdater.quitAndInstall()
+})
+
+autoUpdater.on('error', err => {
+	console.error(err)
+})
+
+autoUpdater.on('checking-for-update', () => {
+	console.log('Checking for update')
+})
+
+autoUpdater.on('update-available', () => {
+	console.log('Update available')
+})
+
+autoUpdater.on('update-not-available', () => {
+	console.log('Update not available')
+})
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -39,7 +70,7 @@ const gotTheLock = app.requestSingleInstanceLock()
 if (!gotTheLock) {
 	app.quit()
 } else {
-	app.on('second-instance', (event, commandLine, workingDirectory) => {
+	app.on('second-instance', (event, commandLine) => {
 		// Someone tried to run a second instance, we should focus our window.
 		if (mainWindow) {
 			if (mainWindow.isMinimized()) mainWindow.restore()
@@ -74,7 +105,7 @@ export function createWindow(url: string, options: WindowOptions = {}) {
 		window.show()
 	})
 
-	// if (process.env.NODE_ENV === 'development') window.webContents.openDevTools()
+	if (process.env.NODE_ENV === 'development') window.webContents.openDevTools()
 
 	return window
 }
@@ -92,7 +123,7 @@ export function createMainWindow() {
 		},
 		transparent: true,
 		titleBarStyle: 'hidden',
-		vibrancy: 'under-window',
+		vibrancy: 'fullscreen-ui',
 		visualEffectState: 'active',
 		backgroundMaterial: 'acrylic',
 		titleBarOverlay: true,

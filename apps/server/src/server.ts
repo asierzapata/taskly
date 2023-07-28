@@ -13,6 +13,7 @@ import { Logger, LOGGER_SOURCES } from './services/logger/logger'
 import { env } from './env'
 import { HTTPServer } from './services/http_server/http_server'
 import { uuid } from './services/uuid'
+import { Nuts } from 'nuts-serve'
 
 import { type AuthenticationService } from './services/authentication'
 
@@ -156,6 +157,48 @@ class Server {
 
 		router.use('/health', health)
 		router.use(api.route, api.router)
+
+		// Desktop App Updater
+		// -------------------
+
+		const nuts = Nuts({
+			// GitHub configuration
+			repository: 'asierzapata/taskly',
+			token: env.nuts.githubApiKey,
+			refreshSecret: env.nuts.refreshSecret
+		})
+
+		router.use('/desktop', nuts.router)
+
+		nuts.before('download', function (download, next) {
+			console.log(
+				'User is downloading',
+				download.platform.filename,
+				'for version',
+				download.version.tag,
+				'on channel',
+				download.version.channel,
+				'for',
+				download.platform.type
+			)
+
+			next()
+		})
+
+		nuts.after('download', function (download, next) {
+			console.log(
+				'User downloaded',
+				download.platform.filename,
+				'for version',
+				download.version.tag,
+				'on channel',
+				download.version.channel,
+				'for',
+				download.platform.type
+			)
+
+			next()
+		})
 
 		// Error Handling
 		// --------------

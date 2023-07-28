@@ -68,12 +68,6 @@ const NoteNavigation = ({ noteId, onNavigateToNote }: NoteNavigationProps) => {
 		})
 	}
 
-	console.log('>>>>>>', {
-		noteId,
-		currentNoteNavigationIndex,
-		noteNavigationStack
-	})
-
 	return (
 		<div className="flex">
 			<Button
@@ -83,7 +77,7 @@ const NoteNavigation = ({ noteId, onNavigateToNote }: NoteNavigationProps) => {
 				onClick={handleNavigateBack}
 				disabled={currentNoteNavigationIndex === 0}
 			>
-				<Icons.chevronLeft className="group-hover:stroke-primary h-4 w-4" />
+				<Icons.chevronLeft className="group-hover:stroke-accent-foreground h-4 w-4" />
 			</Button>
 			<Button
 				variant="ghost"
@@ -95,7 +89,7 @@ const NoteNavigation = ({ noteId, onNavigateToNote }: NoteNavigationProps) => {
 					currentNoteNavigationIndex === noteNavigationStack.length - 1
 				}
 			>
-				<Icons.chevronRight className="group-hover:stroke-primary h-4 w-4" />
+				<Icons.chevronRight className="group-hover:stroke-accent-foreground h-4 w-4" />
 			</Button>
 			{note?.path ? (
 				<div className="flex-1 select-none">
