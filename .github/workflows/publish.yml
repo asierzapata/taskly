@@ -30,6 +30,12 @@ on:
           - minor
           - patch
 
+# You can leverage Vercel Remote Caching with Turbo to speed up your builds
+# @link https://turborepo.org/docs/core-concepts/remote-caching#remote-caching-on-vercel-builds
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+
 jobs:
   publish:
     runs-on: ${{ inputs.platform }}
@@ -50,7 +56,7 @@ jobs:
       - name: ⬆️ Bump version
         run: yarn workspace @taskly/desktop version --${{ inputs.version }}
 
-      - name: 🛠️ Publish
+      - name: 🛠️ Build, Make and Publish
         run: CHANNEL=${{ inputs.channel }} yarn workspace @taskly/desktop app:publish
 
       - name: 📦 Update Release Notes
@@ -59,17 +65,16 @@ jobs:
           script: |
             // Get all the commits since the last release
             // and update the release name with the channel
-            const commits = await github.repos.compareCommits({
+            const commits = await github.rest.repos.compareCommitsWithBasehead({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              base: context.payload.repository.releases[0].tag_name,
-              head: context.sha,
+              basehead: `${context.payload.repository.releases[0].tag_name}...${context.sha}`,
             });
             const releaseName = context.payload.repository.releases[0].name;
             const releaseNotes = commits.data.commits.map((commit) => {
               return `- ${commit.commit.message}`;
             });
-            await github.repos.updateRelease({
+            await github.rest.repos.updateRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: context.payload.repository.releases[0].id,
@@ -77,6 +82,7 @@ jobs:
               body: releaseNotes.join('\n'),
             });
           github-token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: 💾 Commit & Push changes
         uses: actions-js/push@master
         with:
