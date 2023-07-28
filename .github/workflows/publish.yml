@@ -1,4 +1,4 @@
-name: (Mobile) Build Student Mobile App
+name: 📦 Publish Desktop App
 run-name: ${{ inputs.platform }} -- ${{ inputs.channel }} -- ${{ github.ref_name }}
 
 on:
