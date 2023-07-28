@@ -51,7 +51,7 @@ jobs:
         run: yarn workspace @taskly/desktop version --${{ inputs.version }}
 
       - name: 🛠️ Publish
-        run: CHANNEL=${{ inputs.channel }} yarn workspace @taskly/desktop publish
+        run: CHANNEL=${{ inputs.channel }} yarn workspace @taskly/desktop app:publish
 
       - name: 📦 Update Release Notes
         uses: actions/github-script@v6
@@ -77,3 +77,8 @@ jobs:
               body: releaseNotes.join('\n'),
             });
           github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: 💾 Commit & Push changes
+        uses: actions-js/push@master
+        with:
+          message: Release ${{ inputs.channel }} ${{ inputs.version }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
