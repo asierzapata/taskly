@@ -2,33 +2,33 @@ name: (Mobile) Build Student Mobile App
 run-name: ${{ inputs.platform }} -- ${{ inputs.channel }} -- ${{ github.ref_name }}
 
 on:
-	workflow_dispatch:
+  workflow_dispatch:
     inputs:
       platform:
         type: choice
-				required: true
+        required: true
         description: Platform to build for
         options:
           - macos-latest
           - windows-latest
-					- ubuntu-latest
+          - ubuntu-latest
       channel:
         type: choice
-				required: true
+        required: true
         description: Build channel to use
-				default: 'production'
+        default: 'production'
         options:
           - beta
-					- production
-			version:
-				type: choice
-				required: true
+          - production
+      version:
+        type: choice
+        required: true
         description: Version increment
-				default: 'patch'
-				options:
-					- major
-					- minor
-					- patch
+        default: 'patch'
+        options:
+          - major
+          - minor
+          - patch
 
 jobs:
   publish:
@@ -47,33 +47,33 @@ jobs:
       - name: 🏗 Install deps (with cache)
         run: yarn install
 
-			- name: ⬆️ Bump version
-				run: yarn workspace @taskly/desktop version --${{ inputs.version }}
+      - name: ⬆️ Bump version
+        run: yarn workspace @taskly/desktop version --${{ inputs.version }}
 
       - name: 🛠️ Publish
         run: CHANNEL=${{ inputs.channel }} yarn workspace @taskly/desktop publish
 
-			- name: 📦 Update Release Notes
-				uses: actions/github-script@v6
+      - name: 📦 Update Release Notes
+        uses: actions/github-script@v6
         with:
           script: |
             // Get all the commits since the last release
-						// and update the release name with the channel
-						const commits = await github.repos.compareCommits({
-							owner: context.repo.owner,
-							repo: context.repo.repo,
-							base: context.payload.repository.releases[0].tag_name,
-							head: context.sha,
-						});
-						const releaseName = context.payload.repository.releases[0].name;
-						const releaseNotes = commits.data.commits.map((commit) => {
-							return `- ${commit.commit.message}`;
-						});
-						await github.repos.updateRelease({
-							owner: context.repo.owner,
-							repo: context.repo.repo,
-							release_id: context.payload.repository.releases[0].id,
-							name: `${releaseName}-${inputs.channel}`,
-							body: releaseNotes.join('\n'),
-						});
-					github-token: ${{ secrets.GITHUB_TOKEN }}
+            // and update the release name with the channel
+            const commits = await github.repos.compareCommits({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              base: context.payload.repository.releases[0].tag_name,
+              head: context.sha,
+            });
+            const releaseName = context.payload.repository.releases[0].name;
+            const releaseNotes = commits.data.commits.map((commit) => {
+              return `- ${commit.commit.message}`;
+            });
+            await github.repos.updateRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: context.payload.repository.releases[0].id,
+              name: `${releaseName}-${inputs.channel}`,
+              body: releaseNotes.join('\n'),
+            });
+          github-token: ${{ secrets.GITHUB_TOKEN }}
