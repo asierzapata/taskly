@@ -39,6 +39,8 @@ env:
 jobs:
   publish:
     runs-on: ${{ inputs.platform }}
+    permissions:
+      contents: write
 
     steps:
       - name: 🏗 Setup repo
