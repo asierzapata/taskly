@@ -40,7 +40,8 @@ const config: ForgeConfig = {
 				},
 				authToken:
 					'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',
-				draft: false
+				draft: false,
+				preRelease: process.env.CHANNEL !== 'production'
 			}
 		}
 	],

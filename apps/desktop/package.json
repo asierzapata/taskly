@@ -1,7 +1,7 @@
 {
 	"name": "@taskly/desktop",
 	"productName": "Taskly",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"main": ".webpack/main",
 	"private": true,
 	"scripts": {
@@ -9,7 +9,7 @@
 		"dev:desktop": "NODE_ENV=development electron-forge start --inspect-electron",
 		"app:package": "NODE_ENV=production electron-forge package",
 		"app:make": "NODE_ENV=production electron-forge make",
-		"app:publish": " NODE_ENV=production electron-forge publish",
+		"app:publish": "CHANNEL=beta NODE_ENV=production electron-forge publish",
 		"lint": "eslint --ext .ts,.tsx .",
 		"lint:fix": "eslint --fix --ext .ts,.tsx .",
 		"type-check": "tsc --noEmit",
