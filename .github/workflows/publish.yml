@@ -77,11 +77,12 @@ jobs:
             const releaseNotes = commits.data.commits.map((commit) => {
               return `- ${commit.commit.message}`;
             });
+            const channel = ${{ inputs.channel }};
             await github.rest.repos.updateRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: release.id,
-              name: `${release.data.name}-${inputs.channel}`,
+              name: `${release.data.name}-${channel}`,
               body: releaseNotes.join('\n'),
             });
           github-token: ${{ secrets.GITHUB_TOKEN }}
