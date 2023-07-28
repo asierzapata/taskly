@@ -65,12 +65,15 @@ jobs:
           script: |
             // Get all the commits since the last release
             // and update the release name with the channel
+						const release = await github.rest.repos.getLatestRelease({
+							owner: context.repo.owner,
+							repo: context.repo.repo,
+						});
             const commits = await github.rest.repos.compareCommitsWithBasehead({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              basehead: `${context.payload.repository.releases[0].tag_name}...${context.sha}`,
+              basehead: `${release.data.tag_name}...${context.sha}`,
             });
-            const releaseName = context.payload.repository.releases[0].name;
             const releaseNotes = commits.data.commits.map((commit) => {
               return `- ${commit.commit.message}`;
             });
@@ -78,7 +81,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: context.payload.repository.releases[0].id,
-              name: `${releaseName}-${inputs.channel}`,
+              name: `${release.data.name}-${inputs.channel}`,
               body: releaseNotes.join('\n'),
             });
           github-token: ${{ secrets.GITHUB_TOKEN }}
