@@ -52,6 +52,7 @@ type EditorProps = {
 export type EditorRef = {
 	getValue: () => string | undefined
 	highlight: (start: number, end: number) => void
+	focus: () => void
 }
 
 // Component
@@ -74,6 +75,10 @@ const Editor = React.forwardRef<EditorRef, EditorProps>(
 					selection: EditorSelection.range(start, end),
 					scrollIntoView: true
 				})
+			},
+			focus: () => {
+				console.log('>>>>>>', 'FOCUS')
+				editorViewRef.current?.focus()
 			}
 		}))
 

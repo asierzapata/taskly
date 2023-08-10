@@ -22,11 +22,16 @@ import { selectNotesOnPath } from '../note_management_slice'
 /*                         Styles                         */
 /* ====================================================== */
 
+type EditableNoteNameProps = {
+	noteId: string
+	onBlur?: () => void
+}
+
 /* ====================================================== */
 /*                    Implementation                      */
 /* ====================================================== */
 
-const EditableNoteName = ({ noteId }: { noteId: string }) => {
+const EditableNoteName = ({ noteId, onBlur }: EditableNoteNameProps) => {
 	const note = useAppSelector(state => state.noteManagement.notes[noteId])
 	const noteNamesOnTheSamePath = useAppSelector(
 		selectNotesOnPath(note?.path ?? '', noteId)
@@ -66,6 +71,14 @@ const EditableNoteName = ({ noteId }: { noteId: string }) => {
 		setError(null)
 	}
 
+	const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+		if (event.key === 'Enter') {
+			event.preventDefault()
+			event.currentTarget.blur()
+			onBlur?.()
+		}
+	}
+
 	const handleUpdateNoteName = () => {
 		if (!note || !noteNameRef.current) return
 		const newNoteName = noteNameRef.current.innerText
@@ -88,6 +101,7 @@ const EditableNoteName = ({ noteId }: { noteId: string }) => {
 						ref={noteNameRef}
 						className="w-full bg-transparent p-2 text-4xl font-extrabold tracking-tight outline-none ring-0 lg:text-5xl"
 						contentEditable
+						onKeyDown={handleKeyDown}
 						onInput={handleValidateNoteName}
 						onBlur={handleUpdateNoteName}
 						autoFocus
