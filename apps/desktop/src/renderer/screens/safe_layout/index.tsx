@@ -7,42 +7,71 @@ import React from 'react'
 import { Screen } from '@renderer/ui/screen'
 import { Outlet, useNavigate, useParams } from 'react-router-dom'
 import { SplitPane } from '@renderer/ui/split_pane'
-import { NotesTree } from '@renderer/features/note_management/notes_tree'
+import {
+	NotesTree,
+	NotesTreeActions
+} from '@renderer/features/note_management/notes_tree'
 import { type Note } from '@renderer/features/note_management/types'
 import { NoteFinder } from '@renderer/features/note_management/note_finder'
 import { type Position } from '@orama/plugin-match-highlight'
+import { Button, Icons } from '@taskly/web-ui'
 
 /* ====================================================== */
 /*                    Implementation                      */
 /* ====================================================== */
 
 const SafeLayout = () => {
+	const [isSidebarOpen, setIsSidebarOpen] = React.useState(true)
+
+	const handleToggleSidebar = () => {
+		setIsSidebarOpen(_isSidebarOpen => !_isSidebarOpen)
+	}
+
 	return (
 		<Screen>
 			<div className="min-h-screen-without-frame max-h-screen-without-frame relative flex w-full transition-all">
-				{/* this lib is incompatible with react18. To fix     // children: React.ReactNode; needs to be added to SplitPaneProps.
-				// @ts-ignore TS2322 */}
-				<SplitPane
-					split="vertical"
-					defaultSize={250}
-					minSize={250}
-					maxSize={400}
-				>
-					<SideBar />
-					<Outlet />
-				</SplitPane>
+				{isSidebarOpen ? (
+					/* this lib is incompatible with react18. To fix     // children: React.ReactNode; needs to be added to SplitPaneProps.
+				  // @ts-ignore TS2322 */
+					<SplitPane
+						split="vertical"
+						defaultSize={250}
+						minSize={250}
+						maxSize={400}
+						onResizerDoubleClick={handleToggleSidebar}
+					>
+						<Sidebar onToggleSidebar={handleToggleSidebar} />
+						<Outlet />
+					</SplitPane>
+				) : (
+					<>
+						<Button
+							variant="ghost"
+							size="smallIcon"
+							className="group m-3 flex items-center justify-center"
+							onClick={handleToggleSidebar}
+						>
+							<Icons.sidebarOpen className="group-hover:stroke-accent-foreground h-4 w-4" />
+						</Button>
+						<Outlet />
+					</>
+				)}
 			</div>
 		</Screen>
 	)
 }
 
-type SideBarUiStates = 'tree' | 'search'
+type SidebarUiStates = 'tree' | 'search'
 
-const SideBar = () => {
+type SidebarProps = {
+	onToggleSidebar: () => void
+}
+
+const Sidebar = ({ onToggleSidebar }: SidebarProps) => {
 	const navigate = useNavigate()
 	const { safeId } = useParams()
 
-	const [uiState, setUIState] = React.useState<SideBarUiStates>('tree')
+	const [uiState, setUIState] = React.useState<SidebarUiStates>('tree')
 
 	const handleNoteSelected = React.useCallback(
 		(note: Note) => {
@@ -65,10 +94,20 @@ const SideBar = () => {
 	return (
 		<div className="relative h-full overflow-auto p-3">
 			{uiState === 'tree' && (
-				<NotesTree
-					onNoteSelected={handleNoteSelected}
-					onSearch={() => setUIState('search')}
-				/>
+				<>
+					<div className="flex flex-row items-center">
+						<Button
+							variant="ghost"
+							size="smallIcon"
+							className="group flex items-center justify-center self-start"
+							onClick={onToggleSidebar}
+						>
+							<Icons.sidebarClose className="group-hover:stroke-accent-foreground h-4 w-4" />
+						</Button>
+						<NotesTreeActions onSearch={() => setUIState('search')} />
+					</div>
+					<NotesTree onNoteSelected={handleNoteSelected} />
+				</>
 			)}
 			{uiState === 'search' && (
 				<NoteFinder

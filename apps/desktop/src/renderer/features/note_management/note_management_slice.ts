@@ -3,7 +3,7 @@ import type { RootState } from '@renderer/store'
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import _ from 'lodash'
 
-import type { Folder, Note, NoteTree } from './types'
+import type { Folder, Note, NoteNotification, NoteTree } from './types'
 import { createAppAsyncThunk } from '@renderer/store/hooks'
 import {
 	addNote,
@@ -27,6 +27,7 @@ type NoteManagementState = {
 		searchQuery: string
 		searchResults: Awaited<ReturnType<typeof searchNotes>>
 	}
+	notifications: NoteNotification[]
 }
 
 const initialState: NoteManagementState = {
@@ -45,7 +46,8 @@ const initialState: NoteManagementState = {
 			count: 0,
 			notes: []
 		}
-	}
+	},
+	notifications: []
 }
 
 // Thunks
@@ -116,7 +118,7 @@ export const noteDeleted = createAppAsyncThunk<
 	},
 	{ path: string; name: string },
 	{ state: RootState }
->('noteManagement/noteDeleted', async ({ path, name }, { getState, extra }) => {
+>('noteManagement/noteDeleted', async ({ path, name }, { getState }) => {
 	const note = _.find(
 		getState().noteManagement.notes,
 		note => note.path === path && note.name === name
@@ -141,10 +143,12 @@ export const noteRenamed = createAppAsyncThunk<
 >(
 	'noteManagement/noteRenamed',
 	async ({ path, oldName, newName }, { getState, extra }) => {
+		console.log('>>>>>> notes', getState().noteManagement.notes)
 		const note = _.find(
 			getState().noteManagement.notes,
 			note => note.path === path && note.name === oldName
 		)
+		console.log('>>>>>> note found', note)
 		if (!note) {
 			throw new Error('Note not found')
 		}
@@ -153,6 +157,7 @@ export const noteRenamed = createAppAsyncThunk<
 			name: newName,
 			displayName: newName.split('.').slice(0, -1).join('.')
 		}
+		console.log('>>>>>>newNote', newNote)
 		await updateNote({
 			note: newNote,
 			noteFileSystem: extra.windowApi.noteFileSystem
@@ -409,6 +414,12 @@ export const noteManagement = createSlice({
 			})
 			.addCase(rebuildTree.rejected, state => {
 				state.isRebuilding = false
+				state.notifications.push(
+					_createErrorNotification({
+						title: 'Failed to rebuild tree',
+						message: 'Restart the application and try again.'
+					})
+				)
 			})
 			.addCase(noteCreated.fulfilled, (state, action) => {
 				const note = action.payload.note
@@ -423,6 +434,14 @@ export const noteManagement = createSlice({
 				})
 				state.notes[note.id] = note
 			})
+			.addCase(noteCreated.rejected, state => {
+				state.notifications.push(
+					_createErrorNotification({
+						title: "Ops! We couldn't create the note.",
+						message: ''
+					})
+				)
+			})
 			.addCase(noteDeleted.fulfilled, (state, action) => {
 				const { path, name } = action.payload
 				const note = _.find(
@@ -433,6 +452,15 @@ export const noteManagement = createSlice({
 					delete state.notes[note.id]
 					state.tree[path]?.notes?.filter(note => note.id !== note.id)
 				}
+			})
+			.addCase(noteDeleted.rejected, (state, action) => {
+				const noteName = action.meta.arg.name.split('.').slice(0, -1).join('.')
+				state.notifications.push(
+					_createErrorNotification({
+						title: `Ops! We couldn't delete ${noteName}.`,
+						message: ''
+					})
+				)
 			})
 			.addCase(noteRenamed.fulfilled, (state, action) => {
 				const { path, oldName, newName } = action.payload
@@ -446,10 +474,29 @@ export const noteManagement = createSlice({
 					note.displayName = newName.split('.').slice(0, -1).join('.')
 				}
 			})
+			.addCase(noteRenamed.rejected, (state, action) => {
+				const { oldName } = action.meta.arg
+				const noteName = oldName.split('.').slice(0, -1).join('.')
+				state.notifications.push(
+					_createErrorNotification({
+						title: `Ops! We couldn't rename ${noteName}.`,
+						message: ''
+					})
+				)
+			})
 			.addCase(searchNotesInSafe.fulfilled, (state, action) => {
 				const { searchQuery, searchResults } = action.payload
 				state.noteSearch.searchQuery = searchQuery
 				state.noteSearch.searchResults = searchResults
+			})
+			.addCase(searchNotesInSafe.rejected, (state, action) => {
+				const { searchQuery } = action.meta.arg
+				state.notifications.push(
+					_createErrorNotification({
+						title: `Ops! We couldn't search for ${searchQuery}.`,
+						message: ''
+					})
+				)
 			})
 	}
 })
@@ -553,4 +600,28 @@ async function _getNoteTree({
 	}, {} as NoteTree)
 
 	return { noteTree, notes, folders }
+}
+
+function _createInfoNotification({
+	title,
+	message
+}: Pick<NoteNotification, 'title' | 'message'>) {
+	return {
+		title,
+		message,
+		type: 'info' as const,
+		createdAt: Date.now()
+	}
+}
+
+function _createErrorNotification({
+	title,
+	message
+}: Pick<NoteNotification, 'title' | 'message'>) {
+	return {
+		title,
+		message,
+		type: 'error' as const,
+		createdAt: Date.now()
+	}
 }

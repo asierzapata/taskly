@@ -126,14 +126,14 @@
 		--border: rgba(225, 231, 239, 0.6);
 		--input: rgba(225, 231, 239, 0.6);
 
-		--primary: rgba(0, 43, 166, 1);
-		--primary-foreground: rgba(248, 250, 252, 1);
-		--primary-light: rgba(51, 68, 170, 1);
+		--primary: rgba(246, 218, 80, 1);
+		--primary-foreground: rgba(0, 0, 0, 1);
+		--primary-light: rgba(248, 225, 115, 1);
 
-		--secondary: rgba(241, 246, 249, 0.8);
+		--secondary: rgba(93, 108, 234, 1);
 		--secondary-foreground: rgba(0, 0, 0, 1);
 
-		--accent: rgba(241, 246, 249, 0.8);
+		--accent: rgba(93, 234, 148, 1);
 		--accent-foreground: rgba(0, 0, 0, 1);
 
 		--destructive: rgba(255, 0, 0, 1);
@@ -143,14 +143,14 @@
 
 		--radius: 0.5rem;
 
-		--accent-1: 65, 100%, 50%; /* hsl(65, 100%, 50%) */
-		--accent-2: 180, 100%, 50%; /* hsl(180, 100%, 50%) */
-		--accent-3: 90, 100%, 50%; /* hsl(135, 100%, 50%) */
-		--accent-4: 55, 100%, 50%; /* hsl(55, 100%, 50%) */
-		--accent-5: 165, 100%, 50%; /* hsl(165, 100%, 50%) */
-		--accent-6: 110, 100%, 50%; /* hsl(110, 100%, 50%) */
-		--accent-7: 77, 100%, 50%; /* hsl(77, 100%, 50%) */
-		--accent-8: 155, 100%, 50%; /* hsl(155, 100%, 50%) */
+		--accent-1: hsl(65, 100%, 50%); /* hsl(65, 100%, 50%) */
+		--accent-2: hsl(180, 100%, 50%); /* hsl(180, 100%, 50%) */
+		--accent-3: hsl(90, 100%, 50%); /* hsl(135, 100%, 50%) */
+		--accent-4: hsl(55, 100%, 50%); /* hsl(55, 100%, 50%) */
+		--accent-5: hsl(165, 100%, 50%); /* hsl(165, 100%, 50%) */
+		--accent-6: hsl(110, 100%, 50%); /* hsl(110, 100%, 50%) */
+		--accent-7: hsl(77, 100%, 50%); /* hsl(77, 100%, 50%) */
+		--accent-8: hsl(155, 100%, 50%); /* hsl(155, 100%, 50%) */
 	}
 
 	.dark {
@@ -178,8 +178,8 @@
 		--secondary-foreground: rgba(29, 40, 58, 1);
 		--secondary-light: rgba(249, 171, 149, 1);
 
-		--accent: rgba(29, 40, 58, 0.6);
-		--accent-foreground: rgba(248, 250, 252, 1);
+		--accent: rgba(0, 191, 255, 1);
+		--accent-foreground: rgba(0, 0, 0, 1);
 
 		--destructive: rgba(255, 0, 0, 1);
 		--destructive-foreground: rgba(248, 250, 252, 1);
@@ -188,14 +188,14 @@
 
 		--radius: 0.5rem; /* 8px */
 
-		--accent-1: 13, 89%, 63%; /* hsl(13, 89%, 63%) */
-		--accent-2: 30, 89%, 63%; /* hsl(30, 89%, 63%) */
-		--accent-3: 55, 75%, 72%; /* hsl(55, 75%, 72%) */
-		--accent-4: 85, 65%, 63%; /* hsl(85, 65%, 63%) */
-		--accent-5: 156, 65%, 63%; /* hsl(156, 65%, 63%) */
-		--accent-6: 199, 65%, 63%; /* hsl(199, 65%, 63%) */
-		--accent-7: 230, 65%, 63%; /* hsl(230, 65%, 63%) */
-		--accent-8: 260, 65%, 63%; /* hsl(260, 65%, 63%) */
+		--accent-1: hsl(13, 89%, 63%); /* hsl(13, 89%, 63%) */
+		--accent-2: hsl(30, 89%, 63%); /* hsl(30, 89%, 63%) */
+		--accent-3: hsl(55, 75%, 72%); /* hsl(55, 75%, 72%) */
+		--accent-4: hsl(85, 65%, 63%); /* hsl(85, 65%, 63%) */
+		--accent-5: hsl(156, 65%, 63%); /* hsl(156, 65%, 63%) */
+		--accent-6: hsl(199, 65%, 63%); /* hsl(199, 65%, 63%) */
+		--accent-7: hsl(230, 65%, 63%); /* hsl(230, 65%, 63%) */
+		--accent-8: hsl(260, 65%, 63%); /* hsl(260, 65%, 63%) */
 	}
 }
 
@@ -205,6 +205,9 @@
 	}
 	*::-webkit-scrollbar {
 		background-color: transparent;
+	}
+	*::selection {
+		@apply bg-muted;
 	}
 	body {
 		@apply text-foreground bg-transparent-background;
@@ -227,55 +230,55 @@
 /* TODO: Move to Text Editor CSS */
 @layer components {
 	.text-accent-1 {
-		color: hsl(var(--accent-1));
+		color: var(--accent-1);
 	}
 	.text-accent-2 {
-		color: hsl(var(--accent-2));
+		color: var(--accent-2);
 	}
 	.text-accent-3 {
-		color: hsl(var(--accent-3));
+		color: var(--accent-3);
 	}
 	.text-accent-4 {
-		color: hsl(var(--accent-4));
+		color: var(--accent-4);
 	}
 	.text-accent-5 {
-		color: hsl(var(--accent-5));
+		color: var(--accent-5);
 	}
 	.text-accent-6 {
-		color: hsl(var(--accent-6));
+		color: var(--accent-6);
 	}
 	.text-accent-7 {
-		color: hsl(var(--accent-7));
+		color: var(--accent-7);
 	}
 	.text-accent-8 {
-		color: hsl(var(--accent-8));
+		color: var(--accent-8);
 	}
 	.tag-contentSeparator {
 		@apply text-accent-7;
 	}
 	.tag-heading-1,
 	.cm-heading-1 {
-		@apply text-accent-1 text-2xl font-bold;
+		@apply text-accent-1 mb-4 text-2xl font-bold;
 	}
 	.tag-heading-2,
 	.cm-heading-2 {
-		@apply text-accent-2 text-xl font-bold;
+		@apply text-accent-2 mb-4 text-xl font-bold;
 	}
 	.tag-heading-3,
 	.cm-heading-3 {
-		@apply text-accent-3 text-lg font-bold;
+		@apply text-accent-3 mb-4 text-lg font-bold;
 	}
 	.tag-heading-4,
 	.cm-heading-4 {
-		@apply text-accent-4 text-base font-bold;
+		@apply text-accent-4 mb-4 text-base font-bold;
 	}
 	.tag-heading-5,
 	.cm-heading-5 {
-		@apply text-accent-5 text-sm font-bold;
+		@apply text-accent-5 mb-4 text-sm font-bold;
 	}
 	.tag-heading-6,
 	.cm-heading-6 {
-		@apply text-accent-6 text-xs font-bold;
+		@apply text-accent-6 mb-4 text-xs font-bold;
 	}
 	.tag-list {
 		/* @apply text-accent-8; */
@@ -296,8 +299,8 @@
 		@apply text-accent-7 underline;
 	}
 	.tag-monospace {
-		@apply rounded-sm px-0.5 font-mono font-bold text-black;
-		background-color: hsl(var(--accent-1));
+		/* @apply rounded-sm px-0.5 font-mono font-bold text-black;
+		background-color: var(--accent-1); */
 	}
 	.tag-strikethrough {
 		@apply text-destructive line-through;

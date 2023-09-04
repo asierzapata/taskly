@@ -62,7 +62,6 @@ function decorateCodeBlocks(view: EditorView) {
 					switch (type.name) {
 						case 'CodeInfo':
 						case 'CodeMark':
-							 
 							const decRange = invisibleDecoration.range(
 								from + nodeFrom,
 								from + nodeTo
@@ -82,14 +81,17 @@ function decorateCodeBlocks(view: EditorView) {
  */
 const baseTheme = EditorView.baseTheme({
 	['.' + classes.widget]: {
-		backgroundColor: 'hsl(var(--muted))',
-		'padding-left': '1em',
-		'padding-right': '1em'
+		backgroundColor: 'var(--muted)',
+		color: 'var(--muted-foreground)',
+		'padding-left': '0.5rem',
+		'padding-right': '0.5rem'
 	},
 	['.' + classes.widgetBegin]: {
-		borderRadius: '3px 3px 0 0'
+		borderRadius: '3px 3px 0 0',
+		marginTop: '1rem'
 	},
 	['.' + classes.widgetEnd]: {
-		borderRadius: '0 0 3px 3px'
+		borderRadius: '0 0 3px 3px',
+		marginBottom: '1rem'
 	}
 })

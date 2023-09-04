@@ -20,7 +20,7 @@ import { type SubmitHandler, useForm } from 'react-hook-form'
 /* ====================================================== */
 
 type CreateSafeProps = {
-	onSafeCreated: (id: string) => void
+	onSafeCreated: (id: string) => Promise<void>
 }
 
 type CreateSafeForm = {
@@ -51,7 +51,7 @@ const CreateSafe = ({ onSafeCreated }: CreateSafeProps) => {
 				path: data.folder
 			})
 		).unwrap()
-		onSafeCreated(id)
+		void onSafeCreated(id)
 	}
 
 	const handleSelectFolder = async () => {
@@ -91,11 +91,11 @@ const CreateSafe = ({ onSafeCreated }: CreateSafeProps) => {
 					<Label>Folder</Label>
 					<div className="flex w-full items-center gap-4">
 						{folder ? (
-							<span className="line-clamp-2 flex-1 break-words text-gray-500">
+							<span className="text-muted-foreground line-clamp-2 flex-1 break-words">
 								{folder}
 							</span>
 						) : (
-							<span className="line-clamp-2 flex-1 break-words text-gray-500">
+							<span className="text-muted-foreground line-clamp-2 flex-1 break-words">
 								No folder selected
 							</span>
 						)}
@@ -110,7 +110,7 @@ const CreateSafe = ({ onSafeCreated }: CreateSafeProps) => {
 					</div>
 
 					{errors.folder?.message ? (
-						<span className="text-red-500">{errors.folder.message}</span>
+						<span className="text-destructive">{errors.folder.message}</span>
 					) : null}
 				</div>
 				<Button type="submit" className="mt-12">

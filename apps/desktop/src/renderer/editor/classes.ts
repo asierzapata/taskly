@@ -9,48 +9,55 @@
 
 /** Classes for blockquote decorations. */
 export const blockquote = {
-		/** Blockquote widget */
-		widget: 'cm-blockquote',
-		/** Replace decoration for the quote mark */
-		mark: 'cm-blockquote-border'
-	},
-	/** Classes for codeblock decorations. */
-	codeblock = {
-		/** Codeblock widget */
-		widget: 'cm-codeblock',
-		/** First line of the codeblock widget */
-		widgetBegin: 'cm-codeblock-begin',
-		/** Last line of the codeblock widget */
-		widgetEnd: 'cm-codeblock-end'
-	},
-	/** Classes for heading decorations. */
-	heading = {
-		/** Heading decoration class */
-		heading: 'cm-heading',
-		/** Heading levels (h1, h2, etc) */
-		level: (level: number) => `cm-heading-${level}`,
-		/** Heading slug */
-		slug: (slug: string) => `cm-heading-slug-${slug}`
-	},
-	/** Classes for link (URL) widgets. */
-	link = {
-		/** URL widget */
-		widget: 'cm-link'
-	},
-	/** Classes for list widgets. */
-	list = {
-		/** List bullet */
-		bullet: 'cm-list-bullet',
-		/** List task checkbox */
-		taskCheckbox: 'cm-task-marker-checkbox',
-		taskCheckboxWrapper: 'cm-task-marker-checkbox-wrapper',
-		taskCheckboxChecked: 'cm-task-marker-checkbox-checked',
-		taskCheckboxCheckedWrapper: 'cm-task-marker-checkbox-checked-wrapper',
-		/** Task list item with checkbox checked */
-		taskChecked: 'cm-task-checked'
-	},
-	/** Classes for image widgets. */
-	image = {
-		/** Image preview */
-		widget: 'cm-image'
-	}
+	/** Blockquote widget */
+	widget: 'cm-blockquote',
+	/** Replace decoration for the quote mark */
+	mark: 'cm-blockquote-border'
+}
+
+/** Classes for codeblock decorations. */
+export const codeblock = {
+	/** Codeblock widget */
+	widget: 'cm-codeblock',
+	/** First line of the codeblock widget */
+	widgetBegin: 'cm-codeblock-begin',
+	/** Last line of the codeblock widget */
+	widgetEnd: 'cm-codeblock-end'
+}
+
+/** Classes for heading decorations. */
+export const heading = {
+	/** Heading decoration class */
+	heading: 'cm-heading',
+	/** Heading levels (h1, h2, etc) */
+	level: (level: number) => `cm-heading-${level}`,
+	/** Heading slug */
+	slug: (slug: string) => `cm-heading-slug-${slug}`
+}
+
+/** Classes for link (URL) widgets. */
+export const link = {
+	/** URL widget */
+	widget: 'cm-link'
+}
+
+/** Classes for list widgets. */
+export const list = {
+	/** List bullet */
+	bullet: 'cm-list-bullet',
+	/** List task checkbox */
+	taskCheckbox: 'cm-task-marker-checkbox',
+	taskCheckboxWrapper: 'cm-task-marker-checkbox-wrapper',
+	taskCheckboxChecked: 'cm-task-marker-checkbox-checked',
+	taskCheckboxCheckedWrapper: 'cm-task-marker-checkbox-checked-wrapper',
+	/** Task list item with checkbox checked */
+	taskChecked: 'cm-task-checked',
+	/** Ordered List */
+	orderedList: 'cm-ordered-list'
+}
+
+/** Classes for image widgets. */
+export const image = {
+	/** Image preview */
+	widget: 'cm-image'
+}

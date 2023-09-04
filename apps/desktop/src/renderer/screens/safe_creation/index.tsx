@@ -1,19 +1,20 @@
 import React from 'react'
-import { Screen } from '@renderer/ui/screen'
-import { SafesList } from '@renderer/features/safe_management/safes_list'
-import { Button, H1, Icons } from '@taskly/web-ui'
-import { CreateSafe } from '@renderer/features/safe_management/create_safe'
-import { useNavigate } from 'react-router-dom'
-import { useAppDispatch } from '@renderer/store/hooks'
-import { selectSafe } from '@renderer/features/safe_management/safe_management_slice'
 
 /* ====================================================== */
 /*                   Actions / Selectors                  */
 /* ====================================================== */
 
+import { useAppDispatch } from '@renderer/store/hooks'
+import { useNavigate } from 'react-router-dom'
+import { selectSafe } from '@renderer/features/safe_management/safe_management_slice'
+
 /* ====================================================== */
 /*                       Components                       */
 /* ====================================================== */
+
+import { Button, H1, Icons } from '@taskly/web-ui'
+import { Screen } from '@renderer/ui/screen'
+import { CreateSafe } from '@renderer/features/safe_management/create_safe'
 
 /* ====================================================== */
 /*                    Implementation                      */
@@ -36,12 +37,7 @@ const SafeCreation = () => {
 		<Screen>
 			<div className="min-h-screen-without-frame m-auto flex h-full max-w-xl flex-col items-center justify-start">
 				<div className="relative flex w-full  flex-row items-center justify-start gap-2 p-4">
-					<Button
-						variant="ghost"
-						size="sm"
-						onClick={handleGoBack}
-						// className="absolute -left-8"
-					>
+					<Button variant="ghost" size="sm" onClick={handleGoBack}>
 						<Icons.arrowLeft size={20} />
 					</Button>
 					<H1>Create Safe</H1>

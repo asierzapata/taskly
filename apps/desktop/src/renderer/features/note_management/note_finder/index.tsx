@@ -65,8 +65,13 @@ const NoteFinder = ({
 	return (
 		<div className="">
 			<div className="flex items-center gap-2">
-				<Button variant="outline" size="icon" onClick={onBack}>
-					<Icons.chevronLeft className="h-4 w-4" />
+				<Button
+					className="group flex items-center justify-center"
+					variant="ghost"
+					size="smallIcon"
+					onClick={onBack}
+				>
+					<Icons.chevronLeft className="group-hover:stroke-accent-foreground h-4 w-4" />
 				</Button>
 				<Input
 					className="flex-1"

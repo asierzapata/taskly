@@ -28,3 +28,11 @@ export type TreeNode = {
 export type Path = string
 
 export type NoteTree = Record<Path, TreeNode>
+
+export type NoteNotificationType = 'info' | 'error'
+export type NoteNotification = {
+	type: NoteNotificationType
+	title: string
+	message: string
+	createdAt: number
+}

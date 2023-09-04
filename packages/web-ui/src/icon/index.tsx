@@ -38,7 +38,11 @@ import {
 	Command,
 	ArrowBigUp,
 	FolderPlus,
-	RotateCcw
+	RotateCcw,
+	Navigation,
+	Sidebar,
+	SidebarOpen,
+	SidebarClose
 } from 'lucide-react'
 
 export type Icon = LucideIcon
@@ -94,6 +98,10 @@ export const Icons = {
 	shift: ArrowBigUp,
 	addFolder: FolderPlus,
 	refresh: RotateCcw,
+	navigation: Navigation,
+	sidebar: Sidebar,
+	sidebarOpen: SidebarOpen,
+	sidebarClose: SidebarClose,
 	gitHub: (props: LucideProps) => (
 		<svg viewBox="0 0 438.549 438.549" {...props}>
 			<path

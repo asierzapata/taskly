@@ -1,37 +1,37 @@
 .rbc-today {
-	background-color: hsl(var(--muted));
-	border-bottom: 1px solid hsl(var(--border));
-	color: hsl(var(--primary));
+	background-color: var(--muted);
+	border-bottom: 1px solid var(--border);
+	color: var(--primary);
 	@apply text-xs;
 }
 
 .rbc-current-time-indicator {
-	background-color: hsl(var(--primary));
+	background-color: var(--primary);
 }
 
 .rbc-timeslot-group {
-	border-bottom: 1px solid hsl(var(--border));
+	border-bottom: 1px solid var(--border);
 	@apply text-xs;
 }
 
 .rbc-header {
-	border-bottom: 1px solid hsl(var(--border));
+	border-bottom: 1px solid var(--border);
 	@apply text-xs;
 }
 
 .rbc-header + .rbc-header {
-	border-bottom: 1px solid hsl(var(--border));
-	border-left: 1px solid hsl(var(--border));
+	border-bottom: 1px solid var(--border);
+	border-left: 1px solid var(--border);
 	@apply text-xs;
 }
 
 .rbc-time-header-content {
-	border-left: 1px solid hsl(var(--border));
+	border-left: 1px solid var(--border);
 }
 
 .rbc-today,
 .rbc-day-bg + .rbc-day-bg {
-	border-left: 1px solid hsl(var(--border));
+	border-left: 1px solid var(--border);
 }
 
 .rbc-time-view,
@@ -41,15 +41,15 @@
 
 .rbc-time-content,
 .rbc-day-slot .rbc-time-slot {
-	border-top: 1px solid hsl(var(--border));
+	border-top: 1px solid var(--border);
 }
 
 .rbc-time-content > * + * > * {
-	border-left: 1px solid hsl(var(--border));
+	border-left: 1px solid var(--border);
 }
 
 .rbc-toolbar-label {
-	color: hsl(var(--muted-foreground));
+	color: var(--muted-foreground);
 	@apply font-bold;
 }
 

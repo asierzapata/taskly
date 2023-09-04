@@ -11,6 +11,7 @@ import { type ChangeSpec, type Range } from '@codemirror/state'
 import { type NodeType, type SyntaxNodeRef } from '@lezer/common'
 import { list as classes } from '../classes'
 
+const orderedListRegularExpresion = /^[\d]\./
 const bulletListRegularExpresion = /^[-+*]/
 const taskListRegularExpresion = /^^[-+*]\s\[[xX\s]?\]/
 
@@ -21,7 +22,12 @@ const taskListRegularExpresion = /^^[-+*]\s\[[xX\s]?\]/
  * - Customize list mark
  * - Add an interactive checkbox for task lists
  */
-export const lists = () => [listBulletPlugin, taskListPlugin, baseTheme]
+export const lists = () => [
+	listBulletPlugin,
+	orderedListPlugin,
+	taskListPlugin,
+	baseTheme
+]
 
 /**
  * Plugin to add custom list bullet mark.
@@ -74,6 +80,56 @@ class ListBulletWidget extends WidgetType {
 		listBullet.textContent = this.bullet
 		listBullet.className = 'cm-list-bullet'
 		return listBullet
+	}
+}
+
+/**
+ * Plugin to add custom style to ordered list.
+ */
+class OrderedListPlugin {
+	decorations: DecorationSet = Decoration.none
+	constructor(view: EditorView) {
+		this.decorations = this.decorateLists(view)
+	}
+	update(update: ViewUpdate) {
+		if (update.docChanged || update.viewportChanged || update.selectionSet)
+			this.decorations = this.decorateLists(update.view)
+	}
+	private decorateLists(view: EditorView) {
+		const widgets: Range<Decoration>[] = []
+		iterateTreeInVisibleRanges(view, {
+			enter: ({ type, from, to }) => {
+				if (isCursorInRange(view.state, [from, to])) return
+				if (type.name === 'ListMark') {
+					const listMark = view.state.sliceDoc(from, to)
+					if (orderedListRegularExpresion.test(listMark)) {
+						const dec = Decoration.replace({
+							widget: new OrderedListWidget(listMark)
+						})
+						widgets.push(dec.range(from, to))
+					}
+				}
+			}
+		})
+		return Decoration.set(widgets, true)
+	}
+}
+const orderedListPlugin = ViewPlugin.fromClass(OrderedListPlugin, {
+	decorations: v => v.decorations
+})
+
+/**
+ * Widget to render list bullet mark.
+ */
+class OrderedListWidget extends WidgetType {
+	constructor(readonly orderedList: string) {
+		super()
+	}
+	toDOM(): HTMLElement {
+		const orderedList = document.createElement('span')
+		orderedList.textContent = this.orderedList
+		orderedList.className = classes.orderedList
+		return orderedList
 	}
 }
 
@@ -196,13 +252,13 @@ const baseTheme = EditorView.baseTheme({
 		transition: '0.2s all linear'
 	},
 	['.' + classes.taskCheckbox + ':hover']: {
-		borderColor: 'var(--secondary)'
+		borderColor: 'var(--accent)'
 	},
 	['.' + classes.taskCheckboxChecked]: {
 		backgroundColor: 'var(--primary)'
 	},
 	['.' + classes.taskCheckboxChecked + ':hover']: {
-		backgroundColor: 'var(--secondary)'
+		backgroundColor: 'var(--accent)'
 	},
 	['.' + classes.taskCheckboxCheckedWrapper]: {
 		display: 'flex',
@@ -233,5 +289,8 @@ const baseTheme = EditorView.baseTheme({
 		left: 0,
 		color: 'var(--primary)',
 		content: "'\\2022'" /* U+2022 BULLET */
+	},
+	['.' + classes.orderedList]: {
+		color: 'var(--primary)'
 	}
 })

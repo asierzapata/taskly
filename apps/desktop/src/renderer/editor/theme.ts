@@ -144,7 +144,7 @@ const createTheme = ({
 
 	if (settings.selection) {
 		themeOptions[
-			'&.cm-focused .cm-selectionBackground, & .cm-selectionLayer .cm-selectionBackground, .cm-content ::selection'
+			'&.cm-focused .cm-selectionBackground, & .cm-selectionLayer .cm-selectionBackground, .cm-content::selection'
 		] = {
 			backgroundColor: settings.selection
 		}

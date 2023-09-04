@@ -107,12 +107,12 @@ const baseTheme = EditorView.baseTheme({
 		width: '2px',
 		height: '100%',
 		'border-radius': '3px 0 0 3px',
-		'border-left': '4px solid hsl(var(--accent-1))'
+		'border-left': '4px solid var(--accent-1)'
 	},
 	['.' + classes.widget]: {
-		color: 'hsl(var(--accent-1))',
+		color: 'var(--accent-1)',
 		'border-radius': '3px',
-		backgroundColor: 'hsl(var(--muted))',
+		backgroundColor: 'var(--muted)',
 		padding: '1rem',
 		position: 'relative'
 	}

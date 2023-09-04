@@ -12,7 +12,6 @@ import _ from 'lodash'
 import { Button, Icons } from '@taskly/web-ui'
 import { useAppDispatch, useAppSelector } from '@renderer/store/hooks'
 import { navigatedBack, navigatedForward } from '../note_management_slice'
-import { useNavigate } from 'react-router-dom'
 
 /* ====================================================== */
 /*                        Types                           */

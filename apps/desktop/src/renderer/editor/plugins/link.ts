@@ -50,7 +50,6 @@ export class GoToLinkWidget extends WidgetType {
 		anchor.target = '_blank'
 		anchor.classList.add(classes.widget)
 		anchor.textContent = `${this.title ? this.title : this.link} 🔗`
-		console.log('>>>>>>', this.title)
 		if (this.title) anchor.title = this.title
 		return anchor
 	}
@@ -141,6 +140,7 @@ export const goToLinkPlugin = ViewPlugin.fromClass(
 const baseTheme = EditorView.baseTheme({
 	['.' + classes.widget]: {
 		cursor: 'pointer',
-		textDecoration: 'underline'
+		textDecoration: 'underline',
+		color: 'var(--primary-light)'
 	}
 })
