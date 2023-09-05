@@ -17,7 +17,8 @@ const config: ForgeConfig = {
 				name: 'Taskly',
 				schemes: ['taskly']
 			}
-		]
+		],
+		osxSign: {}
 	},
 	rebuildConfig: {},
 	makers: [
