@@ -173,7 +173,7 @@
 		/* @apply text-accent-8; */
 	}
 	.tag-quote {
-		@apply text-accent-8 italic;
+		@apply italic;
 	}
 	.tag-emphasis {
 		@apply text-accent-5 italic;

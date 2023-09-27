@@ -132,6 +132,7 @@
 
 		--secondary: rgba(93, 108, 234, 1);
 		--secondary-foreground: rgba(0, 0, 0, 1);
+		--secondary-light: rgba(148, 163, 255, 1);
 
 		--accent: rgba(93, 234, 148, 1);
 		--accent-foreground: rgba(0, 0, 0, 1);
@@ -284,7 +285,7 @@
 		/* @apply text-accent-8; */
 	}
 	.tag-quote {
-		@apply text-accent-8 italic;
+		@apply italic;
 	}
 	.tag-emphasis {
 		@apply text-accent-5 italic;

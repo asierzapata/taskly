@@ -17,10 +17,18 @@ import { blockquote as classes } from '../classes'
 
 const quoteMarkRE = /^(\s*>+)/gm
 
+type BlockQuoteWidget = 'first' | 'last' | 'middle'
+
 class BlockQuoteBorderWidget extends WidgetType {
+	constructor(readonly type: BlockQuoteWidget = 'middle') {
+		super()
+	}
 	toDOM(): HTMLElement {
 		const dom = document.createElement('span')
-		dom.classList.add(classes.mark)
+		let className = classes.mark
+		className = this.type === 'first' ? classes.firstMark : className
+		className = this.type === 'last' ? classes.lastMark : className
+		dom.classList.add(className)
 		return dom
 	}
 }
@@ -50,9 +58,12 @@ class BlockQuotePlugin {
 				if (name !== 'Blockquote') return
 				const lines = editorLines(view, from, to)
 
-				lines.forEach(line => {
+				lines.forEach((line, index) => {
+					let className = index === 0 ? classes.firstWidget : classes.widget
+					className =
+						index === lines.length - 1 ? classes.lastWidget : className
 					const lineDec = Decoration.line({
-						class: classes.widget
+						class: className
 					})
 					widgets.push(lineDec.range(line.from))
 				})
@@ -66,22 +77,40 @@ class BlockQuotePlugin {
 						view.state.sliceDoc(from, to).matchAll(quoteMarkRE)
 					)
 						.map(x => (x.index ? from + x.index : from))
-						.map(i =>
-							Decoration.replace({
-								widget: new BlockQuoteBorderWidget()
+						.map((i, markNumber, _marks) => {
+							let widgetType: BlockQuoteWidget = 'middle'
+							if (markNumber === 0) {
+								widgetType = 'first'
+							}
+							if (markNumber === _marks.length - 1) {
+								widgetType = 'last'
+							}
+							console.log('>>>>>>', {
+								i,
+								from,
+								to,
+								markNumber,
+								length: _marks.length,
+								widgetType
+							})
+							return Decoration.replace({
+								widget: new BlockQuoteBorderWidget(widgetType)
 							}).range(i, i + 1)
-						)
-					lines.forEach(line => {
+						})
+					lines.forEach((line, i) => {
 						if (
 							!marks.some(mark =>
 								checkRangeSubset([line.from, line.to], [mark.from, mark.to])
 							)
-						)
+						) {
+							let widgetType: BlockQuoteWidget = i === 0 ? 'first' : 'middle'
+							widgetType = i === lines.length - 1 ? 'last' : 'middle'
 							marks.push(
 								Decoration.widget({
-									widget: new BlockQuoteBorderWidget()
+									widget: new BlockQuoteBorderWidget(widgetType)
 								}).range(line.from)
 							)
+						}
 					})
 
 					widgets.push(...marks)
@@ -106,13 +135,43 @@ const baseTheme = EditorView.baseTheme({
 		left: 0,
 		width: '2px',
 		height: '100%',
-		'border-radius': '3px 0 0 3px',
-		'border-left': '4px solid var(--accent-1)'
+		'border-left': '4px solid var(--secondary)'
+	},
+	['.' + classes.firstMark]: {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		width: '2px',
+		height: '100%',
+		'border-radius': '3px 0 0 0',
+		'border-left': '4px solid var(--secondary)'
+	},
+	['.' + classes.lastMark]: {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		width: '2px',
+		height: '100%',
+		'border-radius': '0 0 0 3px',
+		'border-left': '4px solid var(--secondary)'
 	},
 	['.' + classes.widget]: {
-		color: 'var(--accent-1)',
-		'border-radius': '3px',
-		backgroundColor: 'var(--muted)',
+		color: 'var(--secondary-foreground)',
+		backgroundColor: 'var(--secondary-light)',
+		padding: '1rem',
+		position: 'relative'
+	},
+	['.' + classes.firstWidget]: {
+		color: 'var(--secondary-foreground)',
+		'border-radius': '3px 3px 0 0',
+		backgroundColor: 'var(--secondary-light)',
+		padding: '1rem',
+		position: 'relative'
+	},
+	['.' + classes.lastWidget]: {
+		color: 'var(--secondary-foreground)',
+		'border-radius': '0 0 3px 3px',
+		backgroundColor: 'var(--secondary-light)',
 		padding: '1rem',
 		position: 'relative'
 	}

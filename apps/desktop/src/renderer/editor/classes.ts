@@ -11,8 +11,12 @@
 export const blockquote = {
 	/** Blockquote widget */
 	widget: 'cm-blockquote',
+	lastWidget: 'cm-blockquote-last',
+	firstWidget: 'cm-blockquote-first',
 	/** Replace decoration for the quote mark */
-	mark: 'cm-blockquote-border'
+	mark: 'cm-blockquote-border',
+	lastMark: 'cm-blockquote-border-last',
+	firstMark: 'cm-blockquote-border-first'
 }
 
 /** Classes for codeblock decorations. */
