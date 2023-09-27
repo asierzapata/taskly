@@ -11,11 +11,14 @@ import {
 	iterateTreeInVisibleRanges,
 	editorLines,
 	isCursorInRange,
-	checkRangeSubset
+	checkRangeSubset,
+	invisibleDecoration
 } from '../util'
 import { blockquote as classes } from '../classes'
 
 const quoteMarkRE = /^(\s*>+)/gm
+
+const calloutTitleMark = '[!TITLE]'
 
 type BlockQuoteWidget = 'first' | 'last' | 'middle'
 
@@ -62,6 +65,25 @@ class BlockQuotePlugin {
 					let className = index === 0 ? classes.firstWidget : classes.widget
 					className =
 						index === lines.length - 1 ? classes.lastWidget : className
+					// If the line contains [!NOTE] we should display it as a title
+					if (
+						view.state.sliceDoc(line.from, line.to).includes(calloutTitleMark)
+					) {
+						className = classes.titleWidget
+						if (!isCursorInRange(view.state, [from, to])) {
+							const initialPositionOfNoteMark = view.state
+								.sliceDoc(line.from, line.to)
+								.indexOf(calloutTitleMark)
+							widgets.push(
+								invisibleDecoration.range(
+									line.from + initialPositionOfNoteMark,
+									line.from +
+										initialPositionOfNoteMark +
+										calloutTitleMark.length
+								)
+							)
+						}
+					}
 					const lineDec = Decoration.line({
 						class: className
 					})
@@ -85,14 +107,6 @@ class BlockQuotePlugin {
 							if (markNumber === _marks.length - 1) {
 								widgetType = 'last'
 							}
-							console.log('>>>>>>', {
-								i,
-								from,
-								to,
-								markNumber,
-								length: _marks.length,
-								widgetType
-							})
 							return Decoration.replace({
 								widget: new BlockQuoteBorderWidget(widgetType)
 							}).range(i, i + 1)
@@ -154,6 +168,14 @@ const baseTheme = EditorView.baseTheme({
 		height: '100%',
 		'border-radius': '0 0 0 3px',
 		'border-left': '4px solid var(--secondary)'
+	},
+	['.' + classes.titleWidget]: {
+		fontWeight: 'bold',
+		color: 'var(--secondary-foreground)',
+		'border-radius': '3px 3px 0 0',
+		backgroundColor: 'var(--secondary-light)',
+		padding: '1rem',
+		position: 'relative'
 	},
 	['.' + classes.widget]: {
 		color: 'var(--secondary-foreground)',

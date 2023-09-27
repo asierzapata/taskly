@@ -16,7 +16,8 @@ export const blockquote = {
 	/** Replace decoration for the quote mark */
 	mark: 'cm-blockquote-border',
 	lastMark: 'cm-blockquote-border-last',
-	firstMark: 'cm-blockquote-border-first'
+	firstMark: 'cm-blockquote-border-first',
+	titleWidget: 'cm-blockquote-title'
 }
 
 /** Classes for codeblock decorations. */
