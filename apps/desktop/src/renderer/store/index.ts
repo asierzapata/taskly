@@ -18,7 +18,8 @@ import { safeManagementReducer } from '@renderer/features/safe_management/safe_m
 
 const persistConfig = {
 	key: 'root',
-	storage
+	storage,
+	blacklist: ['noteManagement']
 	// storage: createElectronStorage({
 	// 	electronStoreOpts: {
 	// 		encryptionKey: 'G%59tpd!zUy8Kc!b7EHxta+-w4W!b22r'
@@ -26,14 +27,8 @@ const persistConfig = {
 	// })
 }
 
-const notePersistConfig = {
-	key: 'noteManagement',
-	storage,
-	blacklist: ['noteNavigation', 'noteSearch', 'isRebuilding']
-}
-
 const rootReducer = combineReducers({
-	noteManagement: persistReducer(notePersistConfig, noteManagementReducer),
+	noteManagement: noteManagementReducer,
 	safeManagement: safeManagementReducer
 })
 
