@@ -1,29 +1,37 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
 	"extends": "../../tsconfig.json",
-	"display": "Next.js",
+	"display": "Web",
 	"compilerOptions": {
-		"target": "es2017",
-		"lib": ["dom", "dom.iterable", "esnext"],
-		"allowJs": true,
+		"target": "ES2020",
+		"useDefineForClassFields": true,
+		"lib": ["ES2020", "DOM", "DOM.Iterable"],
+		"module": "ESNext",
 		"skipLibCheck": true,
-		"strict": true,
-		"forceConsistentCasingInFileNames": true,
-		"noEmit": true,
-		"esModuleInterop": true,
-		"module": "esnext",
-		"moduleResolution": "node",
+
+		/* Bundler mode */
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
 		"resolveJsonModule": true,
 		"isolatedModules": true,
+		"noEmit": true,
 		"jsx": "preserve",
-		"incremental": true,
-		"noUncheckedIndexedAccess": true,
+
+		/* Linting */
+		"strict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true,
+		"forceConsistentCasingInFileNames": true,
+
 		"baseUrl": ".",
 		"paths": {
 			"@/*": ["./src/*"],
+			"react": ["node_modules/@types/react"],
 			"*": ["node_modules/*"]
-		}
+		},
+		"typeRoots": ["./node_modules/@types", "./src/types"]
 	},
-	"include": ["src", "next-env.d.ts", "**/*.ts", "**/*.tsx"],
+	"include": ["src", "vite.config.ts"],
 	"exclude": ["node_modules"]
 }

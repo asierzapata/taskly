@@ -2,91 +2,201 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+	font-family: 'JetBrainsMono';
+	src: url(../assets/fonts/JetBrainsMonoNL-Regular.ttf);
+}
+
+@font-face {
+	font-family: 'JetBrainsMono';
+	src: url(../assets/fonts/JetBrainsMonoNL-Italic.ttf);
+	font-style: italic;
+}
+
+@font-face {
+	font-family: 'JetBrainsMono';
+	src: url(../assets/fonts/JetBrainsMonoNL-Bold.ttf);
+	font-weight: bold;
+}
+
+@font-face {
+	font-family: 'JetBrainsMono';
+	src: url(../assets/fonts/JetBrainsMonoNL-BoldItalic.ttf);
+	font-weight: bold;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: 'JetBrainsMono';
+	src: url(../assets/fonts/JetBrainsMonoNL-ExtraBold.ttf);
+	font-weight: 800;
+}
+
+@font-face {
+	font-family: 'JetBrainsMono';
+	src: url(../assets/fonts/JetBrainsMonoNL-ExtraBoldItalic.ttf);
+	font-weight: 800;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: 'JetBrainsMono';
+	src: url(../assets/fonts/JetBrainsMonoNL-ExtraLight.ttf);
+	font-weight: 200;
+}
+
+@font-face {
+	font-family: 'JetBrainsMono';
+	src: url(../assets/fonts/JetBrainsMonoNL-ExtraLightItalic.ttf);
+	font-weight: 200;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: 'JetBrainsMono';
+	src: url(../assets/fonts/JetBrainsMonoNL-Light.ttf);
+	font-weight: 300;
+}
+
+@font-face {
+	font-family: 'JetBrainsMono';
+	src: url(../assets/fonts/JetBrainsMonoNL-LightItalic.ttf);
+	font-weight: 300;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: 'JetBrainsMono';
+	src: url(../assets/fonts/JetBrainsMonoNL-Medium.ttf);
+	font-weight: 500;
+}
+
+@font-face {
+	font-family: 'JetBrainsMono';
+	src: url(../assets/fonts/JetBrainsMonoNL-MediumItalic.ttf);
+	font-weight: 500;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: 'JetBrainsMono';
+	src: url(../assets/fonts/JetBrainsMonoNL-SemiBold.ttf);
+	font-weight: 600;
+}
+
+@font-face {
+	font-family: 'JetBrainsMono';
+	src: url(../assets/fonts/JetBrainsMonoNL-SemiBoldItalic.ttf);
+	font-weight: 600;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: 'JetBrainsMono';
+	src: url(../assets/fonts/JetBrainsMonoNL-Thin.ttf);
+	font-weight: 100;
+}
+
+@font-face {
+	font-family: 'JetBrainsMono';
+	src: url(../assets/fonts/JetBrainsMonoNL-ThinItalic.ttf);
+	font-weight: 100;
+	font-style: italic;
+}
+
+:root {
+	font-family: 'JetBrainsMono', sans-serif;
+}
+
 @layer base {
 	:root {
-		--background: 0 0% 100%; /* hsl(0, 0%, 100%) */
-		--transparent-background: rgba(0, 0, 0, 0.6);
-		--foreground: 222 47% 11%; /* hsl(222, 47%, 11%) */
+		--background: rgba(255, 255, 255, 0.4);
+		--transparent-background: rgba(255, 255, 255, 0.2);
+		--foreground: rgba(0, 0, 0, 1);
 
-		--muted: 210 40% 96%; /* hsl(210, 40%, 96%) */
-		--muted-foreground: 215 16% 46%; /* hsl(215, 16%, 46%) */
+		--muted: rgba(241, 246, 249, 0.8);
+		--muted-foreground: rgba(50, 59, 73, 1);
 
-		--popover: 0 0% 100%; /* hsl(0, 0%, 100%) */
-		--popover-foreground: 222 47% 11%; /* hsl(222, 47%, 11%) */
+		--popover: rgba(255, 255, 255, 0.8);
+		--popover-foreground: rgba(0, 0, 0, 1);
 
-		--card: 0 0% 100%;
-		--card-foreground: 222 47% 11%; /* hsl(222, 47%, 11%) */
+		--card: rgba(255, 255, 255, 0.8);
+		--card-foreground: rgba(0, 0, 0, 1);
 
-		--border: 214 31% 91%; /* hsl(214, 31%, 91%) */
-		--input: 214 31% 91%; /* hsl(214, 31%, 91%) */
+		--border: rgba(225, 231, 239, 0.6);
+		--input: rgba(225, 231, 239, 0.6);
 
-		--primary: 13 89% 63%; /* hsl(13, 89%, 63%) */
-		--primary-foreground: 6 66% 25%; /* hsl(6, 66%, 25%) */
+		--primary: rgba(246, 218, 80, 1);
+		--primary-foreground: rgba(0, 0, 0, 1);
+		--primary-light: rgba(248, 225, 115, 1);
 
-		--secondary: 210 40% 96%; /* hsl(210, 40%, 96%) */
-		--secondary-foreground: 222 47% 11%; /* hsl(222, 47%, 11%) */
+		--secondary: rgba(93, 108, 234, 1);
+		--secondary-foreground: rgba(0, 0, 0, 1);
+		--secondary-light: rgba(148, 163, 255, 1);
 
-		--accent: 210 40% 96%; /* hsl(210, 40%, 96%) */
-		--accent-foreground: 222 47% 11%; /* hsl(222, 47%, 11%) */
+		--accent: rgba(93, 234, 148, 1);
+		--accent-foreground: rgba(0, 0, 0, 1);
 
-		--destructive: 0 100% 50%; /* hsl(0, 100%, 50%) */
-		--destructive-foreground: 210 40% 98%; /* hsl(210, 40%, 98%) */
+		--destructive: rgba(255, 0, 0, 1);
+		--destructive-foreground: rgba(248, 250, 252, 1);
 
-		--ring: 215 20% 65%; /* hsl(215, 20%, 65%) */
+		--ring: rgba(148, 163, 184, 0.6);
 
 		--radius: 0.5rem;
 
-		--accent-1: 13, 89%, 63%; /* hsl(13, 89%, 63%) */
-		--accent-2: 30, 89%, 63%; /* hsl(30, 89%, 63%) */
-		--accent-3: 55, 75%, 72%; /* hsl(55, 75%, 72%) */
-		--accent-4: 85, 65%, 63%; /* hsl(85, 65%, 63%) */
-		--accent-5: 156, 65%, 63%; /* hsl(156, 65%, 63%) */
-		--accent-6: 199, 65%, 63%; /* hsl(199, 65%, 63%) */
-		--accent-7: 230, 65%, 63%; /* hsl(230, 65%, 63%) */
-		--accent-8: 260, 65%, 63%; /* hsl(260, 65%, 63%) */
+		--accent-1: hsl(65, 100%, 50%); /* hsl(65, 100%, 50%) */
+		--accent-2: hsl(180, 100%, 50%); /* hsl(180, 100%, 50%) */
+		--accent-3: hsl(90, 100%, 50%); /* hsl(135, 100%, 50%) */
+		--accent-4: hsl(55, 100%, 50%); /* hsl(55, 100%, 50%) */
+		--accent-5: hsl(165, 100%, 50%); /* hsl(165, 100%, 50%) */
+		--accent-6: hsl(110, 100%, 50%); /* hsl(110, 100%, 50%) */
+		--accent-7: hsl(77, 100%, 50%); /* hsl(77, 100%, 50%) */
+		--accent-8: hsl(155, 100%, 50%); /* hsl(155, 100%, 50%) */
 	}
 
 	.dark {
-		--background: 224 71% 4%; /* hsl(224, 71%, 4%) */
-		--transparent-background: rgba(0, 0, 0, 0.6);
-		--foreground: 213 31% 91%; /* hsl(213, 31%, 91%) */
+		--background: rgba(0, 0, 0, 0.4);
+		--transparent-background: rgba(0, 0, 0, 0.2);
+		--foreground: rgba(225, 231, 239, 1);
 
-		--muted: 223 47% 11%; /* hsl(223, 47%, 11%) */
-		--muted-foreground: 215 16% 56%; /* hsl(215, 16%, 59%) */
+		--muted: rgba(15, 22, 41, 0.6);
+		--muted-foreground: rgba(134, 148, 167, 1);
 
-		--popover: 224 71% 4%; /* hsl(224, 71%, 4%) */
-		--popover-foreground: 215 20% 65%; /* hsl(215, 20%, 65%) */
+		--popover: rgba(0, 0, 0, 0.6);
+		--popover-foreground: rgba(148, 163, 184, 1);
 
-		--card: 224 71% 4%; /* hsl(224, 71%, 4%) */
-		--card-foreground: 213 31% 91%; /* hsl(213, 31%, 91%) */
+		--card: rgba(0, 0, 0, 0.6);
+		--card-foreground: rgba(225, 231, 239, 1);
 
-		--border: 216 34% 17%; /* hsl(216, 34%, 17%) */
-		--input: 216 34% 17%; /* hsl(216, 34%, 17%) */
+		--border: rgba(29, 40, 58, 0.6);
+		--input: rgba(29, 40, 58, 0.6);
 
-		--primary: 45 100% 50%; /* hsl(45, 100%, 50%) */
-		--primary-foreground: 210 40% 98%; /* hsl(210, 40%, 98%) */
+		--primary: rgba(255, 191, 0, 1);
+		--primary-foreground: rgba(29, 40, 58, 1);
+		--primary-light: rgba(255, 210, 77, 1);
 
-		--secondary: 222 47% 11%; /* hsl(222, 47%, 11%) */
-		--secondary-foreground: 210 40% 98%; /* hsl(210, 40%, 98%) */
+		--secondary: rgba(245, 113, 77, 1);
+		--secondary-foreground: rgba(29, 40, 58, 1);
+		--secondary-light: rgba(249, 171, 149, 1);
 
-		--accent: 216 34% 17%; /* hsl(216, 34%, 17%) */
-		--accent-foreground: 210 40% 98%; /* hsl(210, 40%, 98%) */
+		--accent: rgba(0, 191, 255, 1);
+		--accent-foreground: rgba(0, 0, 0, 1);
 
-		--destructive: 0 63% 31%; /* hsl(0, 63%, 31%) */
-		--destructive-foreground: 210 40% 98%; /* hsl(210, 40%, 98%) */
+		--destructive: rgba(255, 0, 0, 1);
+		--destructive-foreground: rgba(248, 250, 252, 1);
 
-		--ring: 216 34% 17%; /* hsl(216, 34%, 17%) */
+		--ring: rgba(29, 40, 58, 1);
 
 		--radius: 0.5rem; /* 8px */
 
-		--accent-1: 13, 89%, 63%; /* hsl(13, 89%, 63%) */
-		--accent-2: 30, 89%, 63%; /* hsl(30, 89%, 63%) */
-		--accent-3: 55, 75%, 72%; /* hsl(55, 75%, 72%) */
-		--accent-4: 85, 65%, 63%; /* hsl(85, 65%, 63%) */
-		--accent-5: 156, 65%, 63%; /* hsl(156, 65%, 63%) */
-		--accent-6: 199, 65%, 63%; /* hsl(199, 65%, 63%) */
-		--accent-7: 230, 65%, 63%; /* hsl(230, 65%, 63%) */
-		--accent-8: 260, 65%, 63%; /* hsl(260, 65%, 63%) */
+		--accent-1: hsl(13, 89%, 63%); /* hsl(13, 89%, 63%) */
+		--accent-2: hsl(30, 89%, 63%); /* hsl(30, 89%, 63%) */
+		--accent-3: hsl(55, 75%, 72%); /* hsl(55, 75%, 72%) */
+		--accent-4: hsl(85, 65%, 63%); /* hsl(85, 65%, 63%) */
+		--accent-5: hsl(156, 65%, 63%); /* hsl(156, 65%, 63%) */
+		--accent-6: hsl(199, 65%, 63%); /* hsl(199, 65%, 63%) */
+		--accent-7: hsl(230, 65%, 63%); /* hsl(230, 65%, 63%) */
+		--accent-8: hsl(260, 65%, 63%); /* hsl(260, 65%, 63%) */
 	}
 }
 
@@ -94,16 +204,18 @@
 	* {
 		@apply border-border;
 	}
+	*::-webkit-scrollbar {
+		background-color: transparent;
+	}
+	*::selection {
+		@apply bg-muted;
+	}
 	body {
-		@apply text-foreground;
-		background-color: rgba(0, 0, 0, 0.6);
+		@apply text-foreground bg-transparent-background;
 		font-feature-settings: 'rlig' 1, 'calt' 1;
 		-webkit-font-smoothing: antialiased;
 		text-rendering: optimizeLegibility;
 		background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuZGV2L3N2Z2pzIiB2aWV3Qm94PSIwIDAgNzAwIDcwMCIgd2lkdGg9IjcwMCIgaGVpZ2h0PSI3MDAiPjxkZWZzPjxmaWx0ZXIgaWQ9Im5ubm9pc2UtZmlsdGVyIiB4PSItMjAlIiB5PSItMjAlIiB3aWR0aD0iMTQwJSIgaGVpZ2h0PSIxNDAlIiBmaWx0ZXJVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIHByaW1pdGl2ZVVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJsaW5lYXJSR0IiPgoJPGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuMTA5IiBudW1PY3RhdmVzPSI0IiBzZWVkPSIxNSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgeD0iMCUiIHk9IjAlIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiByZXN1bHQ9InR1cmJ1bGVuY2UiPjwvZmVUdXJidWxlbmNlPgoJPGZlU3BlY3VsYXJMaWdodGluZyBzdXJmYWNlU2NhbGU9IjIyIiBzcGVjdWxhckNvbnN0YW50PSIwLjkiIHNwZWN1bGFyRXhwb25lbnQ9IjIwIiBsaWdodGluZy1jb2xvcj0iIzQ1NDU0NSIgeD0iMCUiIHk9IjAlIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBpbj0idHVyYnVsZW5jZSIgcmVzdWx0PSJzcGVjdWxhckxpZ2h0aW5nIj4KICAgIAkJPGZlRGlzdGFudExpZ2h0IGF6aW11dGg9IjMiIGVsZXZhdGlvbj0iMTExIj48L2ZlRGlzdGFudExpZ2h0PgogIAk8L2ZlU3BlY3VsYXJMaWdodGluZz4KICAKPC9maWx0ZXI+PC9kZWZzPjxyZWN0IHdpZHRoPSI3MDAiIGhlaWdodD0iNzAwIiBmaWxsPSJ0cmFuc3BhcmVudCI+PC9yZWN0PjxyZWN0IHdpZHRoPSI3MDAiIGhlaWdodD0iNzAwIiBmaWxsPSIjNDU0NTQ1IiBmaWx0ZXI9InVybCgjbm5ub2lzZS1maWx0ZXIpIj48L3JlY3Q+PC9zdmc+');
-	}
-	body::selection {
-		@apply bg-muted text-muted-foreground;
 	}
 	.max-h-screen-without-frame {
 		max-height: calc(100vh - 32px);
@@ -147,27 +259,27 @@
 	}
 	.tag-heading-1,
 	.cm-heading-1 {
-		@apply text-accent-1 text-2xl font-bold;
+		@apply text-accent-1 mb-4 text-2xl font-bold;
 	}
 	.tag-heading-2,
 	.cm-heading-2 {
-		@apply text-accent-2 text-xl font-bold;
+		@apply text-accent-2 mb-4 text-xl font-bold;
 	}
 	.tag-heading-3,
 	.cm-heading-3 {
-		@apply text-accent-3 text-lg font-bold;
+		@apply text-accent-3 mb-4 text-lg font-bold;
 	}
 	.tag-heading-4,
 	.cm-heading-4 {
-		@apply text-accent-4 text-base font-bold;
+		@apply text-accent-4 mb-4 text-base font-bold;
 	}
 	.tag-heading-5,
 	.cm-heading-5 {
-		@apply text-accent-5 text-sm font-bold;
+		@apply text-accent-5 mb-4 text-sm font-bold;
 	}
 	.tag-heading-6,
 	.cm-heading-6 {
-		@apply text-accent-6 text-xs font-bold;
+		@apply text-accent-6 mb-4 text-xs font-bold;
 	}
 	.tag-list {
 		/* @apply text-accent-8; */
@@ -188,8 +300,8 @@
 		@apply text-accent-7 underline;
 	}
 	.tag-monospace {
-		@apply rounded-sm px-0.5 font-mono font-bold text-black;
-		background-color: var(--accent-1);
+		/* @apply rounded-sm px-0.5 font-mono font-bold text-black;
+		background-color: var(--accent-1); */
 	}
 	.tag-strikethrough {
 		@apply text-destructive line-through;

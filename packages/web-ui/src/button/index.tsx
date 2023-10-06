@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { Slot } from '@radix-ui/react-slot'
+import { forwardRef } from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { classnames } from '../lib/classnames'
 import { Loader2 } from 'lucide-react'
@@ -43,7 +42,7 @@ export interface ButtonProps
 	unboundedHeight?: boolean
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 	(
 		{
 			as: T = 'button',

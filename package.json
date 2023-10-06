@@ -11,6 +11,7 @@
 		"dev": "turbo dev --parallel",
 		"dev:mobile": "turbo dev:mobile --parallel",
 		"dev:desktop": "turbo dev:desktop --parallel",
+		"dev:web": "turbo dev:web --parallel",
 		"format": "prettier --write \"**/*.{js,cjs,mjs,ts,tsx,md,json}\" --ignore-path .gitignore",
 		"lint": "turbo lint && manypkg check",
 		"lint:fix": "turbo lint:fix && manypkg fix",

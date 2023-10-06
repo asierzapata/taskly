@@ -8,6 +8,7 @@
 		"dev": "NODE_ENV=development nodemon",
 		"dev:desktop": "NODE_ENV=development nodemon",
 		"dev:mobile": "NODE_ENV=development nodemon",
+		"dev:web": "NODE_ENV=development nodemon",
 		"type-check": "tsc --noEmit"
 	},
 	"devDependencies": {
