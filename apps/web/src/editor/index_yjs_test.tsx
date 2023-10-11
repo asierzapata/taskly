@@ -8,6 +8,9 @@ import {
 } from '@codemirror/view'
 import { EditorSelection, EditorState } from '@codemirror/state'
 
+import * as Y from 'yjs'
+import { yCollab } from 'y-codemirror.next'
+
 // Extensions
 // ----------
 
@@ -42,10 +45,13 @@ import { keymaps } from './keymap'
 // Types
 // -----
 
+import type { FileSystemFile } from '@/lib/file_system/types'
+import { useFileSync } from '@/lib/file_system'
+import { IndexeddbPersistence } from 'y-indexeddb'
+
 type EditorProps = {
+	fileSystemFile: FileSystemFile
 	editorViewRef?: React.MutableRefObject<EditorView>
-	initialDocument?: string
-	onChange?: (value: string) => void
 	onLoaded?: () => void
 }
 
@@ -59,12 +65,13 @@ export type EditorRef = {
 // ---------
 
 const Editor = React.forwardRef<EditorRef, EditorProps>(
-	(
-		{ editorViewRef: editorViewRefProp, initialDocument, onChange, onLoaded },
-		ref
-	) => {
+	({ editorViewRef: editorViewRefProp, fileSystemFile, onLoaded }, ref) => {
 		const editorViewRefInternal = useRef<EditorView>()
 		const containerRef = useRef<HTMLDivElement | null>(null)
+		const yDocRef = useRef<Y.Doc>(new Y.Doc())
+		const indexeddbPersistenceRef = useRef<IndexeddbPersistence>()
+
+		const { syncDoc } = useFileSync()
 
 		const editorViewRef = editorViewRefProp || editorViewRefInternal
 
@@ -83,63 +90,75 @@ const Editor = React.forwardRef<EditorRef, EditorProps>(
 		}))
 
 		useEffect(() => {
-			const updateListener = EditorView.updateListener.of(v => {
-				if (v.docChanged) {
-					if (typeof onChange === 'function') {
-						onChange(v.state.doc.toString())
-					}
-				}
-			})
+			const load = async () => {
+				if (containerRef.current) {
+					if (!editorViewRef.current) {
+						// Y.js
+						indexeddbPersistenceRef.current = new IndexeddbPersistence(
+							fileSystemFile.name,
+							yDocRef.current
+						)
 
-			if (containerRef.current) {
-				if (!editorViewRef.current) {
-					const extensions = [
-						highlightSpecialChars(),
-						history(),
-						foldGutter(),
-						drawSelection(),
-						EditorState.allowMultipleSelections.of(true),
-						indentOnInput(),
-						bracketMatching(),
-						closeBrackets(),
-						autocompletion(),
-						highlightSelectionMatches(),
-						highlightSpecialChars(),
-						scrollPastEnd(),
-						dropCursor(),
-						search(),
-						keymaps(),
-						EditorView.lineWrapping,
-						blockquote(),
-						codeblock(),
-						headings(),
-						hideMarks(),
-						htmlBlock,
-						image(),
-						links(),
-						lists(),
-						headingSlugField,
-						imagePreview,
-						// markdown({
-						// 	base: markdownLanguage,
-						// 	extensions: [frontmatter],
-						// 	codeLanguages: languages
-						// }),
-						updateListener,
-						...EditorTheme
-					]
-					editorViewRef.current = new EditorView({
-						state: EditorState.create({
-							doc: initialDocument || '',
+						await syncDoc({
+							doc: yDocRef.current,
+							name: fileSystemFile.name,
+							directoryHandle: fileSystemFile.parentHandle
+						})
+
+						const yText = yDocRef.current.getText()
+
+						console.log('>>>>>>', 'YJS', yText.toString())
+
+						const extensions = [
+							highlightSpecialChars(),
+							history(),
+							foldGutter(),
+							drawSelection(),
+							EditorState.allowMultipleSelections.of(true),
+							indentOnInput(),
+							bracketMatching(),
+							closeBrackets(),
+							autocompletion(),
+							highlightSelectionMatches(),
+							highlightSpecialChars(),
+							scrollPastEnd(),
+							dropCursor(),
+							search(),
+							keymaps(),
+							EditorView.lineWrapping,
+							blockquote(),
+							codeblock(),
+							headings(),
+							hideMarks(),
+							htmlBlock,
+							image(),
+							links(),
+							lists(),
+							headingSlugField,
+							imagePreview,
+							// markdown({
+							// 	base: markdownLanguage,
+							// 	extensions: [frontmatter],
+							// 	codeLanguages: languages
+							// }),
+							...EditorTheme,
+							yCollab(yText, null)
+						]
+						console.log('>>>>>>', 'CREATING EDITOR VIEW', extensions)
+						editorViewRef.current = new EditorView({
+							parent: containerRef.current,
+							doc: yText.toString(),
 							extensions
-						}),
-						parent: containerRef.current
-					})
-					if (typeof onLoaded === 'function') {
-						onLoaded()
+						})
+
+						if (typeof onLoaded === 'function') {
+							onLoaded()
+						}
 					}
 				}
 			}
+
+			void load()
 
 			return () => {
 				if (editorViewRef.current) {
@@ -147,7 +166,14 @@ const Editor = React.forwardRef<EditorRef, EditorProps>(
 					editorViewRef.current = undefined
 				}
 			}
-		}, [containerRef, editorViewRef, initialDocument, onChange, onLoaded])
+		}, [
+			containerRef,
+			editorViewRef,
+			fileSystemFile.name,
+			fileSystemFile.parentHandle,
+			onLoaded,
+			syncDoc
+		])
 
 		return <div ref={containerRef} />
 	}

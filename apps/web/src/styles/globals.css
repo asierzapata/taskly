@@ -110,7 +110,7 @@
 
 @layer base {
 	:root {
-		--background: rgba(255, 255, 255, 0.4);
+		--background: rgba(255, 255, 255, 1);
 		--transparent-background: rgba(255, 255, 255, 0.2);
 		--foreground: rgba(0, 0, 0, 1);
 
@@ -155,7 +155,7 @@
 	}
 
 	.dark {
-		--background: rgba(0, 0, 0, 0.4);
+		--background: rgba(0, 0, 0, 1);
 		--transparent-background: rgba(0, 0, 0, 0.2);
 		--foreground: rgba(225, 231, 239, 1);
 
@@ -211,7 +211,7 @@
 		@apply bg-muted;
 	}
 	body {
-		@apply text-foreground bg-transparent-background;
+		@apply text-foreground bg-background;
 		font-feature-settings: 'rlig' 1, 'calt' 1;
 		-webkit-font-smoothing: antialiased;
 		text-rendering: optimizeLegibility;

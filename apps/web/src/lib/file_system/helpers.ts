@@ -67,6 +67,11 @@ export const renameFile = async (
 	parentDirectoryHandle: FileSystemDirectoryHandle,
 	name: string
 ) => {
+	console.log('>>>>>>', {
+		fsFile,
+		parentDirectoryHandle,
+		name
+	})
 	// Move and rename is not currently supported by the FileSystem
 	// Access API so we need to do this they manual way by creating
 	// a new file and deleting the old one.

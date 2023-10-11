@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 /*                       Components                       */
 /* ====================================================== */
 
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { SplitPane } from '@/ui/split_pane'
 // import {
 // 	NotesTree,
@@ -14,6 +14,8 @@ import { SplitPane } from '@/ui/split_pane'
 // import { NoteFinder } from '@renderer/features/note_management/note_finder'
 // import { type Position } from '@orama/plugin-match-highlight'
 import { Button, Icons } from '@taskly/web-ui'
+import { NotesTree } from '@/features/note_management/notes_tree'
+import { NotesTreeBuilder } from '@/features/note_management/notes_tree_builder'
 
 /* ====================================================== */
 /*                    Implementation                      */
@@ -22,8 +24,14 @@ import { Button, Icons } from '@taskly/web-ui'
 const HomeLayout = () => {
 	const [isSidebarOpen, setIsSidebarOpen] = React.useState(true)
 
+	const [isBuildingTree, setIsBuildingTree] = React.useState(true)
+
 	const handleToggleSidebar = () => {
 		setIsSidebarOpen(_isSidebarOpen => !_isSidebarOpen)
+	}
+
+	if (isBuildingTree) {
+		return <NotesTreeBuilder onTreeBuilt={() => setIsBuildingTree(false)} />
 	}
 
 	return (
@@ -65,16 +73,16 @@ type SidebarProps = {
 }
 
 const Sidebar = ({ onToggleSidebar }: SidebarProps) => {
-	// const navigate = useNavigate()
+	const navigate = useNavigate()
 
 	const [uiState, setUIState] = React.useState<SidebarUiStates>('tree')
 
-	// const handleNoteSelected = React.useCallback(
-	// 	(note: Note) => {
-	// 		navigate(`/safe/${safeId}/note/${note.id}`)
-	// 	},
-	// 	[navigate, safeId]
-	// )
+	const handleNoteSelected = React.useCallback(
+		(noteId: string) => {
+			navigate(`/note/${noteId}`)
+		},
+		[navigate]
+	)
 
 	// const handleNotePositionSelected = React.useCallback(
 	// 	({ note, position }: { note: Note; position: Position }) => {
@@ -102,7 +110,7 @@ const Sidebar = ({ onToggleSidebar }: SidebarProps) => {
 						</Button>
 						{/* <NotesTreeActions onSearch={() => setUIState('search')} /> */}
 					</div>
-					{/* <NotesTree onNoteSelected={handleNoteSelected} /> */}
+					<NotesTree onNoteSelected={handleNoteSelected} />
 				</>
 			)}
 			{/* {uiState === 'search' && (
