@@ -4,26 +4,25 @@ import React from 'react'
 /*                   Actions / Selectors                  */
 /* ====================================================== */
 
-import { useAppDispatch, useAppSelector } from '@renderer/store/hooks'
+import { useSafeManagementStore } from '../safe_management_slice'
 
 /* ====================================================== */
 /*                       Components                       */
 /* ====================================================== */
 
 import { Button, Icons } from '@taskly/web-ui'
-import { removeSafe } from '../safe_management_slice'
 
 /* ====================================================== */
 /*                       Types                            */
 /* ====================================================== */
 
 type SafeListProps = {
-	onSelectSafe: (id: string) => void
+	onSelectSafe: ({ id, path }: { id: string; path: string }) => Promise<void>
 }
 
 type SafeItemProps = {
 	id: string
-	onSelectSafe: (id: string) => void
+	onSelectSafe: ({ id, path }: { id: string; path: string }) => Promise<void>
 }
 
 /* ====================================================== */
@@ -31,7 +30,7 @@ type SafeItemProps = {
 /* ====================================================== */
 
 const SafesList = ({ onSelectSafe }: SafeListProps) => {
-	const safes = useAppSelector(state => state.safeManagement.safes)
+	const safes = useSafeManagementStore.use.safes()
 	return (
 		<div className="flex w-full flex-col gap-2">
 			{Object.keys(safes).map(id => (
@@ -42,19 +41,25 @@ const SafesList = ({ onSelectSafe }: SafeListProps) => {
 }
 
 const SafeItem = ({ id, onSelectSafe }: SafeItemProps) => {
-	const safe = useAppSelector(state => state.safeManagement.safes[id])
-	const dispatch = useAppDispatch()
+	const safe = useSafeManagementStore.use.safes()[id]
+	const removeSafe = useSafeManagementStore.use.removeSafe()
 
 	const onDeleteSafe = () => {
-		dispatch(removeSafe({ id }))
-	}
-
-	const handleSelectSafe = () => {
-		onSelectSafe(id)
+		removeSafe({ id })
 	}
 
 	if (!safe) {
 		return null
+	}
+
+	const handleSelectSafe = () => {
+		const handler = async () => {
+			await onSelectSafe({
+				id,
+				path: safe.path
+			})
+		}
+		void handler()
 	}
 
 	return (

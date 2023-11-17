@@ -15,7 +15,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 // import { NoteNavigation } from '@/features/note_management/note_navigation'
 import { EditableNoteName } from '@/features/note_management/editable_note_name'
-import { NoteEditor } from '@/features/note_management/note_editor'
+import { NoteEditor } from '@/features/note_management/note_editor/index_yjs_test'
 import { useFileSystem } from '@/lib/file_system'
 import { type FileSystemFile } from '@/lib/file_system/types'
 

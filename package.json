@@ -12,6 +12,7 @@
 		"dev:mobile": "turbo dev:mobile --parallel",
 		"dev:desktop": "turbo dev:desktop --parallel",
 		"dev:web": "turbo dev:web --parallel",
+		"dev:web-local": "turbo dev:web-local --parallel",
 		"format": "prettier --write \"**/*.{js,cjs,mjs,ts,tsx,md,json}\" --ignore-path .gitignore",
 		"lint": "turbo lint && manypkg check",
 		"lint:fix": "turbo lint:fix && manypkg fix",
@@ -34,6 +35,7 @@
 		"apps/desktop",
 		"apps/server",
 		"apps/web",
+		"apps/web_local",
 		"packages/config/*",
 		"packages/web-ui"
 	]

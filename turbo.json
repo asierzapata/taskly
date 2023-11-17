@@ -50,6 +50,26 @@
 				"NUTS_GITHUB_API_KEY"
 			]
 		},
+		"dev:web-local": {
+			"persistent": true,
+			"cache": false,
+			"env": [
+				"PORT",
+				"LOGGING_ENABLED",
+				"LOGGING_LEVEL",
+				"JWT_ALGORITHM",
+				"JWT_EXPIRATION",
+				"JWT_SECRET",
+				"JWT_COOKIE_NAME",
+				"MONGODB_URI",
+				"MONGODB_DATA_DB_NAME",
+				"MONGODB_USER_DB_NAME",
+				"GOOGLE_CLIENT_ID",
+				"GOOGLE_CLIENT_SECRET",
+				"GOOGLE_REDIRECT_URL",
+				"NUTS_GITHUB_API_KEY"
+			]
+		},
 		"build": {
 			"dependsOn": ["^build"],
 			"outputs": [".expo/**"]

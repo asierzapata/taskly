@@ -83,7 +83,8 @@
 		"y-codemirror.next": "^0.3.2",
 		"y-indexeddb": "^9.0.11",
 		"y-websocket": "^1.5.0",
-		"yjs": "^13.6.4"
+		"yjs": "^13.6.4",
+		"zustand": "^4.4.6"
 	},
 	"workspaces": {
 		"nohoist": [

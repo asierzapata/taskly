@@ -5,8 +5,7 @@ import { ulid } from 'ulid'
 /*                   Actions / Selectors                  */
 /* ====================================================== */
 
-import { createSafe } from '../safe_management_slice'
-import { useAppDispatch } from '@renderer/store/hooks'
+import { useSafeManagementStore } from '../safe_management_slice'
 
 /* ====================================================== */
 /*                       Components                       */
@@ -20,7 +19,7 @@ import { type SubmitHandler, useForm } from 'react-hook-form'
 /* ====================================================== */
 
 type CreateSafeProps = {
-	onSafeCreated: (id: string) => Promise<void>
+	onSafeCreated: ({ id, path }: { id: string; path: string }) => Promise<void>
 }
 
 type CreateSafeForm = {
@@ -33,7 +32,7 @@ type CreateSafeForm = {
 /* ====================================================== */
 
 const CreateSafe = ({ onSafeCreated }: CreateSafeProps) => {
-	const dispatch = useAppDispatch()
+	const createSafe = useSafeManagementStore.use.createSafe()
 	const {
 		register,
 		handleSubmit,
@@ -42,42 +41,51 @@ const CreateSafe = ({ onSafeCreated }: CreateSafeProps) => {
 		setError,
 		watch
 	} = useForm<CreateSafeForm>()
-	const onSubmit: SubmitHandler<CreateSafeForm> = async data => {
-		const id = ulid()
-		await dispatch(
-			createSafe({
+
+	const onSubmit: SubmitHandler<CreateSafeForm> = data => {
+		const handler = async () => {
+			const id = ulid()
+			await createSafe({
 				id,
 				name: data.name,
 				path: data.folder
 			})
-		).unwrap()
-		void onSafeCreated(id)
+			void onSafeCreated({
+				id,
+				path: data.folder
+			})
+		}
+		void handler()
 	}
 
-	const handleSelectFolder = async () => {
-		const { canceled, filePaths } = await window.filePicker.openDialog({
-			properties: ['openDirectory']
-		})
-		if (canceled) {
-			setError('folder', {
-				type: 'manual',
-				message: 'Picker closed'
+	const handleSelectFolder = () => {
+		const handler = async () => {
+			const { canceled, filePaths } = await window.filePicker.openDialog({
+				properties: ['openDirectory']
 			})
-			return
+			if (canceled) {
+				setError('folder', {
+					type: 'manual',
+					message: 'Picker closed'
+				})
+				return
+			}
+			if (filePaths.length === 0 || !filePaths[0]) {
+				setError('folder', {
+					type: 'manual',
+					message: 'No folder selected'
+				})
+				return
+			}
+			setValue('folder', filePaths[0])
 		}
-		if (filePaths.length === 0 || !filePaths[0]) {
-			setError('folder', {
-				type: 'manual',
-				message: 'No folder selected'
-			})
-			return
-		}
-		setValue('folder', filePaths[0])
+		void handler()
 	}
 
 	const folder = watch('folder')
 
 	return (
+		// eslint-disable-next-line @typescript-eslint/no-misused-promises
 		<form onSubmit={handleSubmit(onSubmit)} className="w-full">
 			<div className="flex flex-col">
 				<div className="flex flex-col gap-2">

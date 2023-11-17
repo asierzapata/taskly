@@ -14,7 +14,7 @@ import {
 import storage from 'redux-persist/lib/storage'
 
 import { noteManagementReducer } from '@renderer/features/note_management/note_management_slice'
-import { safeManagementReducer } from '@renderer/features/safe_management/safe_management_slice'
+// import { safeManagementReducer } from '@renderer/features/safe_management/safe_management_slice'
 
 const persistConfig = {
 	key: 'root',
@@ -28,8 +28,8 @@ const persistConfig = {
 }
 
 const rootReducer = combineReducers({
-	noteManagement: noteManagementReducer,
-	safeManagement: safeManagementReducer
+	noteManagement: noteManagementReducer
+	// safeManagement: safeManagementReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

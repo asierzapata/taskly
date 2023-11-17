@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { classnames } from '../lib/classnames'
 import { Loader2 } from 'lucide-react'
@@ -42,7 +42,7 @@ export interface ButtonProps
 	unboundedHeight?: boolean
 }
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 	(
 		{
 			as: T = 'button',

@@ -8,7 +8,7 @@ import React from 'react'
 /*                       Components                       */
 /* ====================================================== */
 
-import { Editor, type EditorRef } from '@/editor'
+import { Editor, type EditorRef } from '@/editor/index_yjs_test'
 
 /* ====================================================== */
 /*                        Types                           */

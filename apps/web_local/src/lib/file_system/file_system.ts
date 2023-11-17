@@ -34,13 +34,16 @@ export const useFileSystem = () => {
 
 	useEffect(() => {
 		const loadHandle = async () => {
+			console.log('>>>>>>', 'loadHandle')
 			const handle = await idbGet<FileSystemDirectoryHandle>(
 				STORE_KEY_DIRECTORY_HANDLE
 			)
+			console.log('>>>>>>', 'loadHandle', handle)
 			if (handle) {
 				setDirectoryHandle(handle)
 			}
 		}
+		console.log('>>>>>>', 'loadHandle before')
 		void loadHandle()
 	}, [])
 
@@ -204,6 +207,7 @@ export const useFileSystem = () => {
 				allowedFileExtensions: ['md']
 			}
 		)
+		console.log('>>>>>>', tree)
 		await idbSet(STORE_KEY_CACHED_TREE, tree)
 		await idbSet(STORE_KEY_CACHED_NORMALIZED_FILES, normalizedFiles)
 		return

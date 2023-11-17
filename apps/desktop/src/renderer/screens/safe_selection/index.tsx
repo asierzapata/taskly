@@ -5,8 +5,7 @@ import { useNavigate } from 'react-router-dom'
 /*                   Actions / Selectors                  */
 /* ====================================================== */
 
-import { useAppDispatch } from '@renderer/store/hooks'
-import { selectSafe } from '@renderer/features/safe_management/safe_management_slice'
+import { useSafeManagementStore } from '@renderer/features/safe_management/safe_management_slice'
 
 /* ====================================================== */
 /*                       Components                       */
@@ -22,10 +21,16 @@ import { SafesList } from '@renderer/features/safe_management/safes_list'
 
 const SafeSelection = () => {
 	const navigate = useNavigate()
-	const dispatch = useAppDispatch()
+	const selectSafe = useSafeManagementStore.use.selectSafe()
 
-	const handleSelectSafe = async (id: string) => {
-		await dispatch(selectSafe({ id })).unwrap()
+	const handleSelectSafe = async ({
+		id,
+		path
+	}: {
+		id: string
+		path: string
+	}) => {
+		await selectSafe({ id, path })
 		navigate(`/safe/${id}`)
 	}
 

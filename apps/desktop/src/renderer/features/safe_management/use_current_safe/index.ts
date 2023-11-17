@@ -1,11 +1,15 @@
-import { useAppSelector } from '@renderer/store/hooks'
+import { useSafeManagementStore } from '../safe_management_slice'
 
 export const useCurrentSafe = () => {
-	const currentSafe = useAppSelector(state =>
-		state.safeManagement.currentSafeId
-			? state.safeManagement.safes[state.safeManagement.currentSafeId]
-			: null
-	)
+	const currentSafeId = useSafeManagementStore.use.currentSafeId
+		? useSafeManagementStore.use.currentSafeId()
+		: null
+
+	if (!currentSafeId) {
+		return
+	}
+
+	const currentSafe = useSafeManagementStore.use.safes()[currentSafeId]
 
 	return currentSafe
 }

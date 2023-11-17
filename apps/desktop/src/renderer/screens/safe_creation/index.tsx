@@ -4,9 +4,7 @@ import React from 'react'
 /*                   Actions / Selectors                  */
 /* ====================================================== */
 
-import { useAppDispatch } from '@renderer/store/hooks'
 import { useNavigate } from 'react-router-dom'
-import { selectSafe } from '@renderer/features/safe_management/safe_management_slice'
 
 /* ====================================================== */
 /*                       Components                       */
@@ -15,6 +13,7 @@ import { selectSafe } from '@renderer/features/safe_management/safe_management_s
 import { Button, H1, Icons } from '@taskly/web-ui'
 import { Screen } from '@renderer/ui/screen'
 import { CreateSafe } from '@renderer/features/safe_management/create_safe'
+import { useSafeManagementStore } from '@renderer/features/safe_management/safe_management_slice'
 
 /* ====================================================== */
 /*                    Implementation                      */
@@ -22,10 +21,16 @@ import { CreateSafe } from '@renderer/features/safe_management/create_safe'
 
 const SafeCreation = () => {
 	const navigate = useNavigate()
-	const dispatch = useAppDispatch()
+	const selectSafe = useSafeManagementStore.use.selectSafe()
 
-	const handleSafeCreated = async (id: string) => {
-		await dispatch(selectSafe({ id })).unwrap()
+	const handleSafeCreated = async ({
+		id,
+		path
+	}: {
+		id: string
+		path: string
+	}) => {
+		await selectSafe({ id, path })
 		navigate(`/safe/${id}`)
 	}
 
