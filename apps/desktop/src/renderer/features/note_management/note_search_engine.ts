@@ -3,8 +3,7 @@ import {
 	insert,
 	remove,
 	insertMultiple,
-	type Result,
-	count
+	type Result
 } from '@orama/orama'
 import {
 	afterInsert as highlightAfterInsert,
