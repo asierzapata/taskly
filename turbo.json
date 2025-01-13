@@ -79,9 +79,6 @@
 		"clean": {
 			"cache": false
 		},
-		"//#clean": {
-			"cache": false
-		},
 		"type-check": {}
 	},
 	"globalEnv": ["CI", "EXPO_ROUTER_APP_ROOT", "NODE_ENV", "SKIP_ENV_VALIDATION"]
